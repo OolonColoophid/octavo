@@ -18,15 +18,15 @@ The system has taken me a while to get up and running. I started from a position
 
 *Octavo* is a tool for multiple document deployment.
 
-1. [Template-based](#templates)
+1. Template-based
 
-2. Produces any document (PDF, HTML, .Docx, spoken word etc.) using the excellent [pandoc](http://pandoc.org) and Octavo-specific templates, and inserts [live links to these alternative versions](#versions)
+2. Produces any document (PDF, HTML, .Docx, spoken word etc.) using the excellent [pandoc](http://pandoc.org) and Octavo-specific templates, and inserts live links to these alternative versions
 
-3. Mark sections as [redacted](#redact); these can either be included in the final document or not
+3. Mark sections as redacted; these can either be included in the final document or not
 
-4. Common text can be inserted from an [external text file](#includes)
+4. Common text can be inserted from an external text file
 
-5. Include the output of [arbitrary shell commands](#commands)
+5. Include the output of arbitrary shell commands
 
 6. [Latex equations](https://www.sharelatex.com/learn/Mathematical_expressions) are supported without a problem; as are [standard citations](https://www.sharelatex.com/learn/Bibliography_management_with_bibtex)
 
@@ -36,7 +36,7 @@ The system has taken me a while to get up and running. I started from a position
 
 ## Installing
 
-1. Install the [dependencies](#dependencies)
+1. Install the dependencies (see below)
 
 2. Download the above files (either individually or [cloning this repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository))
 
@@ -66,7 +66,7 @@ Your Markdown file should have a set of YAML at the top that follows the example
 
 deployConfig contains individual Pandoc commands for each of the currently supported output documents.
 
-The folder includes contains text files that can be included in your document [if you request it](#includes).
+The folder includes contains text files that can be included in your document if you request it.
 
 The folder media contains pictures for inclusion in the document.
 
@@ -76,9 +76,9 @@ The folder templates contains Pandoc templates modified to work with Octavo.
 
 ## Features in More Detail
 
-### Ready-to-use templates {#templates}
+### Ready-to-use templates
 
-![exampleDeploy](blob/master/examples/exampleDeploy.100.jpg) "How Octavo works")
+![exampleDeploy](../blob/master/examples/exampleDeploy.001.jpg) "How Octavo works")
 
 | Template                            | Notes                                                                 |
 |-------------------------------------|-----------------------------------------------------------------------|
@@ -90,7 +90,7 @@ The folder templates contains Pandoc templates modified to work with Octavo.
 | Spoken (MP3)                        | Audio file of the text, suitable for podcasting etc.                  |
 | Tufte book (special)                | Produce a Tufte 'book'                                                |
 
-### Hyperlinks to other versions of the file{#versions}
+### Hyperlinks to other versions of the file
 
 If insert the following in the Markdown file:
 
@@ -110,7 +110,7 @@ Insert the version number (specified using the *version* variable in the Yaml).
 & version &
 ~~~
 
-### Arbitrary commands{#commands}
+### Arbitrary commands
 
 Enclose as follows, and the standard output of the command will be piped into the document:
 
@@ -118,7 +118,7 @@ Enclose as follows, and the standard output of the command will be piped into th
 &cmd date +%D cmd&
 ~~~
 
-### Include text from external sources{#includes}
+### Include text from external sources
 
 Mark the line with the ampersand character to have Octavo fetch external text using the following text as the filename. Look at the example below.
 
@@ -138,7 +138,7 @@ To emphasise individual words, use the PopOut class.
 The deadline for this is <span class="inlinePopout">25 Novemeber 2016</span>.
 ~~~
 
-### Answer Box, Task, Journal, and Highlight{#redact}
+### Answer Box, Task, Journal, and Highlight
 
 To place special formatting around an *answer box*, *task*, *journal* or *highlight*, use the following:
 
@@ -159,7 +159,6 @@ The *id* tag above provides an emphasised text element above the text ('Text her
 ## Tables
 
 Octavo can use the [pandoc-tabletocsv](https://github.com/baig/pandoc-csv2table) filter to create tables from csv. Otherwise, standard Markdown tables can be included.
-
 
 ## Issues
 
