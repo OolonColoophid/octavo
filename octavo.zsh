@@ -628,12 +628,12 @@ if [[ $ftpDeploy == "yes" ]]; then
 
 	cd "$deployto" || exit
 
-	if [[ $deployPurgeOlderThan != "0" ]]; then
-
-		logThis $scriptName "Looking to clean up files older than $deployPurgeOlderThan days"
-		find . -mtime +"$deployPurgeOlderThan" -exec rm {} \; || logThis $scriptname "Attempt to delete files exited with error" 
-
-	fi
+#	if [[ $deployPurgeOlderThan != "0" ]]; then
+#
+#		logThis $scriptName "Looking to clean up files older than $deployPurgeOlderThan days"
+#		find . -mtime +"$deployPurgeOlderThan" -exec rm {} \; || logThis $scriptname "Attempt to delete files exited with error" 
+#
+#	fi
 
 
 	logThis $scriptName "Upoading all files to FTP..."

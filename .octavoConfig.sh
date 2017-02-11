@@ -40,5 +40,5 @@ export deploymentTextBody=""
 export deploymentTextFoot="This document contains hyperlinks to [sections within it](#overview), [external webpages](http://cccupsychology.com), and email addresses like [ian.hocking@canterbury.ac.uk](mailto:ian.hocking@canterbury.ac.uk)."
 
 # Purge files in Deploy directories older than N days (use 0 to unset this behaviour):
-export deployPurgeOlderThan="1"
+# export deployPurgeOlderThan="1"   # Disabled for the moment because it's deleting source files, annoyingly
 
