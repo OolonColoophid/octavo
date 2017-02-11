@@ -1,0 +1,95 @@
+%!TEX program = xelatex 
+% Scott's letterhead template. Requires that Miami logo and signature file be
+% installed within the LaTeX directory structure. The "letter" class is used
+% because it allows for spacing between paragraphs, but properly line breaks at
+% the end of paragraphs (the articles class tends to avoid full lines at the
+% ends of paragraphs, for some reason).
+
+\documentclass[$size$]{letter}
+\usepackage[letterpaper,margin=1.5in]{geometry}
+
+\usepackage{fixltx2e}
+
+% Adds microtypography features: character protrusion, for XeTeX.
+\usepackage{microtype}
+
+% Allows links.
+\usepackage[usenames,dvipsnames]{color}
+\usepackage[xetex, bookmarks, colorlinks, breaklinks]{hyperref}
+\hypersetup{colorlinks=true, urlcolor=NavyBlue, linkcolor=NavyBlue}
+
+\urlstyle{rm}
+
+\frenchspacing{}        % Remove extra spaces after periods.
+\pagestyle{empty}       % Remove page numbers.
+
+\usepackage{fontspec}
+\defaultfontfeatures{Mapping=tex-text}  % Sets quotation marks.
+\setromanfont{Linux Libertine}
+\setsansfont[BoldFont={Helvetica Neue Bold}]{Helvetica Neue}
+\setmonofont[Scale=MatchLowercase]{Inconsolata}
+
+% From default template
+\providecommand{\tightlist}{
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\newcommand\shyp{\-}
+
+\newcommand{\header}[0]{
+    {\hypersetup{hidelinks}
+    \noindent
+    \parbox[b][0.625in][t]{5.5in}{
+        \vspace{-0.375in}
+        \parbox[b][0.625in][t]{3.74in}
+            {\href{http://www.canterbury.ac.uk}
+            {\includegraphics[width=4cm]{/Users/ianuser/Dropbox/CCCU/text/deploy/media/cccuLogo.png}}}\hfill
+        \parbox[b][0.625in][t]{1.72in}{
+            \setlength{\baselineskip}{9pt}
+            \fontsize{7pt}{7pt}{
+                \fontspec{Helvetica}
+                \href{https://www.canterbury.ac.uk/social-and-applied-sciences/psychology-politics-and-sociology/staff/Profile.aspx?staff=e0fe64b03fece667}{\textbf{Ian Hocking, BA MSc MA PhD FHEA}}\\
+                \href{https://www.canterbury.ac.uk/social-and-applied-sciences/psychology-politics-and-sociology/psychology-politics-and-sociology.aspx}{School of Psychology, Politics\\ 
+                and Sociology}\vspace{6pt}\\
+                North Holmes Road\\
+                Canterbury, Kent, UK\\
+                01227 767700 ext 3277\\
+                \href{mailto:ian.hocking@canterbury.ac.uk}{ian.hocking@canterbury.ac.uk}
+                }
+            }
+        }}
+    }
+
+$if(draft)$
+\usepackage{draftwatermark}
+\SetWatermarkLightness{0.9}
+$endif$
+
+\begin{document}
+
+\header
+
+$body$
+
+$if(sig.include)$
+    \begin{minipage}[t]{6.5in}
+    Sincerely,\\\vspace{.22cm}\\
+    $if(sig.sign)$
+       \vspace{.8cm}\includegraphics[width=3cm]{/Users/ianuser/Dropbox/CCCU/text/deploy/media/sigIanHocking.png}
+    $else$
+        \\
+    $endif$
+    \\
+    Dr Ian Hocking\\
+    \textit{$sig.post$}
+    \end{minipage}
+$endif$
+
+$if(cc)$
+    cc: $for(cc)$$cc$$sep$, $endfor$
+$endif$
+
+$if(ps)$
+    $ps$
+$endif$
+
+\end{document}

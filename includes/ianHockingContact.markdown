@@ -1,0 +1,1 @@
+Dr Ian Hocking^[Room Lg05 (Laud, ground floor main corridor). Office hours [by appointment](https://ianhocking-tutorials.youcanbook.me/). Email me at [ian.hocking@canterbury.ac.uk](mailto:ian.hocking@canterbury.ac.uk)]

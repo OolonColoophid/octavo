@@ -1,0 +1,1 @@
+All communication (unless of a sensitive nature) should be directed to the module discussion board within Blackboard rather than email. This ensures that all students receive the same advice and feedback.

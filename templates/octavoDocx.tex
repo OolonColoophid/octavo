@@ -1,0 +1,253 @@
+% tufte-handout.tex - DESC
+% Iago Mosqueira - JRC. 2013
+% Updated by Ian Hocking 2016
+%
+\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{tufte-handout}
+
+% For color boxes
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+\tcbuselibrary{breakable}
+% Set up coloured 'call outs'
+\tcbset{textmarker/.style={skin=enhancedmiddle jigsaw,breakable,parbox=false, boxrule=0mm,leftrule=5mm,rightrule=5mm,boxsep=0mm,arc=0mm,outer arc=0mm, left=3mm,right=3mm,top=1mm,bottom=1mm,toptitle=1mm,bottomtitle=1mm,oversize}}
+\newtcolorbox{highlight}{textmarker,colback=yellow!5!white,colframe=yellow}\newtcolorbox{task}{textmarker,colback=DarkOrange!5!white,colframe=DarkOrange!75!yellow}\newtcolorbox{journal}{textmarker,colback=DeepSkyBlue!5!white,colframe=DeepSkyBlue} 
+\newtcolorbox{red}{textmarker,colback=BrickRed!5!white,colframe=BrickRed, opacityframe=0.5}
+% Set up 'answer boxes'
+\tcbset{answerbox/.style={enhanced jigsaw, breakable,title=Answer box, colback=Apricot!75!white, colbacktitle=Maroon!75!white, colframe=Maroon!75!white,opacityback=0.5}}
+\newtcolorbox{answer}{answerbox}
+
+
+% IH added this:
+% longtable
+\usepackage{longtable}
+
+\usepackage{framed}
+
+% IH added this to stop the error 'Argument of \MakeTextLowercase has an extra }
+\def\tightlist{}
+
+% IH added this - apparently it improves kerning etc.
+\usepackage{microtype}
+
+\usepackage{fontspec}
+
+$if(mainfont)$
+\setmainfont{$mainfont$}% IH added this to make the template honour 'mainfont'
+$endif$
+
+% Set up the spacing using fontspec features
+\renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
+\renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
+
+% A package that will add nice chapter opening pages
+% \usepackage[grey,utopia]{quotchap}
+% ams
+\usepackage{amssymb,amsmath}
+
+% Set up the images/graphics package
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{graphics/}}
+
+% natbib
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+
+% biblatex
+$if(biblatex)$
+\usepackage{biblatex}
+$if(biblio-files)$
+\bibliography{$biblio-files$}
+$endif$
+$endif$
+
+% multiplecol
+%\usepackage{multicol}
+
+% For nice quotes
+\usepackage{epigraph}
+
+% booktabs
+\usepackage{booktabs}
+\usepackage{array}% http://ctan.org/pkg/array
+%\setlength{\defaultaddspace}{2em}% Adjusted line spacing
+\setlength{\extrarowheight}{5pt}
+\let\originaltoprule\toprule
+
+% url
+\usepackage{url}
+
+% hyperref
+\usepackage{hyperref}
+% Next three lines added by IH
+% to make sure links are colored
+$if(colorlinks)$
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+$endif$
+
+% units.
+\usepackage{units}
+
+% fancyvrb
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\DefineShortVerb[commandchars=\\\{\}]{\|}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+
+
+% multiplecol
+\usepackage{multicol}
+
+% lipsum
+\usepackage{lipsum}
+
+% These commands are used to pretty-print LaTeX commands
+\newcommand{\doccmd}[1]{\texttt{\textbackslash#1}}% command name -- adds backslash automatically
+\newcommand{\docopt}[1]{\ensuremath{\langle}\textrm{\textit{#1}}\ensuremath{\rangle}}% optional command argument
+\newcommand{\docarg}[1]{\textrm{\textit{#1}}}% (required) command argument
+\newenvironment{docspec}{\begin{quote}\noindent}{\end{quote}}% command specification environment
+\newcommand{\docenv}[1]{\textsf{#1}}% environment name
+\newcommand{\docpkg}[1]{\texttt{#1}}% package name
+\newcommand{\doccls}[1]{\texttt{#1}}% document class name
+\newcommand{\docclsopt}[1]{\texttt{#1}}% document class option name
+
+% Shaded
+% \newenvironment{Shaded}{}{}
+% \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+% \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+% \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+% \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+% \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+% \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+% \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+% \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+% \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+% \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+% \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+% \newcommand{\RegionMarkerTok}[1]{{#1}}
+% \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+% \newcommand{\NormalTok}[1]{{#1}}
+
+
+
+
+%%%%%%%%
+%% Next bit added by IH 2 May
+\hypersetup{unicode=true,
+$if(title-meta)$
+            pdftitle={$title-meta$},
+$endif$
+$if(author-meta)$
+            pdfauthor={$author-meta$},
+$endif$
+$if(keywords)$
+            pdfkeywords={$for(keywords)$$keywords$$sep$; $endfor$},
+$endif$
+$if(colorlinks)$
+            colorlinks=true,
+            linkcolor=$if(linkcolor)$$linkcolor$$else$Red$endif$, % garish unless specified in yaml
+            citecolor=$if(citecolor)$$citecolor$$else$Red$endif$, % garish unless specified in yaml
+            urlcolor=$if(urlcolor)$$urlcolor$$else$Blue$endif$, % garish unless specified in yaml
+            pdfborder={0 0 0},
+$endif$
+            breaklinks=false}        
+\urlstyle{same}  % don't use monospace font for urls
+$if(lang)$
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
+$if(babel-newcommands)$
+  $babel-newcommands$
+$endif$
+\else
+  \usepackage{polyglossia}
+  \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
+$for(polyglossia-otherlangs)$
+  \setotherlanguage[$polyglossia-otherlangs.options$]{$polyglossia-otherlangs.name$}
+$endfor$
+\fi
+$endif$
+%%%%%%%%%
+
+
+$if(numbersections)$
+\setcounter{secnumdepth}{5}
+$else$
+\setcounter{secnumdepth}{0}
+$endif$
+
+
+$if(title)$
+\title{$title$ \\ \small $subtitle$}
+$endif$
+$if(author)$
+\author{$for(author)$$author$$sep$ \and $endfor$}
+$endif$
+$if(date)$
+\date{$date$}
+$endif$
+
+\begin{document}
+
+%\large % Added by IH. For other sizes, see http://texblog.org/2012/08/29/changing-the-font-size-in-latex/
+$if(title)$
+\maketitle
+$endif$
+
+$if(headimage)$
+%$headimage$
+\begin{marginfigure}
+\includegraphics{$headimage$}
+	\epigraph{$headquote$}{\textit{$headquoteauthor$}}
+\end{marginfigure}
+$endif$
+
+
+
+
+% Next toc ... body added by IH
+$if(toc)$
+{
+$if(colorlinks)$
+\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
+$endif$
+\setcounter{tocdepth}{$toc-depth$}
+\tableofcontents
+%\addtocontents{toc}{~\hfill\textbf{Page}\par} % added by IH
+\addtocontents{toc}{~\hfill\par} % added by IH
+}
+$endif$
+$if(lot)$
+\listoftables
+$endif$
+$if(lof)$
+\listoffigures
+$endif$
+
+$body$
+
+
+
+$if(natbib)$
+$if(biblio-files)$
+$if(biblio-title)$
+$if(book-class)$
+\renewcommand\bibname{$biblio-title$}
+$else$
+\renewcommand\refname{$biblio-title$}
+$endif$
+$endif$
+\bibliography{$biblio-files$}
+\bibliographystyle{plainnat}
+
+$endif$
+$endif$
+$if(biblatex)$
+\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+
+$endif$
+$for(include-after)$
+$include-after$
+
+$endfor$
+
+\end{document}

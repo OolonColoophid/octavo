@@ -1,0 +1,1 @@
+According to University regulations, late submissions (unless authorised by an approved LSP, NLP or ECRF) will receive a penalty of five percentage points per day. Work that exceeds the maximum word count by more than 10% will receive a penalty of ten percentage points. 
