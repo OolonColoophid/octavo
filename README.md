@@ -79,12 +79,6 @@ The folder templates contains Pandoc templates modified to work with Octavo.
 To see an example, check out the source Markdown of my sixth workshop booklet, (examples/markdown/6twr.markdown).
 
 ### Ready-to-use templates
-6twroctavoLargePdfe7272db78832d4744dd6685c80dceb86.pdf
-6twroctavoNormalPdfe7272db78832d4744dd6685c80dceb86.pdf
-6twroctavoOpenDyslexicPdfe7272db78832d4744dd6685c80dceb86.pdf
-6twroctavoSpokene7272db78832d4744dd6685c80dceb86.mp4
-6twroctavoTuftePdfe7272db78832d4744dd6685c80dceb86.pdf
-6twroctavoTufteSolarisedPdfe7272db78832d4744dd6685c80dceb86.pdf
 
 ![exampleDeploy](examples/exampleDeploy.001.jpeg "How Octavo works")
  
