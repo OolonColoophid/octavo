@@ -1,6 +1,6 @@
 # Octavo v0.1
 
-Create a well-presented documents, in different formats, from a single [Markdown](https://en.wikipedia.org/wiki/Markdown) source, like [this](examples/deployed/4twaoctavoTuftePdf7d151f3ee7015e65ddd07434193d2cbb.pdf).
+Create well-presented documents, in different formats like [this](examples/deployed/4twaoctavoTuftePdf7d151f3ee7015e65ddd07434193d2cbb.pdf), from a single [Markdown](https://en.wikipedia.org/wiki/Markdown) source.
 
 Why does it exist? As a [psychology lecturer](https://www.canterbury.ac.uk/social-and-applied-sciences/psychology-politics-and-sociology/staff/Profile.aspx?staff=e0fe64b03fece667), I wanted a way to write statistics workshop booklets in Markdown (without all that tedious mucking around in Latex) and have my computer produce multiple versions, insert commonly-used text, grab calendar items (like a week-by-week breakdown of teaching sessions) and drop them into the document, run arbitrary UNIX commands and pipe their output into the final documents, as well as do the usual stuff like produce a References section in APA style and handle equations well. I also wanted it to last for several years, if not decades. I did the former. We'll see about the latter. 
 
@@ -16,7 +16,7 @@ The script has taken me a while to get up and running. I started from a position
 
 ## Features
 
-*Octavo* is a tool for multiple document deployment.
+Octavo is a tool for multiple document deployment.
 
 1. Template-based
 
@@ -76,19 +76,27 @@ The folder templates contains Pandoc templates modified to work with Octavo.
 
 ## Features in More Detail
 
+To see an example, check out the source Markdown of my sixth workshop booklet, (examples/markdown/6twr.markdown).
+
 ### Ready-to-use templates
+6twroctavoLargePdfe7272db78832d4744dd6685c80dceb86.pdf
+6twroctavoNormalPdfe7272db78832d4744dd6685c80dceb86.pdf
+6twroctavoOpenDyslexicPdfe7272db78832d4744dd6685c80dceb86.pdf
+6twroctavoSpokene7272db78832d4744dd6685c80dceb86.mp4
+6twroctavoTuftePdfe7272db78832d4744dd6685c80dceb86.pdf
+6twroctavoTufteSolarisedPdfe7272db78832d4744dd6685c80dceb86.pdf
 
 ![exampleDeploy](examples/exampleDeploy.001.jpeg "How Octavo works")
  
-| Template                            | Notes                                                                                                          |
-|-------------------------------------|----------------------------------------------------------------------------------------------------------------|
-| Tufte (the version I give students) | A style that loosely follows the design philosophy of Edward R. Tufte                                          |
-| Standard PDF                        | A simple PDF, lacking some of the bells and whistles of Tufte                                                  |
-| PDF with large text                 | Like ‘Standard PDF’, but with a large font                                                                     |
-| PDF with OpenDyslexic font          | Like ‘Standard PDF’, but with an Open Dyslexic font                                                            |
-| Solarised PDF                       | Like ‘Standard PDF’ but using the Solarized colour scheme                                                      |
-| Spoken (MP3)                        | Audio file of the text, suitable for podcasting etc.                                                           |
-| Tufte book (special)                | Produce a Tufte 'book', like [this](examples/deployed/0allBookletsoctavoTufteBookPdf.pdf).                     |
+| Template                                                                                                        | Notes                                                                                                          |
+|-----------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| [Tufte (the version I give students)](examples/deployed/6twroctavoTuftePdfe7272db78832d4744dd6685c80dceb86.pdf) | A style that loosely follows the design philosophy of Edward R. Tufte                                          |
+| [Standard PDF](examples/deployed/6twroctavoNormalPdfe7272db78832d4744dd6685c80dceb86.pdf)                       | A simple PDF, lacking some of the bells and whistles of Tufte                                                  |
+| [PDF with large text](examples/deployed/6twroctavoNormalPdfe7272db78832d4744dd6685c80dceb86.pdf)                | Like ‘Standard PDF’, but with a large font                                                                     |
+| [PDF with OpenDyslexic font](examples/deployed/6twroctavoOpenDyslexicPdfe7272db78832d4744dd6685c80dceb86.pdf)   | Like ‘Standard PDF’, but with an Open Dyslexic font                                                            |
+| [Solarised PDF](examples/deployed/6twroctavoTufteSolarisedPdfe7272db78832d4744dd6685c80dceb86.pdf)              | Like ‘Standard PDF’ but using the Solarized colour scheme                                                      |
+| [Spoken (MP4)](examples/deployed/6twroctavoSpokene7272db78832d4744dd6685c80dceb86.mp4)                          | Audio file of the text, suitable for podcasting etc.                                                           |
+| [Tufte book (special)](examples/deployed/0allBookletsoctavoTufteBookPdf.pdf)                                    | Produce a Tufte 'book'                                                                                         |
 
 ### Hyperlinks to other versions of the file
 
@@ -104,7 +112,7 @@ If you insert the following in the Markdown file:
 
 ### Version
 
-Insert the version number (specified using the *version* variable in the YAML).
+Insert the version number (specified using the version variable in the YAML).
 
 ~~~
 & version &
@@ -128,7 +136,7 @@ Mark the line with the ampersand character to have Octavo fetch external text us
 
 ~~~
 
-This will insert the text contents of the file *ianHockingContact.markdown*. The path to *include* files is contained in .octavoConfig.sh
+This will insert the text contents of the file ianHockingContact.markdown. The path to include files is contained in .octavoConfig.sh
 
 ### PopOut
 
@@ -140,7 +148,7 @@ The deadline for this is <span class="inlinePopout">25 Novemeber 2016</span>.
 
 ### Answer Box, Task, Journal, and Highlight
 
-To place special formatting around an *answer box* (showing answers), *task* (asking the reader to do something), *journal* (asking them to write in their journal) or *highlight* (remind them of something important), use the following:
+To place special formatting around an answer box (showing answers), task (asking the reader to do something), journal (asking them to write in their journal) or highlight (remind them of something important), use the following:
 
 ~~~
 <div latex="true" class="answer" id="Answer">
@@ -152,9 +160,9 @@ Significant.
 
 'Answer' is a special class. When you ask for redacted versions to be produced, Octavo will omit text with this class.
 
-Octavo will create the necessary Latex for PDF documents, while at the same time pre-processing the *div* into an appropriate format (creating a subheader based on the class; these are hardcoded in octavo.zsh).
+Octavo will create the necessary Latex for PDF documents, while at the same time pre-processing the div into an appropriate format (creating a subheader based on the class; these are hardcoded in octavo.zsh).
 
-The *id* tag above provides an emphasised text element above the text ('Text here' in the example) for simplified PDF layouts.
+The id tag above provides an emphasised text element above the text ('Text here' in the example) for simplified PDF layouts.
 
 ## Tables
 
