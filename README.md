@@ -76,9 +76,9 @@ The folder templates contains Pandoc templates modified to work with Octavo.
 
 ## Features in More Detail
 
-### Ready-to-use templates{#templates}
+### Ready-to-use templates {#templates}
 
-![exampleDeploy](examples/exampleDeploy.jpg) "How Octavo works")
+![exampleDeploy](examples/exampleDeploy.100.jpg) "How Octavo works")
 
 | Template                            | Notes                                                                 |
 |-------------------------------------|-----------------------------------------------------------------------|
