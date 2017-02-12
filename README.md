@@ -1,6 +1,6 @@
 # Octavo v0.1
 
-Create well-presented documents, in different formats like [this](examples/deployed/4twaoctavoTuftePdf7d151f3ee7015e65ddd07434193d2cbb.pdf), from a single [Markdown](https://en.wikipedia.org/wiki/Markdown) source.
+Create well-presented documents, in different formats like [this](examples/deployed/6twroctavoTuftePdfe7272db78832d4744dd6685c80dceb86.pdf), from a single [Markdown](https://en.wikipedia.org/wiki/Markdown) source. (Note: There seems to be a GitHub issue where rendering PDFs on iOS devices fails; check out Octavo outputs on [Dropbox](https://www.dropbox.com/sh/54j75ji2kbwpgka/AACKPuHeUVMVR_l_dmYoj_9ea?dl=0).)
 
 Why does it exist? As a [psychology lecturer](https://www.canterbury.ac.uk/social-and-applied-sciences/psychology-politics-and-sociology/staff/Profile.aspx?staff=e0fe64b03fece667), I wanted a way to write statistics workshop booklets in Markdown (without all that tedious mucking around in Latex) and have my computer produce multiple versions, insert commonly-used text, grab calendar items (like a week-by-week breakdown of teaching sessions) and drop them into the document, run arbitrary UNIX commands and pipe their output into the final documents, as well as do the usual stuff like produce a References section in APA style and handle equations well. I also wanted it to last for several years, if not decades. I did the former. We'll see about the latter. 
 
@@ -79,6 +79,8 @@ The folder templates contains Pandoc templates modified to work with Octavo.
 To see an example, check out the source Markdown of my sixth workshop booklet, (examples/markdown/6twr.markdown).
 
 ### Ready-to-use templates
+
+(If you have problems viewing the files below, see my [Dropbox](https://www.dropbox.com/sh/54j75ji2kbwpgka/AACKPuHeUVMVR_l_dmYoj_9ea?dl=0).)
 
 ![exampleDeploy](examples/exampleDeploy.001.jpeg "How Octavo works")
  
