@@ -26,18 +26,9 @@ setBashVarsFromYaml() # Read YAML block at top of Markdown file and create shell
 {
 
 	scriptName=setBashVarsFromYaml_func
-
-	if [[ -e "$envVariableTemp" ]] 
-
-	then
-
-		rm  "$envVariableTemp"
-
-	else
-
-		touch "$envVariableTemp"
-	fi
-
+	
+	touch "$octavoTempDirectory/envVariableTemp"
+	
 	inYamlZone="0"
 
 	while IFS= read -r line # IFS method maintains white space
@@ -67,7 +58,7 @@ do
 				varValueTrimmed=$(echo "$varValue" | sed 's/\"//g')
 				declare ${varKey}="$varValueTrimmed"
 
-				declare -p ${varKey} >> $envVariableTemp
+				declare -p ${varKey} >> "$octavoTempDirectory/envVariableTemp"
 
 
 			fi
@@ -108,7 +99,7 @@ preProcessMarkdownVariables()
 
 	# Source the variables that were in the Markdown's YAML
 	# shellcheck source=/Users/ianuser/Dropbox/.temp/envVariableTemp
-	source "$HOME/Dropbox/.temp/envVariableTemp"
+	source "$octavoTempDirectory/envVariableTemp"
 
 	# Set defaults
 	preTempFileStepOne="$octavoTempDirectory/preProcessedOne" ## Temporary output
@@ -282,8 +273,7 @@ cat $markdownSourceFile | sed "s@\$HOME@$HOME@g" | setBashVarsFromYaml || echo s
 # markdown file and are stored in file $octavoTempDirectory/envVariableTemp
 
 # Let's get those variables
-# shellcheck source=/Users/ianuser/Dropbox/.temp/envVariableTemp
-source "$HOME/Dropbox/.temp/envVariableTemp"
+source "$octavoTempDirectory/envVariableTemp"
 
 # Does the user want all formats?
 if [[ $formats == "all" ]]; then

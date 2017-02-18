@@ -23,7 +23,6 @@ export deployconfig="$HOME/Dropbox/CCCU/text/deploy/deployConfig"
 export remoteserver="cccupsychology.com"
 
 ## YAML processing
-export envVariableTemp="$HOME/Dropbox/.temp/envVariableTemp" # Where to store shell variables drawn from YAML
 export yamlBeginMarker="---" ## Where does the YAML block start?
 export yamlEndMarker="..." ## Where does it end?
 
