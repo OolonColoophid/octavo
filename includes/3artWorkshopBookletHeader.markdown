@@ -46,5 +46,15 @@ Remember that you’re just setting out with Tlearn, so this booklet might take 
 
 Sometimes, when there is an instructor version of an exercise booklet, you'll be provided with a second version of this document, containing answers, a few days after your seminar. 
 
+# Workshop
+
+Tlearn is a simple connectionist network program developed by Kim Plunkett and Jeffrey L. Elman. It’s a bit long in the tooth, but it is much more straightforward to use than most connectionist software, which makes it suitable as a teaching tool. That said, please remember:
+
+1. Save your work regularly
+
+2. Keep backups of the files you’re working on.
+
+Tlearn hasn’t been actively developed since 1999, and it does have some bugs.
+
 \newpage
 

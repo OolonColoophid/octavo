@@ -199,6 +199,19 @@ logThis() { # This function notes things in a log directory
 # Main routine begins
 #############################
 
+# Verify that the script has received a text file
+
+if [[ $1 = *[!\ ]* ]]; then
+
+	# All good; carry on
+	: 
+
+else
+	echo "Fatal error: You need to specify the Markdown source file."
+	cleanUp > /dev/null 2>&1 
+	exit 1
+fi
+
 
 if [ -n "${TEMPDIRECTORY+1}" ]; then # Is the environment variable TEMPDIRECTORY set?
 
@@ -250,19 +263,6 @@ fi
 logThis $scriptName "Beginning deployment"
 
 #####################################################################################
-
-# Verify that the script has received a text file
-
-if [[ $1 = *[!\ ]* ]]; then
-
-	# All good; carry on
-	: 
-
-else
-	echo "Fatal error: You need to specify the Markdown source file."
-	cleanUp > /dev/null 2>&1 
-	exit 1
-fi
 
 markdownSourceFile=$1 # Name of the current document (presumably a Markdown file)
 
