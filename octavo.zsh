@@ -18,19 +18,7 @@ source "$HOME/.octavoConfig.sh" || echo "Could not source .octavoConfig.sh, whic
 
 cleanUp() # Delete temporary files (fail silently)
 {
-	
-	rm  "$TEMPDIRECTORY/deployTempfile.markdown"
-	rm  "$TEMPDIRECTORY/deployTempfile.markdown.bak"
-	rm  "$TEMPDIRECTORY/deployTempSubFileOne.markdown"
-	rm  "$TEMPDIRECTORY/deployTempSubFileOne.markdown.bak"
-	rm  "$TEMPDIRECTORY/deployTempSubFileTwo.markdown"
-	rm  "$TEMPDIRECTORY/deployTempSubFileTwo.markdown.bak"
-	rm  "$TEMPDIRECTORY/preProcessedOne"
-	rm  "$TEMPDIRECTORY/preProcessedOne.bak"
-	rm  "$TEMPDIRECTORY/preProcessedTwo.markdown"
-	rm  "$TEMPDIRECTORY/preProcessedTwo.markdown.bak"
-	rm  "$TEMPDIRECTORY/envVariableTemp"
-
+	rm -r $octavoTempDirectory	
 }
 
 
@@ -123,8 +111,8 @@ preProcessMarkdownVariables()
 	source "$HOME/Dropbox/.temp/envVariableTemp"
 
 	# Set defaults
-	preTempFileStepOne="$TEMPDIRECTORY/preProcessedOne" ## Temporary output
-	preTempFileStepTwo="$TEMPDIRECTORY/preProcessedTwo.markdown" ## Temporary output
+	preTempFileStepOne="$octavoTempDirectory/preProcessedOne" ## Temporary output
+	preTempFileStepTwo="$octavoTempDirectory/preProcessedTwo.markdown" ## Temporary output
 
 	touch "$preTempFileStepOne"
 	touch "$preTempFileStepTwo"
@@ -229,10 +217,15 @@ else
 
 fi
 
+# Specify a unique directory within the $TEMPDIRECTORY
+# path, so that multiple instances of Octavo won't conflict
+octavoTempDirectory="$TEMPDIRECTORY/`md5 -q $1`"
 
+# Create this new directory
+mkdir $octavoTempDirectory || exit 1
 
 # Define simple variables
-tempWorkingFile="$TEMPDIRECTORY/deployTempFile.markdown"
+tempWorkingFile="$octavoTempDirectory/deployTempFile.markdown"
 
 counter=0
 
@@ -286,7 +279,7 @@ logThis $scriptName "1. Process YAML: Launching setBashVarsFromYaml"
 cat $markdownSourceFile | sed "s@\$HOME@$HOME@g" | setBashVarsFromYaml || echo setBashVarsFromYaml reported an error 
 
 # At this point, variables specified in the YAML of the
-# markdown file and are stored in file $TEMPDIRECTORY/envVariableTemp
+# markdown file and are stored in file $octavoTempDirectory/envVariableTemp
 
 # Let's get those variables
 # shellcheck source=/Users/ianuser/Dropbox/.temp/envVariableTemp
@@ -471,9 +464,9 @@ sed -i.bak "s%& version &%$version%g" "$tempWorkingFile" || echo SED grumpy
 # commands that want to output their text into
 # the document
 
-tempSubworkingFileOne=$(echo $TEMPDIRECTORY/deployTempSubFileOne.markdown) # Create a new temp file (1)
+tempSubworkingFileOne=$(echo $octavoTempDirectory/deployTempSubFileOne.markdown) # Create a new temp file (1)
 
-tempSubworkingFileTwo=$(echo $TEMPDIRECTORY/deployTempSubFileTwo.markdown) # Create a new temp file (2)
+tempSubworkingFileTwo=$(echo $octavoTempDirectory/deployTempSubFileTwo.markdown) # Create a new temp file (2)
 
 
 
@@ -577,9 +570,9 @@ do
 				| sed 's/<div*.*task.*/## Task/g' \
 				| sed 's/<div*.*journal.*/## Journal/g' \
 				| sed 's/<div*.*answer.*/## Answer/g' \
-				| sed 's/<\/div>//g' > "$TEMPDIRECTORY/WorkingFileCleanedOfLatexBlocksForDocx.markdown"
+				| sed 's/<\/div>//g' > "$octavoTempDirectory/WorkingFileCleanedOfLatexBlocksForDocx.markdown"
 
-			eval "cat "$TEMPDIRECTORY/WorkingFileCleanedOfLatexBlocksForDocx.markdown" | $appCommand[$counter]" && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$mdFive$deployExtension[$counter]"; fi || echo Failed comm was "$appCommand[$counter]" 
+			eval "cat "$octavoTempDirectory/WorkingFileCleanedOfLatexBlocksForDocx.markdown" | $appCommand[$counter]" && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$mdFive$deployExtension[$counter]"; fi || echo Failed comm was "$appCommand[$counter]" 
 
 		elif [[ $deployExtension[$counter] == *pdf ]]
 		then
@@ -607,11 +600,11 @@ then
 
 	if [[ $suppressmessages != "yes" ]]; then echo "Creating spoken version" ; fi
 	
-echo "$title-meta by $author" > "$TEMPDIRECTORY/spokenIntro"
-echo "End of document $title-meta by $author" > "$TEMPDIRECTORY/spokenOutro"
+echo "$title-meta by $author" > "$octavoTempDirectory/spokenIntro"
+echo "End of document $title-meta by $author" > "$octavoTempDirectory/spokenOutro"
 	
 	
-	eval "cat '$TEMPDIRECTORY/spokenIntro' '$tempWorkingFile' '$TEMPDIRECTORY/spokenOutro' | $spokenCommandWithArgs" && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$deployExtension[$counter]"; fi || echo Failed comm was "$appCommand[$counter]"
+	eval "cat '$octavoTempDirectory/spokenIntro' '$tempWorkingFile' '$octavoTempDirectory/spokenOutro' | $spokenCommandWithArgs" && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$deployExtension[$counter]"; fi || echo Failed comm was "$appCommand[$counter]"
 
 fi
 
@@ -666,7 +659,7 @@ cleanUp > /dev/null 2>&1
 
 logThis $scriptName "Octavo deployment ended"
 
-echo "Octavo made a successful run." > "$TEMPDIRECTORY/octavoRunStatus"
+echo "Octavo made a successful run." > "$HOME/.octavoLastRunStatus"
 
 if [[ $suppressmessages != "yes" ]]
 
