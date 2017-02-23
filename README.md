@@ -195,3 +195,7 @@ Thanks to [John Gruber](http://daringfireball.net) for creating Markdown and [Jo
 ### Version 0.1.0
 
 Initial release.
+
+### Version 0.1.1
+
+Fix a bug where entire Deploy directory was uploaded with each FTP operation. Now only new files are uploaded. Significant speed increase.

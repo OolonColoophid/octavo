@@ -18,6 +18,14 @@ source "$HOME/.octavoConfig.sh" || echo "Could not source .octavoConfig.sh, whic
 
 cleanUp() # Delete temporary files (fail silently)
 {
+
+	# Try to create a dir for the deployed files
+        mkdir -p "$deployto/archive"
+
+	# Move the deployed files to the archive
+        mv "$deployto"/*.* "$deployto/archive"
+
+	# Finally, delete all intermediate files
 	rm -r $octavoTempDirectory	
 }
 
