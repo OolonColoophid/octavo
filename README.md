@@ -1,4 +1,4 @@
-# Octavo v0.1
+# Octavo
 
 Create well-presented documents, in different formats like [this](examples/deployed/6twroctavoTuftePdfe7272db78832d4744dd6685c80dceb86.pdf), from a single [Markdown](https://en.wikipedia.org/wiki/Markdown) source. (Note: There seems to be a GitHub issue where rendering PDFs on iOS devices fails; check out Octavo outputs on [Dropbox](https://www.dropbox.com/sh/54j75ji2kbwpgka/AACKPuHeUVMVR_l_dmYoj_9ea?dl=0).)
 
