@@ -278,7 +278,7 @@ source "$octavoTempDirectory/envVariableTemp"
 # Does the user want all formats?
 if [[ $formats == "all" ]]; then
 
-	formats="octavoTuftePdf, octavoNormalPdf, octavoTufteSolarisedPdf, octavoOpenDyslexic, octavoLargePdf, octavoSpoken"
+	formats="octavoTuftePdf, octavoNormalPdf, octavoTufteSolarisedPdf, octavoOpenDyslexic, octavoLargePdf, octavoHtml, octavoSpoken"
 
 fi
 
