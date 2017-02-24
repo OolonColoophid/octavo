@@ -192,6 +192,10 @@ I believe the list below is accurate. If you're installing and find something mi
 
 Thanks to [John Gruber](http://daringfireball.net) for creating Markdown and [John MacFarlane](http://johnmacfarlane.net) for creating Pandoc, as well as the authors of the other bits and pieces that Octavo depends upon.
 
+## Contributing
+
+Happy to look at any contributions.
+
 ## History
 
 ### Version 0.1.0
