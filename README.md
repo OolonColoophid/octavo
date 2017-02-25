@@ -1,6 +1,5 @@
 # Octavo
 
-
 Create well-presented documents, in different formats like [this](examples/deployed/1intoctavoTuftePdfa986b13e22b4741f88a3e1042b2772f0.pdf), from a single [Markdown](https://en.wikipedia.org/wiki/Markdown) source. (Note: There seems to be a GitHub issue where rendering PDFs on iOS devices fails; check out Octavo outputs on [Dropbox](https://www.dropbox.com/sh/54j75ji2kbwpgka/AACKPuHeUVMVR_l_dmYoj_9ea?dl=0).)
 
 Why does it exist? As a [psychology lecturer](https://www.canterbury.ac.uk/social-and-applied-sciences/psychology-politics-and-sociology/staff/Profile.aspx?staff=e0fe64b03fece667), I wanted a way to write statistics workshop booklets in Markdown (without all that tedious mucking around in Latex) and have my computer produce multiple versions, insert commonly-used text, grab calendar items (like a week-by-week breakdown of teaching sessions) and drop them into the document, run arbitrary UNIX commands and pipe their output into the final documents, as well as do the usual stuff like produce a References section in APA style and handle equations well. I also wanted it to last for several years, if not decades. I did the former. We'll see about the latter. 
@@ -89,6 +88,7 @@ To see an example, check out the source Markdown of my sixth workshop booklet, (
 |-----------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
 | [Tufte (the version I give students)](examples/deployed/1intoctavoTuftePdfa986b13e22b4741f88a3e1042b2772f0.pdf) | A style that loosely follows the design philosophy of Edward R. Tufte                                          |
 | [Standard PDF](examples/deployed/1intoctavoNormalPdfa986b13e22b4741f88a3e1042b2772f0.pdf)                       | A simple PDF, lacking some of the bells and whistles of Tufte                                                  |
+| [docx](examples/deployed/1intoctavoDocxa986b13e22b4741f88a3e1042b2772f0.docx)                                    | Microsoft Word                                                                                     |
 | [HTML](examples/deployed/1intoctavoHtmla986b13e22b4741f88a3e1042b2772f0.html)                                    | Webpage with Tufte styling                                                                                     |
 | [PDF with large text](examples/deployed/1intoctavoNormalPdfa986b13e22b4741f88a3e1042b2772f0.pdf)                | Like ‘Standard PDF’, but with a large font                                                                     |
 | [PDF with OpenDyslexic font](examples/deployed/1intoctavoOpenDyslexicPdfa986b13e22b4741f88a3e1042b2772f0.pdf)   | Like ‘Standard PDF’, but with an Open Dyslexic font                                                            |
@@ -205,3 +205,7 @@ Initial release.
 ### Version 0.1.1
 
 Fix a bug where entire Deploy directory was uploaded with each FTP operation. Now only new files are uploaded. Significant speed increase.
+
+### Version 0.2.0
+
+Add support for Microsoft Word .docx format.
