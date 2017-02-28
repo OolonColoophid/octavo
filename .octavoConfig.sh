@@ -1,9 +1,39 @@
 #!/bin/sh
 
+#################################################################################################
+#################################################################################################
+
 # Configuration file for Octavo
 
-## Logfile location
-export LOGFILE="$HOME/Dropbox/.logThis/log" # Needs to be created if it doesn't exist
+# You should change the settings below
+
+#################################################################################################
+#################################################################################################
+
+export DEPLOYPATH="$HOME/Dropbox/CCCU/text/deploy" # Path to directories including 'skeletons', 'includes' and 'templates'
+
+export LOGPATH="$HOME/.logThis" # Octavo log file path
+mkdir -p "$LOGPATH" # Will be created if it doesn't exist
+
+export LOGFILE="$LOGPATH/log"
+
+# Deployment text for the document, telling the reader about
+# other versions
+export deploymentTextHead="This document is available in"
+export deploymentTextBody=""
+export deploymentTextFoot="This document contains hyperlinks to [sections within it](#overview), [external webpages](http://cccupsychology.com), and email addresses like [ian.hocking@canterbury.ac.uk](mailto:ian.hocking@canterbury.ac.uk)."
+
+
+
+
+
+#################################################################################################
+#################################################################################################
+
+# You probably don't need to change the setting below right now
+
+#################################################################################################
+#################################################################################################
 
 ## Behaviour
 export suppressmessages="no"
@@ -11,15 +41,15 @@ export suppressmessages="no"
 ### directory should be specified
 
 ## Location of skeleton files for creation of new Octavo documents
-export skeletondir="$HOME/Dropbox/CCCU/text/deploy/skeletons"
+export skeletondir="$DEPLOYPATH/skeletons"
 
 ## Document settings (these can be overriden in the Yaml)
 ## Note: Some variables must be set in the Yaml itself
 ## in order to be available to Pandoc and filters
-export crossrefYaml="$HOME/Dropbox/CCCU/text/deploy/includes/pandoc-crossrefSettings.yaml"
-export includedir="$HOME/Dropbox/CCCU/text/deploy/includes"
-export templatedir="$HOME/Dropbox/CCCU/text/deploy/templates"
-export deployconfig="$HOME/Dropbox/CCCU/text/deploy/deployConfig"
+export crossrefYaml="$DEPLOYPATH/includes/pandoc-crossrefSettings.yaml"
+export includedir="$DEPLOYPATH/includes"
+export templatedir="$DEPLOYPATH/templates"
+export deployconfig="$DEPLOYPATH/deployConfig"
 export remoteserver="cccupsychology.com"
 
 ## YAML processing
@@ -30,14 +60,4 @@ export yamlEndMarker="..." ## Where does it end?
 export extension="markdown" ## file extension
 export includeMarkerString="&&" ## String to indicate where 'includes' should be
 
-
-# Deployment text for the document, telling the reader about
-# other versions
-## export deploymentTextHead="\qrcode{www.google.com} If you scan this QR code with your phone, it will take you an online version of this document. It is available in"
-export deploymentTextHead="This document is available in"
-export deploymentTextBody=""
-export deploymentTextFoot="This document contains hyperlinks to [sections within it](#overview), [external webpages](http://cccupsychology.com), and email addresses like [ian.hocking@canterbury.ac.uk](mailto:ian.hocking@canterbury.ac.uk)."
-
-# Purge files in Deploy directories older than N days (use 0 to unset this behaviour):
-# export deployPurgeOlderThan="1"   # Disabled for the moment because it's deleting source files, annoyingly
 
