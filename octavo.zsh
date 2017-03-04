@@ -1,9 +1,16 @@
 #!/bin/zsh
 
-# This script 'deploys', or publishes, finalised
-# documents based on a markdown source file
+#################################################################################################
+#################################################################################################
 
-###############################################################
+# Octavo 
+
+# Ian Hocking
+# https://github.com/OolonColoophid/octavo
+
+#################################################################################################
+#################################################################################################
+
 
 # Variables
 
@@ -215,26 +222,9 @@ else
 	exit 1
 fi
 
-
-if [ -n "${TEMPDIRECTORY+1}" ]; then # Is the environment variable TEMPDIRECTORY set?
-
-	:
-
-else
-
-	echo "Environment variable TEMPDIRECTORY, which is a path to a"
-	echo "temporary directory, must be set. I'd suggest adding this"
-	echo "to your ~/.bash_profile, like this:"
-	echo
-	echo '"export TEMPDIRECTORY="$HOME/Dropbox/.temp"'
-	cleanUp > /dev/null 2>&1 
-	exit 1
-
-fi
-
-# Specify a unique directory within the $TEMPDIRECTORY
+# Specify a unique directory within the $TMPDIR
 # path, so that multiple instances of Octavo won't conflict
-octavoTempDirectory="$TEMPDIRECTORY/`md5 -q $1`"
+octavoTempDirectory="$TMPDIR/`md5 -q $1`"
 
 # Create this new directory
 mkdir $octavoTempDirectory || exit 1
