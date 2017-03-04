@@ -1,18 +1,18 @@
 ---
-title: "MPSMD3ART Workshop 1, Introduction"
+title: "Sandbox Version of MPSMD3ART Workshop 1, Introduction"
 title-meta: "MPSMD3ART Workshop 1, Introduction"
 author: "Dr Ian Hocking, Psychology Programme"
 date: "February 2017 to April"
 version: 1.0
-headimage: "$HOME/Dropbox/CCCU/text/deploy/media/3art/hal"
+headimage: "$HOME/Dropbox/scripts/octavo/sandbox/media/hal"
 headquote: "I'm sorry, Dave. I'm afraid I can't do that."
 headquoteauthor: "HAL 9000, Discovery One"
-httpdestination: "http://cccupsychology.com/deployIh/3art/workshops/"
-remotedirectory: "3art/workshops/"
-deployto: "$HOME/Dropbox/CCCU/text/3art/deploy/workshops"
+httpdestination: "http://cccupsychology.com/deployIh/sandbox/"
+remotedirectory: "sandbox/"
+deployto: "$HOME/Dropbox/scripts/octavo/sandbox/deploy"
 formats: "octavoTuftePdf"
-preview: "octavoTuftePdf"
-ftpdeploy: "no"
+preview: ""
+ftpdeploy: "yes"
 spokendeploy: "yes"
 refreshcalendar: "no"
 customfilterone: "pandoc-csv2table"
@@ -25,12 +25,12 @@ colorlinks: 1
 boxlinks: true
 linespread: "1.3"
 numbersections: "yes"
-bibliography: "$HOME/Dropbox/CCCU/text/biblio/handbooks/2RES.bib"
+bibliography: "$HOME/Dropbox/scripts/octavo/sandbox/bibliography.bib"
 citation-style: "https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl"
 link-citations: false
 solariseddarkon: false 
 solariseddarkoff: true
-mdfivehashset: "yes"
+mdfivehashset: "no"
 redact: "no"
 tblPrefix: "Table"
 eqnPrefix: "Equation"
