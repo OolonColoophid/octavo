@@ -48,13 +48,21 @@ Octavo is a tool for multiple document deployment.
 
 6. Move the file deployConfig, and the folders includes, media, skeletons and templates to somewhere convenient. I've put them in ~/Dropbox/cccu/text/deploy on my system, but you can set this variable in .octavoConfig.sh
 
-### Ubuntu Installation
+### Ubuntu Installation (These instructions are in draft)
+
+0. Install git if you need to
+
+~~~
+
+sudo apt-get install git
+
+~~~
 
 1. Clone this repo
 
 ~~~
 
-git...
+git clone https://github.com/OolonColoophid/octavo.git
 
 cd octavo
 
