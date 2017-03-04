@@ -42,63 +42,6 @@ Octavo is a tool for multiple document deployment.
 
 3. For convenience, you probably want to have octavo.zsh in your [PATH](https://en.wikipedia.org/wiki/PATH_(variable))
 
-4. Put .octavoConfig in your home folder
-
-5. Put .octavoNewDefaults in your home folder
-
-6. Move the file deployConfig, and the folders includes, media, skeletons and templates to somewhere convenient. I've put them in ~/Dropbox/cccu/text/deploy on my system, but you can set this variable in .octavoConfig.sh
-
-### Ubuntu Installation (These instructions are in draft)
-
-0. Install git if you need to
-
-~~~
-
-sudo apt-get install git
-
-~~~
-
-1. Clone this repo
-
-~~~
-
-git clone https://github.com/OolonColoophid/octavo.git
-
-cd octavo
-
-~~~
-
-2. Create symbolic links to .octavoConfig and .octavoNewDeaults to your home folder
-
-~~~
-
-ln -s /.octavoConfig.sh ~
-
-ln -s /.octavoNewDefaults.sh ~
-
-~~~
-
-3. Edit .octavoConfig. The Octavo script needs to know where certain Octavo directories are, such as the 'templates' folder. This repo already contains a templates folder, but you might want to make your own. Either way, open up .octavoConfig and tweak these lines to set the correct directories in the variables DEPLOYPATH and LOGPATH.
-
-4. Install pandoc. At the time of writing, version 1.16.0.2 is fine.
-
-~~~
-
-sudo apt-get install pandoc
-
-~~~
-
-The command `pandoc -v` should be used to verify that your installation was successful. 
-
-5. Install a full Tex distribution. I recommend TexLive.
-
-~~~
-
-sudo apt-get install texlive-full
-
-~~~
-
-
 ## Usage
 
 ~~~
@@ -111,7 +54,7 @@ octavo.zsh [markdown file]
 
 Your Markdown file should have a wodge of [YAML](https://en.wikipedia.org/wiki/YAML) at the top that follows the examples in the examples folder. Have a look at each setting and tweak to suit your needs. These YAML settings will be applied to document in which it is found.
 
-.octavoNewDefaults.sh is used by the script octavoNew.sh to generate new Markdown documents that conform to the Octavo conventions.
+<!-- .octavoNewDefaults.sh is used by the script octavoNew.sh to generate new Markdown documents that conform to the Octavo conventions. -->
 
 .octavoConfig contains global preferences that change how Octavo behaves. Again, have a look over these and tweak as you see fit.
 
@@ -121,7 +64,7 @@ The folder includes contains text files that can be included in your document if
 
 The folder media contains pictures for inclusion in the document.
 
-The folder skeletons is used by the script octavoNew.sh to create new Octavo-compliant Markdown files.
+<!-- The folder skeletons is used by the script octavoNew.sh to create new Octavo-compliant Markdown files. -->
 
 The folder templates contains Pandoc templates modified to work with Octavo.
 
