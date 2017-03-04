@@ -16,6 +16,17 @@ source "$HOME/.octavoConfig.sh" || echo "Could not source .octavoConfig.sh, whic
 
 # Functions
 
+checkDependencies() # Exit if certain dependencies aren't met
+{
+
+# Pandoc is needed
+command -v pandoc >/dev/null || { echo "Fatal error: I require Pandoc but it's not installed.See http://pandoc.org/installing.html."; exit 1; }
+
+# Latex is needed
+command -v kpsepath >/dev/null || { echo "Fatal error: I require a Latex distribution but it's not installed. See https://www.latex-project.org/get/ for general information or http://www.tug.org/texlive/quickinstall.html for a minimal Unix install recipe."; exit 1; }
+
+}
+
 cleanUp() # Delete temporary files (fail silently)
 {
 
@@ -185,6 +196,11 @@ logThis() { # This function notes things in a log directory
 #############################
 # Main routine begins
 #############################
+
+
+# Check certain critical dependencies
+
+checkDependencies
 
 # Verify that the script has received a text file
 
