@@ -42,7 +42,7 @@ Octavo is a tool for multiple document deployment.
 
 3. For convenience, you probably want to have octavo.zsh in your [PATH](https://en.wikipedia.org/wiki/PATH_(variable))
 
-4. When running, Octavo needs to know where its directory with support files is located. You'll need to set this in your .bash_profile:
+4. When running, Octavo needs to know where its directory with support files is located. You'll need to set this in your .bash_profile (not this path exactly; this is just where I happen to have my Octavo directory):
 
 ~~~
 
@@ -53,10 +53,6 @@ export OCTAVOPATH="/Users/ianuser/Dropbox/scripts/octavo"
 <!--
 
 NOTE THAT THE FOLLOWING SUBJECT TO CHANGE!
-
-I don't think symlinking files to home is necessary...Octavo should assume everything is the Octavo directory.
-
-That's the next job.
 
 ### Ubuntu Installation (These instructions are in draft)
 
