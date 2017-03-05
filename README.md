@@ -42,6 +42,67 @@ Octavo is a tool for multiple document deployment.
 
 3. For convenience, you probably want to have octavo.zsh in your [PATH](https://en.wikipedia.org/wiki/PATH_(variable))
 
+4. When running, Octavo needs to know where its directory with support files is located. You'll need to set this in your .bash_profile:
+
+~~~
+
+export OCTAVOPATH="/Users/ianuser/Dropbox/scripts/octavo"
+
+~~~
+
+NOTE THAT THE FOLLOWING SUBJECT TO CHANGE!
+
+I don't think symlinking files to home is necessary...Octavo should assume everything is the Octavo directory.
+
+That's the next job.
+
+4. Put .octavoConfig in your home folder
+
+<!-- 5. Put .octavoNewDefaults in your home folder -->
+
+6. Move the file deployConfig, and the folders includes, media, skeletons and templates to somewhere convenient. I've put them in ~/Dropbox/cccu/text/deploy on my system, but you can set this variable in .octavoConfig.sh
+
+### Ubuntu Installation (These instructions are in draft)
+
+0. Install git if you need to
+
+~~~
+
+sudo apt-get install git
+
+~~~
+
+1. Clone this repo
+
+~~~
+
+git clone https://github.com/OolonColoophid/octavo.git
+
+cd octavo
+
+~~~
+
+
+
+4. Install pandoc. At the time of writing, version 1.16.0.2 is fine.
+
+~~~
+
+sudo apt-get install pandoc
+
+~~~
+
+The command `pandoc -v` should be used to verify that your installation was successful. 
+
+5. Install a full Tex distribution. I recommend TexLive.
+
+~~~
+
+sudo apt-get install texlive-full
+
+~~~
+
+
 ## Usage
 
 ~~~

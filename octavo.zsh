@@ -11,11 +11,22 @@
 #################################################################################################
 #################################################################################################
 
+# Read Configuration Variables
 
-# Variables
+if [ -n "${OCTAVOPATH+x}" ]
 
-# shellcheck source=/Users/ianuser/.octavoConfig.sh
-source "$HOME/.octavoConfig.sh" || echo "Could not source .octavoConfig.sh, which should be in the home directory" # Source the global configuration file
+then 
+
+	source "$OCTAVOPATH/.octavoConfig.sh" || { echo "Fatal error: Could not source .octavoConfig.sh. Is \$OCTAVOPATH correct? It needs to point to the directory containing Octavo and its support files. This currently set to: $OCTAVOPATH" } # Source the global configuration file
+
+else
+
+	# User has not set $OCTAVOPATH
+	echo "Fatal error: Variable \$OCTAVOPATH has not been set. Make sure it is set in your .bash_profile. For example: export \$OCTAVOPATH=\"/foo/bar/octavo\""
+
+	exit 1
+
+fi
 
 
 
@@ -227,7 +238,7 @@ fi
 octavoTempDirectory="$TMPDIR/`md5 -q $1`"
 
 # Create this new directory
-mkdir $octavoTempDirectory || exit 1
+mkdir $octavoTempDirectory || { rm -r $octavoTempDirectory ; mkdir $octavoTempDirectory }
 
 # Define simple variables
 tempWorkingFile="$octavoTempDirectory/deployTempFile.markdown"
@@ -280,8 +291,8 @@ logThis $scriptName "1. Process YAML: Launching setBashVarsFromYaml"
 
 # Pass file to be processed to the function that gets variables from the Yaml block
 # at the head of the markdown file (sed command substitutes $HOME for the shell
-# variable contents of $HOME)
-cat $markdownSourceFile | sed "s@\$HOME@$HOME@g" | setBashVarsFromYaml || echo setBashVarsFromYaml reported an error 
+# variable contents of $HOME, as well as $OCTAVOPATH for directory where Octavo lives)
+cat $markdownSourceFile | sed "s@\$HOME@$HOME@g" | sed "s@\$OCTAVOPATH@$OCTAVOPATH@g" | setBashVarsFromYaml || echo setBashVarsFromYaml reported an error 
 
 # At this point, variables specified in the YAML of the
 # markdown file and are stored in file $octavoTempDirectory/envVariableTemp
@@ -338,7 +349,7 @@ logThis $scriptName "2. Preprocess Markdown: Launching preProcessMarkdownVariabl
 # Useful for contact details, and so on. (sed command substitutes $HOME for the shell
 # variable contents of $HOME)
 
-cat "$markdownSourceFile" | sed "s@\$HOME@$HOME@g" | preProcessMarkdownVariables > "$tempWorkingFile" || echo "preProcessMarkdownVariables reported an error" 
+cat "$markdownSourceFile" | sed "s@\$HOME@$HOME@g" | sed "s@\$OCTAVOPATH@$OCTAVOPATH@g" | preProcessMarkdownVariables > "$tempWorkingFile" || echo "preProcessMarkdownVariables reported an error" 
 
 
 # If a Yaml variable called 'spokendeploy' has value 'no' then
@@ -513,7 +524,7 @@ done < "$tempSubworkingFileOne"
 sed -i.bak 's/☖/\\/g' "$tempSubworkingFileTwo" && logThis $scriptName "Sed replaced safe characters with backslash"
 
 
-cat "$tempSubworkingFileTwo" | sed "s@\$HOME@$HOME@g" > "$tempWorkingFile"
+cat "$tempSubworkingFileTwo" | sed "s@\$HOME@$HOME@g" | sed "s@\$OCTAVOPATH@$OCTAVOPATH@g" > "$tempWorkingFile"
 
 if [[ $redact = "yes" ]]
 
@@ -644,7 +655,7 @@ if [[ $ftpDeploy == "yes" ]]; then
 	# when indented properly, this scripts failw with a parse error
 	# possibly caused by ENDOFCOMMANDS not being flush left. Go figure
 
-ftp -i -v $remoteServer &> "$HOME/Dropbox/.logThis/log"  <<ENDOFCOMMANDS
+ftp -i -v $remoteServer &> "$LOGPATH/log"  <<ENDOFCOMMANDS
 
         cd $remotedirectory
 	mput *.*
@@ -663,7 +674,7 @@ cleanUp > /dev/null 2>&1
 
 logThis $scriptName "Octavo deployment ended"
 
-echo "Octavo made a successful run." > "$HOME/.octavoLastRunStatus"
+echo "Octavo made a successful run." > "$OCTAVOPATH/.octavoLastRunStatus"
 
 if [[ $suppressmessages != "yes" ]]
 

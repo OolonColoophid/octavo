@@ -5,12 +5,10 @@
 
 # Configuration file for Octavo
 
-# You should change the settings below
+# You could change the settings below
 
 #################################################################################################
 #################################################################################################
-
-export DEPLOYPATH="$HOME/Dropbox/CCCU/text/deploy" # Path to directories including 'skeletons', 'includes' and 'templates'
 
 export LOGPATH="$HOME/.logThis" # Octavo log file path
 mkdir -p "$LOGPATH" # Will be created if it doesn't exist
@@ -41,15 +39,15 @@ export suppressmessages="no"
 ### directory should be specified
 
 ## Location of skeleton files for creation of new Octavo documents
-export skeletondir="$DEPLOYPATH/skeletons"
+export skeletondir="$OCTAVOPATH/skeletons"
 
 ## Document settings (these can be overriden in the Yaml)
 ## Note: Some variables must be set in the Yaml itself
 ## in order to be available to Pandoc and filters
-export crossrefYaml="$DEPLOYPATH/includes/pandoc-crossrefSettings.yaml"
-export includedir="$DEPLOYPATH/includes"
-export templatedir="$DEPLOYPATH/templates"
-export deployconfig="$DEPLOYPATH/deployConfig"
+export crossrefYaml="$OCTAVOPATH/includes/pandoc-crossrefSettings.yaml"
+export includedir="$OCTAVOPATH/includes"
+export templatedir="$OCTAVOPATH/templates"
+export deployconfig="$OCTAVOPATH/deployConfig"
 export remoteserver="cccupsychology.com"
 
 ## YAML processing
