@@ -50,17 +50,13 @@ export OCTAVOPATH="/Users/ianuser/Dropbox/scripts/octavo"
 
 ~~~
 
+<!--
+
 NOTE THAT THE FOLLOWING SUBJECT TO CHANGE!
 
 I don't think symlinking files to home is necessary...Octavo should assume everything is the Octavo directory.
 
 That's the next job.
-
-4. Put .octavoConfig in your home folder
-
-<!-- 5. Put .octavoNewDefaults in your home folder -->
-
-6. Move the file deployConfig, and the folders includes, media, skeletons and templates to somewhere convenient. I've put them in ~/Dropbox/cccu/text/deploy on my system, but you can set this variable in .octavoConfig.sh
 
 ### Ubuntu Installation (These instructions are in draft)
 
@@ -102,6 +98,7 @@ sudo apt-get install texlive-full
 
 ~~~
 
+-->
 
 ## Usage
 
