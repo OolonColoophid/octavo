@@ -14,7 +14,6 @@ This repository contains the handouts from my Level 5 statistics module in Psych
 
 This software is provided as-is. It works on my system, but it might hose yours.
 
-The script has taken me a while to get up and running. I started from a position of wanting something like Octavo, then I set out to build it. I've learned a lot along the way. There's no spaghetti code as such, but my shell programming has improved a great deal, and I wouldn't write the code quite like this if I were starting from scratch. 
 
 ## In Action
 
