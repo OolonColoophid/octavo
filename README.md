@@ -106,7 +106,7 @@ sudo apt-get install texlive-full
 
 ~~~
 
-octavo.zsh [markdown file]
+octavo.zsh <markdown file>
 
 ~~~
 
