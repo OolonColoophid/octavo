@@ -37,11 +37,11 @@ fi
 checkDependencies() # Exit if certain dependencies aren't met
 {
 
-# Pandoc is needed
-command -v pandoc >/dev/null || { echo "Fatal error: I require Pandoc but it's not installed.See http://pandoc.org/installing.html."; exit 1; }
+	# Pandoc is needed
+	command -v pandoc >/dev/null || { echo "Fatal error: I require Pandoc but it's not installed.See http://pandoc.org/installing.html."; exit 1; }
 
-# Latex is needed
-command -v kpsepath >/dev/null || { echo "Fatal error: I require a Latex distribution but it's not installed. See https://www.latex-project.org/get/ for general information or http://www.tug.org/texlive/quickinstall.html for a minimal Unix install recipe."; exit 1; }
+	# Latex is needed
+	command -v kpsepath >/dev/null || { echo "Fatal error: I require a Latex distribution but it's not installed. See https://www.latex-project.org/get/ for general information or http://www.tug.org/texlive/quickinstall.html for a minimal Unix install recipe."; exit 1; }
 
 }
 
@@ -49,10 +49,10 @@ cleanUp() # Delete temporary files (fail silently)
 {
 
 	# Try to create a dir for the deployed files
-        mkdir -p "$deployto/archive"
+	mkdir -p "$deployto/archive"
 
 	# Move the deployed files to the archive
-        mv "$deployto"/*.* "$deployto/archive"
+	mv "$deployto"/*.* "$deployto/archive"
 
 	# Finally, delete all intermediate files
 	rm -r $octavoTempDirectory	
@@ -63,67 +63,67 @@ setBashVarsFromYaml() # Read YAML block at top of Markdown file and create shell
 {
 
 	scriptName=setBashVarsFromYaml_func
-	
+
 	touch "$octavoTempDirectory/envVariableTemp"
-	
+
 	inYamlZone="0"
 
 	while IFS= read -r line # IFS method maintains white space
 
-do
+	do
 
-	if [[ $inYamlZone == "1" ]] # Are we in a YAML block?
-
-	then
-		if [[ $line != "$yamlEndMarker" ]] # Make sure this isn't the YAML end marker
+		if [[ $inYamlZone == "1" ]] # Are we in a YAML block?
 
 		then
+			if [[ $line != "$yamlEndMarker" ]] # Make sure this isn't the YAML end marker
 
-			IFS=': ' read -r varKey varValue <<< "$line"
+			then
 
-			if [[ $varKey != *"-"* ]] 
+				IFS=': ' read -r varKey varValue <<< "$line"
 
-			then	
+				if [[ $varKey != *"-"* ]] 
+
+				then	
 
 
-				if [[ "$varKey" == "" ]]; then echo "setBashVarsFromYaml: Yaml error. Is there an illegal blank line in the Yaml?"; cleanUp > /dev/null 2>&1 ; exit 1; fi
+					if [[ "$varKey" == "" ]]; then echo "setBashVarsFromYaml: Yaml error. Is there an illegal blank line in the Yaml?"; cleanUp > /dev/null 2>&1 ; exit 1; fi
 
-				
-				
-				# varValueTrimmed="${varValue//\"//}"
-			
-				varValueTrimmed=$(echo "$varValue" | sed 's/\"//g')
-				declare ${varKey}="$varValueTrimmed"
 
-				declare -p ${varKey} >> "$octavoTempDirectory/envVariableTemp"
 
+					# varValueTrimmed="${varValue//\"//}"
+
+					varValueTrimmed=$(echo "$varValue" | sed 's/\"//g')
+					declare ${varKey}="$varValueTrimmed"
+
+					declare -p ${varKey} >> "$octavoTempDirectory/envVariableTemp"
+
+
+				fi
 
 			fi
 
 		fi
 
-	fi
+		lineCount=$((lineCount + 1))
 
-	lineCount=$((lineCount + 1))
+		if [[ $line == "$yamlBeginMarker" ]] # Are we entering the YAML block? 
 
-	if [[ $line == "$yamlBeginMarker" ]] # Are we entering the YAML block? 
+		then
 
-	then
+			inYamlZone="1"
 
-		inYamlZone="1"
+		fi
 
-	fi
+		if [[ $line == $yamlEndMarker* ]] # Are we exiting the YAML block?
 
-	if [[ $line == $yamlEndMarker* ]] # Are we exiting the YAML block?
+		then
 
-	then
+			inYamlZone="0"
 
-		inYamlZone="0"
+			break
+		fi
 
-		break
-	fi
-
-done < "${1:-/dev/stdin}" # This means read from Standard Input
+	done < "${1:-/dev/stdin}" # This means read from Standard Input
 }
 
 
@@ -153,37 +153,37 @@ preProcessMarkdownVariables()
 
 	while IFS= read -r line 
 
-do
+	do
 
-	if [[ $line == *$includeMarkerString* ]] # Does the current line contain the replacement marker?
+		if [[ $line == *$includeMarkerString* ]] # Does the current line contain the replacement marker?
 
-	then
+		then
 
-		includeFile=$(echo "$line" | awk '{print $2}') # Get filename
+			includeFile=$(echo "$line" | awk '{print $2}') # Get filename
 
-		logThis $scriptName "Found text to substitute called $includeFile"
+			logThis $scriptName "Found text to substitute called $includeFile"
 
-		includeResult=$(echo $includedir/$includeFile.markdown) # Add path to filename
+			includeResult=$(echo $includedir/$includeFile.markdown) # Add path to filename
 
-		logThis $scriptName "Attempting to splice in $includeResult, adding to $preTempFileStepTwo"
+			logThis $scriptName "Attempting to splice in $includeResult, adding to $preTempFileStepTwo"
 
-		cat "$includeResult" >> "$preTempFileStepTwo" || echo "Cat Charlie failed"
+			cat "$includeResult" >> "$preTempFileStepTwo" || echo "Cat Charlie failed"
 
-	else
+		else
 
-		echo "$line" >> "$preTempFileStepTwo"
+			echo "$line" >> "$preTempFileStepTwo"
 
-	fi
+		fi
 
-done < "$preTempFileStepOne"
+	done < "$preTempFileStepOne"
 
 
-# Revert any backslashes to backslashes, to help
-# raw latex work
+	# Revert any backslashes to backslashes, to help
+	# raw latex work
 
-sed -i.bak 's/☖/\\/g' "$preTempFileStepTwo" && logThis "$scriptName" "Sed replaced a safe character with a backslash"
+	sed -i.bak 's/☖/\\/g' "$preTempFileStepTwo" && logThis "$scriptName" "Sed replaced a safe character with a backslash"
 
-cat "$preTempFileStepTwo" || echo "Cat delta failed" # Cat the finished, expanded text file to Standard Output
+	cat "$preTempFileStepTwo" || echo "Cat delta failed" # Cat the finished, expanded text file to Standard Output
 }
 
 
@@ -317,7 +317,7 @@ fi
 
 # Tell the user where the deployed files will end up
 if [[ $suppressmessages != "yes" ]]; then 
-	
+
 	echo "Deploying to $deployto"; 
 
 fi
@@ -402,11 +402,13 @@ do
 
 done
 
+mdFiveHash=$(md5 -q $tempWorkingFile)
+
 if [[ $mdfivehashset = "yes" ]]
 
 then 
 
-	mdFive=$(md5 -q $tempWorkingFile)
+	mdFive=mdFiveHash
 
 else
 
@@ -543,14 +545,14 @@ fi
 ######################################################################################
 
 # 3. Pandoc
-	
-			# Check whether custom filters have been requested in YAML
-			# If so, format them nicley for Pandoc
-			if [[ $customfilterone != "" ]]; then customfilterone="--filter=$customfilterone"; fi
-			if [[ $customfiltertwo != "" ]]; then customfiltertwo="--filter=$customfiltertwo"; fi
-			if [[ $customfilterthree != "" ]]; then customfilterthree="--filter=$customfilterthree"; fi
-			if [[ $customfilterfour != "" ]]; then customfilterfour="--filter=$customfilterfour"; fi
-			
+
+# Check whether custom filters have been requested in YAML
+# If so, format them nicley for Pandoc
+if [[ $customfilterone != "" ]]; then customfilterone="--filter=$customfilterone"; fi
+if [[ $customfiltertwo != "" ]]; then customfiltertwo="--filter=$customfiltertwo"; fi
+if [[ $customfilterthree != "" ]]; then customfilterthree="--filter=$customfilterthree"; fi
+if [[ $customfilterfour != "" ]]; then customfilterfour="--filter=$customfilterfour"; fi
+
 counter=0 # Reset the counter
 
 while [[ $counter < $deployFormatNumber ]]
@@ -561,8 +563,8 @@ do
 
 	element=$deployShortCode[$counter]
 
-	logThis $scriptName "Creating $element..."
-	if [[ $suppressmessages != "yes" ]]; then echo "Creating $element..."; fi
+	logThis $scriptName "Creating version in $element..."
+	if [[ $suppressmessages != "yes" ]]; then echo "Creating version in $element ($mdFiveHash)..."; fi
 
 	if [[ $element == *octavoSpoken* ]] 
 
@@ -589,18 +591,26 @@ do
 
 			eval "cat "$octavoTempDirectory/WorkingFileCleanedOfLatexBlocksForDocx.markdown" | $appCommand[$counter]" && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$mdFive$deployExtension[$counter]"; fi || echo Failed comm was "$appCommand[$counter]" 
 
+			echo "...done"
+
 		elif [[ $deployExtension[$counter] == *pdf ]]
 		then
 
-			cat $tempWorkingFile | eval $appCommand[$counter] && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$mdFive$deployExtension[$counter]"; fi 
+			cat $tempWorkingFile | eval $appCommand[$counter] && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$mdFive$deployExtension[$counter]"; fi
+
+			echo "...done"	
 
 		elif [[ $deployExtension[$counter] = *html ]]
 		then
 
 			eval "cat "$tempWorkingFile" | $appCommand[$counter]" && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$mdFive$deployExtension[$counter]"; fi || echo Failed comm was "$appCommand[$counter]" 
 
+			echo "...done"
+
 		else
 			eval "cat $tempWorkingFile | $appCommand[$counter]" && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$mdFive$deployExtension[$counter]"; fi || echo Failed comm was "$appCommand[$counter]" 
+
+			echo "...done"
 		fi	
 	fi
 
@@ -613,22 +623,26 @@ if [[ $makeSpoken == *yep* ]]
 
 then
 
-	if [[ $suppressmessages != "yes" ]]; then echo "Creating spoken version" ; fi
-	
-echo "$title-meta by $author" > "$octavoTempDirectory/spokenIntro"
-echo "End of document $title-meta by $author" > "$octavoTempDirectory/spokenOutro"
-	
-	
+	if [[ $suppressmessages != "yes" ]]; then echo "Creating spoken version..." ; fi
+
+	echo "$title-meta by $author" > "$octavoTempDirectory/spokenIntro"
+	echo "End of document $title-meta by $author" > "$octavoTempDirectory/spokenOutro"
+
 	eval "cat '$octavoTempDirectory/spokenIntro' '$tempWorkingFile' '$octavoTempDirectory/spokenOutro' | $spokenCommandWithArgs" && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$deployExtension[$counter]"; fi || echo Failed comm was "$appCommand[$counter]"
+
+
+	fileSizeKb=`du -k "$deployto/$basenameSourceFile$element$deployExtension[$counter]" | cut -f1`	
+
+	echo "...done. Spoken file is $fileSizeKb kb"
 
 fi
 
 
 
-	# Render a special plain text version?
+# Render a special plain text version?
 
-	# Render the spoken version based on that plain text
-	# octavoSpoken, "spoken word", say --voice='Alex' --quality=127 --file-format='mp4f' -f /$tempWorkingFile -o "$deployto/$basenameSourceFile$element.mp4",.mp4
+# Render the spoken version based on that plain text
+# octavoSpoken, "spoken word", say --voice='Alex' --quality=127 --file-format='mp4f' -f /$tempWorkingFile -o "$deployto/$basenameSourceFile$element.mp4",.mp4
 
 
 # Upload to FTP server - if this is request in the Yaml
@@ -636,12 +650,12 @@ if [[ $ftpDeploy == "yes" ]]; then
 
 	cd "$deployto" || exit
 
-#	if [[ $deployPurgeOlderThan != "0" ]]; then
-#
-#		logThis $scriptName "Looking to clean up files older than $deployPurgeOlderThan days"
-#		find . -mtime +"$deployPurgeOlderThan" -exec rm {} \; || logThis $scriptname "Attempt to delete files exited with error" 
-#
-#	fi
+	#	if [[ $deployPurgeOlderThan != "0" ]]; then
+	#
+	#		logThis $scriptName "Looking to clean up files older than $deployPurgeOlderThan days"
+	#		find . -mtime +"$deployPurgeOlderThan" -exec rm {} \; || logThis $scriptname "Attempt to delete files exited with error" 
+	#
+	#	fi
 
 
 	logThis $scriptName "Upoading all files to FTP..."
@@ -655,9 +669,9 @@ if [[ $ftpDeploy == "yes" ]]; then
 	# when indented properly, this scripts failw with a parse error
 	# possibly caused by ENDOFCOMMANDS not being flush left. Go figure
 
-ftp -i -v $remoteServer &> "$LOGPATH/log"  <<ENDOFCOMMANDS
+	ftp -i -v $remoteServer &> "$LOGPATH/log"  <<ENDOFCOMMANDS
 
-        cd $remotedirectory
+	cd $remotedirectory
 	mput *.*
 	quit
 
