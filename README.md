@@ -1,6 +1,8 @@
 # Octavo
 
-Create well-presented documents, in different formats like [this](examples/deployed/1intoctavoTuftePdfa986b13e22b4741f88a3e1042b2772f0.pdf), from a single [Markdown](https://en.wikipedia.org/wiki/Markdown) source. (Note: There seems to be a GitHub issue where rendering PDFs on iOS devices fails; check out Octavo outputs on [Dropbox](https://www.dropbox.com/sh/54j75ji2kbwpgka/AACKPuHeUVMVR_l_dmYoj_9ea?dl=0).)
+Create well-presented documents, in different formats like [this](examples/deployed/1intoctavoTuftePdfa986b13e22b4741f88a3e1042b2772f0.pdf), from a single [Markdown](https://en.wikipedia.org/wiki/Markdown) source.
+
+Octavo is wrapper for the excellent [pandoc](http://pandoc.org/), which translates between different document formats. If you're producing finished-product documents like PDFs or HTML from a text source such as Markdown, you'll need two things: (a) a way of crafting your Markdown files to exploit certain features (see below) and (b) nice templates that take advantage of these features. Octavo supplies the (a) and (b).
 
 Why does it exist? As a [psychology lecturer](https://www.canterbury.ac.uk/social-and-applied-sciences/psychology-politics-and-sociology/staff/Profile.aspx?staff=e0fe64b03fece667), I wanted a way to write statistics workshop booklets in Markdown (without all that tedious mucking around in Latex) and have my computer produce multiple versions, insert commonly-used text, grab calendar items (like a week-by-week breakdown of teaching sessions) and drop them into the document, run arbitrary UNIX commands and pipe their output into the final documents, as well as do the usual stuff like produce a References section in APA style and handle equations well. I also wanted it to last for several years, if not decades. I did the former. We'll see about the latter. 
 
@@ -13,6 +15,10 @@ This repository contains the handouts from my Level 5 statistics module in Psych
 This software is provided as-is. It works on my system, but it might hose yours.
 
 The script has taken me a while to get up and running. I started from a position of wanting something like Octavo, then I set out to build it. I've learned a lot along the way. There's no spaghetti code as such, but my shell programming has improved a great deal, and I wouldn't write the code quite like this if I were starting from scratch. 
+
+## In Action
+
+![Video demonstrating Octavo](https://img.youtube.com/vi/_yCgStuZ09U/0.jpg)](https://www.youtube.com/watch?v=_yCgStuZ09U)
 
 ## Features
 
