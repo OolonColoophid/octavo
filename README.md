@@ -18,7 +18,7 @@ The script has taken me a while to get up and running. I started from a position
 
 ## In Action
 
-![Video demonstrating Octavo](https://img.youtube.com/vi/_yCgStuZ09U/0.jpg)](https://www.youtube.com/watch?v=_yCgStuZ09U)
+[![Video demonstrating Octavo](https://img.youtube.com/vi/_yCgStuZ09U/0.jpg)](https://www.youtube.com/watch?v=_yCgStuZ09U)
 
 ## Features
 
