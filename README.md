@@ -17,7 +17,7 @@ This software is provided as-is. It works on my system, but it might hose yours.
 
 ## In Action
 
-[![Video demonstrating Octavo](media/octavoDemo.png)](https://www.youtube.com/watch?v=_yCgStuZ09U)
+[![Video demonstrating Octavo](media/octavoDemo.png)](https://www.youtube.com/watch?v=fG1Qq1rJMng)
 
 ## Features
 
