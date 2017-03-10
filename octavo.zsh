@@ -408,7 +408,7 @@ if [[ $mdfivehashset = "yes" ]]
 
 then 
 
-	mdFive=mdFiveHash
+	mdFive=$mdFiveHash
 
 else
 
@@ -631,7 +631,7 @@ then
 	eval "cat '$octavoTempDirectory/spokenIntro' '$tempWorkingFile' '$octavoTempDirectory/spokenOutro' | $spokenCommandWithArgs" && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$deployExtension[$counter]"; fi || echo Failed comm was "$appCommand[$counter]"
 
 
-	fileSizeKb=`du -k "$deployto/$basenameSourceFile$element$deployExtension[$counter]" | cut -f1`	
+	fileSizeKb=`du -k "$deployto/$basenameSourceFile$element$mdFiveHash$deployExtension[$counter]" | cut -f1`	
 
 	echo "...done. Spoken file is $fileSizeKb kb"
 
