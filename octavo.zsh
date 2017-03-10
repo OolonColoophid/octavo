@@ -633,7 +633,7 @@ then
 
 	fileSizeKb=`du -k "$deployto/$basenameSourceFile$element$mdFiveHash$deployExtension[$counter]" | cut -f1`	
 
-	echo "...done. Spoken file is $fileSizeKb kb"
+	echo "...done. Spoken file is $fileSizeKb KB"
 
 fi
 
