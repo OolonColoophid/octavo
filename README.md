@@ -55,13 +55,9 @@ export OCTAVOPATH="/Users/ianuser/Dropbox/scripts/octavo"
 
 ~~~
 
-<!--
-
-NOTE THAT THE FOLLOWING SUBJECT TO CHANGE!
-
 ### Ubuntu Installation (These instructions are in draft)
 
-0. Install git if you need to
+- Install git if you need to
 
 ~~~
 
@@ -69,19 +65,34 @@ sudo apt-get install git
 
 ~~~
 
-1. Clone this repo
+- Clone this repo
 
 ~~~
 
 git clone https://github.com/OolonColoophid/octavo.git
 
-cd octavo
+~~~
+
+- Install zsh
+
+~~~
+
+sudo apt-get install zsh
+
+~~~
+
+- Start zsh in the terminal, and, when prompted, set a blank .zshrc file by pressing 0
+
+~~~
+
+zsh
+
+0
 
 ~~~
 
 
-
-4. Install pandoc. At the time of writing, version 1.16.0.2 is fine.
+- Install pandoc
 
 ~~~
 
@@ -99,7 +110,6 @@ sudo apt-get install texlive-full
 
 ~~~
 
--->
 
 ## Usage
 
