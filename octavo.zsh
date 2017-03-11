@@ -13,18 +13,21 @@
 
 # Read Configuration Variables
 
-if [ -n "${OCTAVOPATH+x}" ]
+if [ -n "${OCTAVOPATH+x}" ] # Has the path to the Octavo directory been set by the user?
 
 then 
 
 	source "$OCTAVOPATH/.octavoConfig.sh" || { echo "Fatal error: Could not source .octavoConfig.sh. Is \$OCTAVOPATH correct? It needs to point to the directory containing Octavo and its support files. This currently set to: $OCTAVOPATH" } # Source the global configuration file
 
-else
+elif [[ -a "$HOME/octavo" ]] # Not set, but does Octavo appear in the $HOME directory?
 
-	# User has not set $OCTAVOPATH
-	echo "Fatal error: Variable \$OCTAVOPATH has not been set. Make sure it is set in your .bash_profile. For example: export \$OCTAVOPATH=\"/foo/bar/octavo\""
+then
 
-	exit 1
+	export OCTAVOPATH="$HOME/octavo"
+
+else # Path isn't set and doesn't exist in the home directory
+
+	{ echo "Fatal error: Variable \$OCTAVOPATH has not been set. Make sure it is set in your .bash_profile. For example: export \$OCTAVOPATH=\"/foo/bar/octavo\"" ; exit 1 }
 
 fi
 
