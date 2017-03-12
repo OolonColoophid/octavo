@@ -210,7 +210,24 @@ logThis() { # This function notes things in a log directory
 
 }
 
+# contains(string, substring)
+#
+# Returns 0 if the specified string contains the specified substring,
+# otherwise returns 1.
+# (This function from http://stackoverflow.com/questions/2829613/how-do-you-tell-if-a-string-contains-another-string-in-unix-shell-scripting)
 
+
+
+contains() {
+    string="$1"
+    substring="$2"
+    if test "${string#*$substring}" != "$string"
+    then
+        return 0    # $substring is in $string
+    else
+        return 1    # $substring is not in $string
+    fi
+}
 
 
 
@@ -236,9 +253,33 @@ else
 	exit 1
 fi
 
+
+
+# What platform?
+
+systemInfo=$(uname -a)
+
+contains $systemInfo "Ubuntu" && platform="Ubuntu"
+contains $systemInfo "Darwin" && platform="Mac"
+ 
+
+
+# Set temp directory
+if [[ $platform == "Mac" ]]
+
+then
+
+octavoTempDirectory="$TMPDIR/`md5 -q $1`"
+
+else
+
+octavoTempDirectory="/var/tmp/`md5sum $1 | awk '{print $1;}'`"
+
+fi 
+ 
+ 
 # Specify a unique directory within the $TMPDIR
 # path, so that multiple instances of Octavo won't conflict
-octavoTempDirectory="$TMPDIR/`md5 -q $1`"
 
 # Create this new directory
 mkdir $octavoTempDirectory || { rm -r $octavoTempDirectory ; mkdir $octavoTempDirectory }
