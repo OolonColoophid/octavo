@@ -35,8 +35,6 @@ export deploymentTextFoot="This document contains hyperlinks to [sections within
 
 ## Behaviour
 export suppressmessages="no"
-### Note that a variable called TEMPDIRECTORY specifying your favourite temporary
-### directory should be specified
 
 ## Location of skeleton files for creation of new Octavo documents
 export skeletondir="$OCTAVOPATH/skeletons"
