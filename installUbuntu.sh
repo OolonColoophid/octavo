@@ -5,6 +5,8 @@
 # Octavo                #
 #########################
 
+# This could be made for OS X easily too
+
 sudo apt-get install zsh \
 	&& echo "Installed zsh" \
 	|| echo "Installation of zsh failed"

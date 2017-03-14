@@ -19,7 +19,7 @@ customfilterone: "pandoc-csv2table"
 customfiltertwo: "pandoc-crossref"
 customfilterthree: "pandoc-citeproc"
 papersize: A4
-toc-depth: 1
+toc-depth: 1w
 toc: 1
 colorlinks: 1
 boxlinks: true
