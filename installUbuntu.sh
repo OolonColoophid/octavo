@@ -34,7 +34,10 @@ export PATH="\$HOME/.cabal/bin:/opt/cabal/1.22/bin:/opt/ghc/7.10.3/bin:\$PATH"
 EOF
 export PATH=~/.cabal/bin:/opt/cabal/1.22/bin:/opt/ghc/7.10.3/bin:$PATH
 
-# Now instal csv2table
+# Update Cabal
+sudo cabal update
+
+# Now install csv2table
 cabal install pandoc-csv2table
 
 # Now install pandoc-crossref
