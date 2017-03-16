@@ -46,6 +46,8 @@ checkDependencies() # Exit if certain dependencies aren't met
 	# Latex is needed
 	command -v kpsepath >/dev/null || { echo "Fatal error: I require a Latex distribution but it's not installed. See https://www.latex-project.org/get/ for general information or http://www.tug.org/texlive/quickinstall.html for a minimal Unix install recipe."; exit 1; }
 
+# Pandoc-citeproc etc? See installUbuntu
+
 }
 
 cleanUp() # Delete temporary files (fail silently)
@@ -270,10 +272,13 @@ if [[ $platform == "Mac" ]]
 then
 
 octavoTempDirectory="$TMPDIR/`md5 -q $1`"
+mdFiveHash=$(md5 -q $1)
+
 
 else
 
 octavoTempDirectory="/var/tmp/`md5sum $1 | awk '{print $1;}'`"
+mdFiveHash=$(md5sum $1)
 
 fi 
  
@@ -446,7 +451,6 @@ do
 
 done
 
-mdFiveHash=$(md5 -q $tempWorkingFile)
 
 if [[ $mdfivehashset = "yes" ]]
 
