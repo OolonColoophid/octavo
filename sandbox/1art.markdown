@@ -1,41 +1,41 @@
 ---
-title: "Version of MPSMD3ART Workshop 1, Introduction"
-title-meta: "MPSMD3ART Workshop 1, Introduction"
-author: "Dr Ian Hocking, Psychology Programme"
-date: "February 2017 to April"
-version: 1.0
-headimage: "$OCTAVOPATH/sandbox/media/hal"
-headquote: "I'm sorry, Dave. I'm afraid I can't do that."
-headquoteauthor: "HAL 9000, Discovery One"
-httpdestination: "http://cccupsychology.com/deployIh/sandbox/"
-remotedirectory: "sandbox/"
-deployto: "$OCTAVOPATH/sandbox/deploy"
-formats: "all"
-preview: ""
-ftpdeploy: "yes"
-spokendeploy: "yes"
-refreshcalendar: "no"
-customfilterone: "pandoc-csv2table"
-customfiltertwo: "pandoc-crossref"
+title:             "Version of MPSMD3ART Workshop 1, Introduction"
+title-meta:        "MPSMD3ART Workshop 1, Introduction"
+author:            "Dr Ian Hocking, Psychology Programme"
+date:              "February 2017 to April"
+version:           1.0
+headimage:         "$OCTAVOPATH/sandbox/media/hal"
+headquote:         "I'm sorry, Dave. I'm afraid I can't do that."
+headquoteauthor:   "HAL 9000, Discovery One"
+httpdestination:   "http://cccupsychology.com/deployIh/sandbox/"
+remotedirectory:   "sandbox/"
+deployto:          "$OCTAVOPATH/sandbox/deploy"
+formats:           "all"
+preview:           ""
+ftpdeploy:         "yes"
+spokendeploy:      "yes"
+refreshcalendar:   "no"
+customfilterone:   "pandoc-csv2table"
+customfiltertwo:   "pandoc-crossref"
 customfilterthree: "pandoc-citeproc"
-papersize: A4
-toc-depth: 1
-toc: 1
-colorlinks: 1
-boxlinks: true
-linespread: "1.3"
-numbersections: "yes"
-bibliography: "$OCTAVOPATH/sandbox/bibliography.bib"
-citation-style: "https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl"
-link-citations: false
-solariseddarkon: false 
-solariseddarkoff: true
-mdfivehashset: "no"
-redact: "no"
-tblPrefix: "Table"
-eqnPrefix: "Equation"
-figPrefix: "Figure"
-autoEqnLabels: true
+papersize:         A4
+toc-depth:         1
+toc:               1
+colorlinks:        1
+boxlinks:          true
+linespread:        "1.3"
+numbersections:    "yes"
+bibliography:      "$OCTAVOPATH/sandbox/bibliography.bib"
+citation-style:    "https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl"
+link-citations:    false
+solariseddarkon:   false 
+solariseddarkoff:  true
+mdfivehashset:     "no"
+redact:            "no"
+tblPrefix:         "Table"
+eqnPrefix:         "Equation"
+figPrefix:         "Figure"
+autoEqnLabels:     true
 ...
 
 # Introduction to Tlearn {#intro}
