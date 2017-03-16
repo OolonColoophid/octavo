@@ -271,13 +271,13 @@ if [[ $platform == "Mac" ]]
 
 then
 
-octavoTempDirectory="$TMPDIR/`md5 -q $1`"
+octavoTempDirectory="$TMPDIR/`md5 -q $1`$RANDOM"
 mdFiveHash=$(md5 -q $1)
 
 
 else
 
-octavoTempDirectory="/var/tmp/`md5sum $1 | awk '{print $1;}'`"
+octavoTempDirectory="/var/tmp/`md5sum $1 | awk '{print $1;}'`$RANDOM"
 mdFiveHash=$(md5sum $1)
 
 fi 
