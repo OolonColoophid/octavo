@@ -5,7 +5,11 @@
 # Octavo                #
 #########################
 
-# This could be made for OS X easily too
+# Usage
+
+# sudo sh installUbuntu.sh
+
+# Note to self: This could be made for OS X easily too
 
 sudo apt-get install zsh \
 	&& echo "Installed zsh" \
@@ -35,7 +39,7 @@ EOF
 export PATH=~/.cabal/bin:/opt/cabal/1.22/bin:/opt/ghc/7.10.3/bin:$PATH
 
 # Update Cabal
-sudo cabal update
+sudo /opt/cabal/1.22/bin/cabal update
 
 # Now install csv2table
 cabal install pandoc-csv2table
