@@ -17,7 +17,7 @@ if [ -n "${OCTAVOPATH+x}" ] # Has the path to the Octavo directory been set by t
 
 then 
 
-	source "$OCTAVOPATH/.octavoConfig.sh" || { echo "Fatal error: Could not source .octavoConfig.sh. Is \$OCTAVOPATH correct? It needs to point to the directory containing Octavo and its support files. This currently set to: $OCTAVOPATH" } # Source the global configuration file
+	source "$OCTAVOPATH/.octavoConfig.sh" || { echoCli "Fatal error: Could not source .octavoConfig.sh. Is \$OCTAVOPATH correct? It needs to point to the directory containing Octavo and its support files. This currently set to: $OCTAVOPATH" } # Source the global configuration file
 
 elif [[ -a "$HOME/octavo" ]] # Not set, but does Octavo appear in the $HOME directory?
 
@@ -27,7 +27,7 @@ then
 
 else # Path isn't set and doesn't exist in the home directory
 
-	{ echo "Fatal error: Variable \$OCTAVOPATH has not been set. Make sure it is set in your .bash_profile. For example: export \$OCTAVOPATH=\"/foo/bar/octavo\"" ; exit 1 }
+	{ echoCli "Fatal error: Variable \$OCTAVOPATH has not been set. Make sure it is set in your .bash_profile. For example: export \$OCTAVOPATH=\"/foo/bar/octavo\"" ; exit 1 }
 
 fi
 
@@ -41,16 +41,16 @@ checkDependencies() # Exit if certain dependencies aren't met
 {
 
 	# Pandoc is needed
-	command -v pandoc >/dev/null || { echo "Fatal error: I require Pandoc but it's not installed.See http://pandoc.org/installing.html."; exit 1; }
+	command -v pandoc >/dev/null || { echoCli "Fatal error: I require Pandoc but it's not installed.See http://pandoc.org/installing.html."; exit 1; }
 
 	# Latex is needed
-	command -v kpsepath >/dev/null || { echo "Fatal error: I require a Latex distribution but it's not installed. See https://www.latex-project.org/get/ for general information or http://www.tug.org/texlive/quickinstall.html for a minimal Unix install recipe."; exit 1; }
+	command -v kpsepath >/dev/null || { echoCli "Fatal error: I require a Latex distribution but it's not installed. See https://www.latex-project.org/get/ for general information or http://www.tug.org/texlive/quickinstall.html for a minimal Unix install recipe."; exit 1; }
 
 # Pandoc-citeproc etc? See installUbuntu
 
 }
 
-cleanUp() # Delete temporary files (fail silently)
+cleanUp() # Delete temporary files 
 {
 
 	# Try to create a dir for the deployed files
@@ -60,7 +60,7 @@ cleanUp() # Delete temporary files (fail silently)
 	mv "$deployto"/*.* "$deployto/archive"
 
 	# Finally, delete all intermediate files
-	rm -r $octavoTempDirectory	
+	rm -r $octavoTempDirectory && { echoLog "Deleted temporary directory $octavoTempDirectory" }	
 }
 
 
@@ -91,7 +91,7 @@ setBashVarsFromYaml() # Read YAML block at top of Markdown file and create shell
 				then	
 
 
-					if [[ "$varKey" == "" ]]; then echo "setBashVarsFromYaml: Yaml error. Is there an illegal blank line in the Yaml?"; cleanUp > /dev/null 2>&1 ; exit 1; fi
+					if [[ "$varKey" == "" ]]; then echoCli "setBashVarsFromYaml: Yaml error. Is there an illegal blank line in the Yaml?"; cleanUp > /dev/null 2>&1 ; exit 1; fi
 
 
 
@@ -137,7 +137,7 @@ preProcessMarkdownVariables()
 
 	scriptName=preProcessMarkdownVariables
 
-	logThis scriptName "preProcessMarkdownVariables called"
+	echoLog "preProcessMarkdownVariables called"
 
 	# Source the variables that were in the Markdown's YAML
 	# shellcheck source=/Users/ianuser/Dropbox/.temp/envVariableTemp
@@ -153,8 +153,8 @@ preProcessMarkdownVariables()
 	# To deal with raw latex, lines of which begin with a backslash
 	# we need to temporarily replace these with an unusual character
 	# like ☖
-	cat "$markdownSourceFile" > "$preTempFileStepOne" || echo "Cat alpha failed"
-	sed -i.bak 's/\\/☖/g' "$preTempFileStepOne" && logThis $scriptName "Sed replaced a backslash with a safe character"
+	cat "$markdownSourceFile" > "$preTempFileStepOne" || echoCli "Cat alpha failed"
+	sed -i.bak 's/\\/☖/g' "$preTempFileStepOne" && echoLog "Sed replaced a backslash with a safe character"
 
 	while IFS= read -r line 
 
@@ -166,13 +166,13 @@ preProcessMarkdownVariables()
 
 			includeFile=$(echo "$line" | awk '{print $2}') # Get filename
 
-			logThis $scriptName "Found text to substitute called $includeFile"
+			echoLog "Found text to substitute called $includeFile"
 
 			includeResult=$(echo $includedir/$includeFile.markdown) # Add path to filename
 
-			logThis $scriptName "Attempting to splice in $includeResult, adding to $preTempFileStepTwo"
+			echoLog "Attempting to splice in $includeResult, adding to $preTempFileStepTwo"
 
-			cat "$includeResult" >> "$preTempFileStepTwo" || echo "Cat Charlie failed"
+			cat "$includeResult" >> "$preTempFileStepTwo" || echoCli "Cat Charlie failed"
 
 		else
 
@@ -186,31 +186,57 @@ preProcessMarkdownVariables()
 	# Revert any backslashes to backslashes, to help
 	# raw latex work
 
-	sed -i.bak 's/☖/\\/g' "$preTempFileStepTwo" && logThis "$scriptName" "Sed replaced a safe character with a backslash"
+	sed -i.bak 's/☖/\\/g' "$preTempFileStepTwo" && echoLog "Sed replaced a safe character with a backslash"
 
-	cat "$preTempFileStepTwo" || echo "Cat delta failed" # Cat the finished, expanded text file to Standard Output
+	cat "$preTempFileStepTwo" || echoCli "Cat delta failed" # Cat the finished, expanded text file to Standard Output
 }
 
 
 
-logThis() { # This function notes things in a log directory
+echoLog() { # This function notes things in a log directory
 
 	# Usage:
-	# logThis "scriptName" ["Message"]
+	# echoLog [text] 
 	now=$(date +"%A %T")
 
-	if [[ $2 = *[!\ ]* ]] # Function has been passed a message
+	if [[ $1 = *[!\ ]* ]] # Function has been passed text
 
 	then
 
-		echo "$1 ($HOST) -- on $now: $2" >> "$LOGFILE"
+		echo "$now: $1" >> "$logFile"
 
 	else
 
-		echo "$1 ($HOST) -- on $now: Just saying hello" >> "$LOGFILE"
+		echo " " >> "$logFile"
 	fi
 
 }
+
+echoCli() { # This function notes things in a log directory
+
+	# Usage:
+	# echoCli [text] 
+	if [[ $1 = *[!\ ]* ]] # Function has been passed text
+
+	then
+
+		cliText="$1"
+
+	else
+
+		cliText=" "
+
+	fi
+
+	if [[ $suppressmessages != "yes" ]] # If suppressmessages set, keep quiet
+
+	then
+		echo $cliText
+
+	fi
+
+}
+
 
 # contains(string, substring)
 #
@@ -232,7 +258,6 @@ contains() {
 }
 
 
-
 #############################
 # Main routine begins
 #############################
@@ -242,6 +267,8 @@ contains() {
 
 checkDependencies
 
+# export suppressmessages="yes"
+
 # Verify that the script has received a text file
 
 if [[ $1 = *[!\ ]* ]]; then
@@ -250,12 +277,12 @@ if [[ $1 = *[!\ ]* ]]; then
 	: 
 
 else
-	echo "Fatal error: You need to specify the Markdown source file."
+	echoCli "Fatal error: You need to specify the Markdown source file."
 	cleanUp > /dev/null 2>&1 
 	exit 1
 fi
 
-
+logFile="$HOME/.octavo.log"
 
 # What platform?
 
@@ -282,9 +309,6 @@ mdFiveHash=$(md5sum $1)
 
 fi 
  
- 
-# Specify a unique directory within the $TMPDIR
-# path, so that multiple instances of Octavo won't conflict
 
 # Create this new directory
 mkdir $octavoTempDirectory || { rm -r $octavoTempDirectory ; mkdir $octavoTempDirectory }
@@ -306,19 +330,17 @@ scriptName=deploy.zsh
 
 # Opening statement for the command line
 
+	echoCli "" 
+	echoCli "---------------------------------------"
+	echoCli "This is Octavo saying 'To me'"
+	echoCli "---------------------------------------"
+	echoCli ""
 
-if [[ $suppressmessages != "yes" ]]
-
-then
-	echo "" 
-	echo "---------------------------------------"
-	echo "This is Octavo saying 'To me'"
-	echo "---------------------------------------"
-	echo ""
-
-fi
-
-logThis $scriptName "Beginning deployment"
+echoLog
+echoLog
+echoLog "--------------------"
+echoLog "Beginning deployment"
+echoLog "--------------------"
 
 #####################################################################################
 
@@ -336,12 +358,12 @@ touch "$tempWorkingFile" # Create our temp file if it doesn't already exist
 
 # 1. Process YAML
 
-logThis $scriptName "1. Process YAML: Launching setBashVarsFromYaml"
+echoLog "1. Process YAML: Launching setBashVarsFromYaml"
 
 # Pass file to be processed to the function that gets variables from the Yaml block
 # at the head of the markdown file (sed command substitutes $HOME for the shell
 # variable contents of $HOME, as well as $OCTAVOPATH for directory where Octavo lives)
-cat $markdownSourceFile | sed "s@\$HOME@$HOME@g" | sed "s@\$OCTAVOPATH@$OCTAVOPATH@g" | setBashVarsFromYaml || echo setBashVarsFromYaml reported an error 
+cat $markdownSourceFile | sed "s@\$HOME@$HOME@g" | sed "s@\$OCTAVOPATH@$OCTAVOPATH@g" | setBashVarsFromYaml 
 
 # At this point, variables specified in the YAML of the
 # markdown file and are stored in file $octavoTempDirectory/envVariableTemp
@@ -365,11 +387,7 @@ if [[ $numbersections == "yes" ]]; then
 fi
 
 # Tell the user where the deployed files will end up
-if [[ $suppressmessages != "yes" ]]; then 
-
-	echo "Deploying to $deployto"; 
-
-fi
+echoCli "Deploying to $deployto" 
 
 
 # If there is a Yaml variable called 'refreshcalendar' and it is set to yes
@@ -381,7 +399,7 @@ fi
 
 if [[ $refreshcalendar == "yes" ]]; then
 
-	if [[ $suppressmessages != "yes" ]]; then echo "Refreshing calendar"; fi
+	echoCli "Refreshing calendar"
 
 	updateTimeTablesFromiCal.zsh # This script must be in your $PATH
 
@@ -392,13 +410,13 @@ fi
 
 # 2. Preprocess Markdown
 
-logThis $scriptName "2. Preprocess Markdown: Launching preProcessMarkdownVariables"
+echoLog "2. Preprocess Markdown: Launching preProcessMarkdownVariables"
 
 # The following script does basic substitution of text in the markdown file.
 # Useful for contact details, and so on. (sed command substitutes $HOME for the shell
 # variable contents of $HOME)
 
-cat "$markdownSourceFile" | sed "s@\$HOME@$HOME@g" | sed "s@\$OCTAVOPATH@$OCTAVOPATH@g" | preProcessMarkdownVariables > "$tempWorkingFile" || echo "preProcessMarkdownVariables reported an error" 
+cat "$markdownSourceFile" | sed "s@\$HOME@$HOME@g" | sed "s@\$OCTAVOPATH@$OCTAVOPATH@g" | preProcessMarkdownVariables > "$tempWorkingFile" || echoCli "preProcessMarkdownVariables reported an error" 
 
 
 # If a Yaml variable called 'spokendeploy' has value 'no' then
@@ -409,7 +427,7 @@ if [[ $spokendeploy == "no" ]]; then
 	formats=$(echo $formats | sed 's/, octavoSpoken//g')
 	# formats=${formats//, octavoSpoken//}
 
-	if [[ $suppressmessages != "yes" ]]; then echo "(Suppressing spoken word version)"; fi
+	echoCli "(Suppressing spoken word version)"
 
 fi
 
@@ -428,7 +446,7 @@ deployFormatNumber=${#deployFormat[*]} # Get the number of deploy formats reques
 # version=$(echo $version | sed 's/\./_/g')
 
 
-logThis $scriptName "deployFormatNumber is $deployFormatNumber"
+echoLog "deployFormatNumber is $deployFormatNumber"
 
 
 counter=0 # Reset counter
@@ -465,6 +483,7 @@ else
 fi
 
 
+echoCli "MD5: $mdFiveHash"
 
 # Now we should generate the text that tells the reader about
 # alternative versions
@@ -516,12 +535,12 @@ escaped="${escaped//[$'\n']/}"
 # Now, "$escape" should be safe as part of a normal sed pattern.
 # Note that it is NOT safe if the -r option is used.
 
-sed -i.bak "s%& deployments &%$escaped%g" $tempWorkingFile || echo SED not happy # Insert finalised 'deployments' string
+sed -i.bak "s%& deployments &%$escaped%g" $tempWorkingFile || echoCli "SED not happy" # Insert finalised 'deployments' string
 
 # Let's also update the version as displayed in
 # in the document
 
-sed -i.bak "s%& version &%$version%g" "$tempWorkingFile" || echo SED grumpy
+sed -i.bak "s%& version &%$version%g" "$tempWorkingFile" || echoCli "SED grumpy"
 
 #####################################################################################
 
@@ -538,14 +557,14 @@ tempSubworkingFileTwo=$(echo $octavoTempDirectory/deployTempSubFileTwo.markdown)
 echo "" > "$tempSubworkingFileOne"
 echo "" > "$tempSubworkingFileTwo"
 
-cat "$tempWorkingFile" > "$tempSubworkingFileOne" || echo "Cat Foxtrot failed"
+cat "$tempWorkingFile" > "$tempSubworkingFileOne" || echoCli "Cat Foxtrot failed"
 
 
 touch "$tempSubworkingFileOne"
 touch "$tempSubworkingFileTwo"
 
-sed -i.bak 's/\\/☖/g' $tempSubworkingFileOne && logThis $scriptName "Sed replaced a backslash with a safe character"
-logThis $scriptName "Attempting command substitution in file called $tempSubworkingFileOne"
+sed -i.bak 's/\\/☖/g' $tempSubworkingFileOne && echoLog "Sed replaced a backslash with a safe character"
+echoLog "Attempting command substitution in file called $tempSubworkingFileOne"
 
 while IFS= read -r line 
 
@@ -571,7 +590,7 @@ done < "$tempSubworkingFileOne"
 # Revert any backslashes to backslashes, to help
 # raw latex work
 
-sed -i.bak 's/☖/\\/g' "$tempSubworkingFileTwo" && logThis $scriptName "Sed replaced safe characters with backslash"
+sed -i.bak 's/☖/\\/g' "$tempSubworkingFileTwo" && echoLog "Sed replaced safe characters with backslash"
 
 
 cat "$tempSubworkingFileTwo" | sed "s@\$HOME@$HOME@g" | sed "s@\$OCTAVOPATH@$OCTAVOPATH@g" > "$tempWorkingFile"
@@ -611,8 +630,8 @@ do
 
 	element=$deployShortCode[$counter]
 
-	logThis $scriptName "Creating version in $element..."
-	if [[ $suppressmessages != "yes" ]]; then echo "Creating version in $element ($mdFiveHash)..."; fi
+	echoLog "Creating version in $element..."
+	echoCli "Creating version in $element..."
 
 	if [[ $element == *octavoSpoken* ]] 
 
@@ -637,28 +656,24 @@ do
 				| sed 's/<div*.*answer.*/## Answer/g' \
 				| sed 's/<\/div>//g' > "$octavoTempDirectory/WorkingFileCleanedOfLatexBlocksForDocx.markdown"
 
-			eval "cat "$octavoTempDirectory/WorkingFileCleanedOfLatexBlocksForDocx.markdown" | $appCommand[$counter]" && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$mdFive$deployExtension[$counter]"; fi || echo Failed comm was "$appCommand[$counter]" 
+			eval "cat "$octavoTempDirectory/WorkingFileCleanedOfLatexBlocksForDocx.markdown" | $appCommand[$counter]" && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$mdFive$deployExtension[$counter]"; fi || echoCli Failed comm was "$appCommand[$counter]" 
 
-			echo "...done"
 
 		elif [[ $deployExtension[$counter] == *pdf ]]
 		then
 
 			cat $tempWorkingFile | eval $appCommand[$counter] && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$mdFive$deployExtension[$counter]"; fi
 
-			echo "...done"	
 
 		elif [[ $deployExtension[$counter] = *html ]]
 		then
 
-			eval "cat "$tempWorkingFile" | $appCommand[$counter]" && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$mdFive$deployExtension[$counter]"; fi || echo Failed comm was "$appCommand[$counter]" 
+			eval "cat "$tempWorkingFile" | $appCommand[$counter]" && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$mdFive$deployExtension[$counter]"; fi || echoCli Failed comm was "$appCommand[$counter]" 
 
-			echo "...done"
 
 		else
-			eval "cat $tempWorkingFile | $appCommand[$counter]" && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$mdFive$deployExtension[$counter]"; fi || echo Failed comm was "$appCommand[$counter]" 
+			eval "cat $tempWorkingFile | $appCommand[$counter]" && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$mdFive$deployExtension[$counter]"; fi || echoCli Failed comm was "$appCommand[$counter]" 
 
-			echo "...done"
 		fi	
 	fi
 
@@ -671,17 +686,17 @@ if [[ $makeSpoken == *yep* ]]
 
 then
 
-	if [[ $suppressmessages != "yes" ]]; then echo "Creating spoken version..." ; fi
+	echoCli "Creating spoken version..."
 
-	echo "$title-meta by $author" > "$octavoTempDirectory/spokenIntro"
-	echo "End of document $title-meta by $author" > "$octavoTempDirectory/spokenOutro"
+	echoCli "$title-meta by $author" > "$octavoTempDirectory/spokenIntro"
+	echoCli "End of document $title-meta by $author" > "$octavoTempDirectory/spokenOutro"
 
-	eval "cat '$octavoTempDirectory/spokenIntro' '$tempWorkingFile' '$octavoTempDirectory/spokenOutro' | $spokenCommandWithArgs" && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$deployExtension[$counter]"; fi || echo Failed comm was "$appCommand[$counter]"
+	eval "cat '$octavoTempDirectory/spokenIntro' '$tempWorkingFile' '$octavoTempDirectory/spokenOutro' | $spokenCommandWithArgs" && if [[ "$preview" == *"$element"* ]]; then open "$deployto/$basenameSourceFile$element$deployExtension[$counter]"; fi || echoCli Failed comm was "$appCommand[$counter]"
 
 
 	fileSizeKb=`du -k "$deployto/$basenameSourceFile$element$mdFiveHash$deployExtension[$counter]" | cut -f1`	
 
-	echo "...done. Spoken file is $fileSizeKb KB"
+	echoCli "Spoken file is $fileSizeKb KB"
 
 fi
 
@@ -700,15 +715,15 @@ if [[ $ftpDeploy == "yes" ]]; then
 
 	#	if [[ $deployPurgeOlderThan != "0" ]]; then
 	#
-	#		logThis $scriptName "Looking to clean up files older than $deployPurgeOlderThan days"
-	#		find . -mtime +"$deployPurgeOlderThan" -exec rm {} \; || logThis $scriptname "Attempt to delete files exited with error" 
+	#		echoLog "Looking to clean up files older than $deployPurgeOlderThan days"
+	#		find . -mtime +"$deployPurgeOlderThan" -exec rm {} \; || echoLog "Attempt to delete files exited with error" 
 	#
 	#	fi
 
 
-	logThis $scriptName "Upoading all files to FTP..."
+	echoLog "Upoading all files to FTP..."
 
-	if [[ $suppressmessages != "yes" ]]; then echo "FTP is uploading to $httpDestination..."; fi
+	echoCli "FTP is uploading to $httpDestination..."
 
 	# The most important command is put <source> <destination>
 	# The below should use the login credentials in a file called
@@ -717,7 +732,7 @@ if [[ $ftpDeploy == "yes" ]]; then
 	# when indented properly, this scripts failw with a parse error
 	# possibly caused by ENDOFCOMMANDS not being flush left. Go figure
 
-	ftp -i -v $remoteServer &> "$LOGPATH/log"  <<ENDOFCOMMANDS
+	ftp -i -v $remoteServer &> "$logPath"  <<ENDOFCOMMANDS
 
 	cd $remotedirectory
 	mput *.*
@@ -726,7 +741,8 @@ if [[ $ftpDeploy == "yes" ]]; then
 ENDOFCOMMANDS
 
 else
-	if [[ $suppressmessages != "yes" ]]; then echo \(Suppressing FTP upload\); fi
+	echoCli "Suppressing FTP upload"
+
 
 fi
 
@@ -734,27 +750,21 @@ fi
 
 cleanUp > /dev/null 2>&1 
 
-logThis $scriptName "Octavo deployment ended"
+echoLog
+echoLog "-----------------------"
+echoLog "Octavo deployment ended"
+echoLog "-----------------------"
+echoLog
 
-echo "Octavo made a successful run." > "$OCTAVOPATH/.octavoLastRunStatus"
+echoCli "Octavo made a successful run." > "$OCTAVOPATH/.octavoLastRunStatus"
 
-if [[ $suppressmessages != "yes" ]]
+echoCli "" 
+echoCli "---------------------------------------"
+echoCli "This is Octavo saying 'To you'"
+echoCli "---------------------------------------"
+echoCli ""
 
-then
-
-	echo "" 
-	echo "---------------------------------------"
-	echo "This is Octavo saying 'To you'"
-	echo "---------------------------------------"
-	echo ""
-
-	echo "Execution time"
-	times
-
-fi
-
-
-
-
+echoCli "Execution time"
+times
 
 
