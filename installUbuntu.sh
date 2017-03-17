@@ -31,7 +31,7 @@ sudo apt-get install texlive-full \
 sudo apt-get install haskell-platform
 
 # Update Cabal
-sudo /opt/cabal/1.22/bin/cabal update
+sudo cabal update
 
 # Now install csv2table
 cabal install pandoc-csv2table
