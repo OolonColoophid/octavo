@@ -244,8 +244,6 @@ echoCli() { # This function notes things in a log directory
 # otherwise returns 1.
 # (This function from http://stackoverflow.com/questions/2829613/how-do-you-tell-if-a-string-contains-another-string-in-unix-shell-scripting)
 
-
-
 contains() {
     string="$1"
     substring="$2"
