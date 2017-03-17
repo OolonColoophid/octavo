@@ -28,7 +28,7 @@ sudo apt-get install texlive-full \
 # Install Haskell (instructions for other OSs than Ubuntu
 # are available here: https://www.haskell.org/downloads/linux)
 
-sudo apt-get install haskell-platform
+sudo apt-get –force-yes –yes install haskell-platform
 
 # Update Cabal
 sudo cabal update
@@ -44,7 +44,7 @@ sudo apt-get install pandoc-citeproc
 
 
 # Python for the python-based filters
-sudo apt-get install python-pip
+sudo apt-get –force-yes –yes install python-pip
 pip-install upgrade pip
 sudo pip install pandocfilters
 
