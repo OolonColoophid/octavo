@@ -10,11 +10,6 @@
 #################################################################################################
 #################################################################################################
 
-export LOGPATH="$HOME/.logThis" # Octavo log file path
-mkdir -p "$LOGPATH" # Will be created if it doesn't exist
-
-export LOGFILE="$LOGPATH/log"
-
 # Deployment text for the document, telling the reader about
 # other versions
 export deploymentTextHead="This document is available in"
