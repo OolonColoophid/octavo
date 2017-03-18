@@ -44,7 +44,7 @@ sudo apt-get --yes install pandoc-citeproc
 
 
 # Python for the python-based filters
-sudo apt-get --yes install python-pip
+sudo apt-get --yes install python3-pip
 pip-install upgrade pip
-sudo pip install pandocfilters
+sudo pip3 install pandocfilters
 
