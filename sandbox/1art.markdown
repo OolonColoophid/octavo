@@ -15,7 +15,7 @@ preview:           ""
 ftpdeploy:         "yes"
 spokendeploy:      "yes"
 refreshcalendar:   "no"
-customfilterone:   ""
+customfilterone:   "pandoc-csv2table"
 customfiltertwo:   ""
 customfilterthree: ""
 papersize:         A4

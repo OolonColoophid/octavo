@@ -45,9 +45,7 @@ Octavo is a tool for multiple document deployment.
 
 2. Download the above files (either individually or by [cloning this repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository))
 
-3. For convenience, you probably want to have octavo.zsh in your [PATH](https://en.wikipedia.org/wiki/PATH_(variable))
-
-4. When running, Octavo needs to know where its directory with support files is located. You'll need to set this in your .bash_profile (not this path exactly; this is just where I happen to have my Octavo directory):
+3. When running, Octavo needs to know where its directory with support files is located. You'll need to set this in your .bash_profile (not this path exactly; this is just where I happen to have my Octavo directory):
 
 ~~~
 
@@ -55,61 +53,17 @@ export OCTAVOPATH="/Users/ianuser/Dropbox/scripts/octavo"
 
 ~~~
 
-### Ubuntu Installation (These instructions are in draft)
+### Installation
 
-- Install git if you need to
+Install, if you haven't already, [zsh](http://www.zsh.org/), [a full LaTeX distribution](https://www.latex-project.org/get/), [the Haskell platform](https://www.haskell.org/platform/), [Cabal](https://www.haskell.org/cabal/download.html), and install [Pandoc using Cabal](http://pandoc.org/installing.html). Also via Cabal, install Pandoc filters [pandoc-csv2table](https://github.com/baig/pandoc-csv2table), [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref), [pandoc-citeproc](https://hackage.haskell.org/package/pandoc-citeproc). Finally, install [Python3-pip](https://community.c9.io/t/how-to-install-pip-for-python3/3196/4) and use pip3, which you've just installed, to itself install [pandocfilters](https://github.com/jgm/pandocfilters/blob/master/README).
 
-~~~
+Notes:
 
-sudo apt-get install git
+- The above installation works for macOS Yosemite and Ubuntu 16.04.2
 
-~~~
+- LaTeX and Haskell (and Cabal) are huge
 
-- Clone this repo
-
-~~~
-
-git clone https://github.com/OolonColoophid/octavo.git
-
-~~~
-
-- Install zsh
-
-~~~
-
-sudo apt-get install zsh
-
-~~~
-
-- Start zsh in the terminal, and, when prompted, set a blank .zshrc file by pressing 0
-
-~~~
-
-zsh
-
-0
-
-~~~
-
-
-- Install pandoc
-
-~~~
-
-sudo apt-get install pandoc
-
-~~~
-
-The command `pandoc -v` should be used to verify that your installation was successful. 
-
-5. Install a full Tex distribution. I recommend TexLive.
-
-~~~
-
-sudo apt-get install texlive-full
-
-~~~
-
+- On Ubuntu, I had a persistent Cabal installation fail that I managed to fix with the [following advice](http://stackoverflow.com/questions/20769183/cabal-update-failed-due-to-out-of-memory)
 
 ## Usage
 
