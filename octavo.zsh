@@ -328,12 +328,6 @@ scriptName=deploy.zsh
 
 # Opening statement for the command line
 
-	echoCli "" 
-	echoCli "---------------------------------------"
-	echoCli "This is Octavo saying 'To me'"
-	echoCli "---------------------------------------"
-	echoCli ""
-
 echoLog
 echoLog
 echoLog "--------------------"
@@ -384,8 +378,11 @@ if [[ $numbersections == "yes" ]]; then
 
 fi
 
+# What's the MD5 hash? Tell the user
+echoCli "Deploying: $mdFiveHash"
+
 # Tell the user where the deployed files will end up
-echoCli "Deploying to $deployto" 
+echoCli "Destination: $deployto" 
 
 
 # If there is a Yaml variable called 'refreshcalendar' and it is set to yes
@@ -480,8 +477,6 @@ else
 
 fi
 
-
-echoCli "MD5: $mdFiveHash"
 
 # Now we should generate the text that tells the reader about
 # alternative versions
@@ -628,8 +623,8 @@ do
 
 	element=$deployShortCode[$counter]
 
-	echoLog "Creating version in $element..."
-	echoCli "Creating version in $element..."
+	echoLog "Creating: $element..."
+	echoCli "Creating: $element..."
 
 	if [[ $element == *octavoSpoken* ]] 
 
@@ -719,9 +714,9 @@ if [[ $ftpDeploy == "yes" ]]; then
 	#	fi
 
 
-	echoLog "Upoading all files to FTP..."
+	echoLog "Upoading all files to FTP destination $httpDestination"
 
-	echoCli "FTP is uploading to $httpDestination..."
+	echoCli "FTP: $httpDestination..."
 
 	# The most important command is put <source> <destination>
 	# The below should use the login credentials in a file called
@@ -755,14 +750,5 @@ echoLog "-----------------------"
 echoLog
 
 echoCli "Octavo made a successful run." > "$OCTAVOPATH/.octavoLastRunStatus"
-
-echoCli "" 
-echoCli "---------------------------------------"
-echoCli "This is Octavo saying 'To you'"
-echoCli "---------------------------------------"
-echoCli ""
-
-echoCli "Execution time"
-times
 
 
