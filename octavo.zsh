@@ -153,7 +153,8 @@ preProcessMarkdownVariables()
 	# To deal with raw latex, lines of which begin with a backslash
 	# we need to temporarily replace these with an unusual character
 	# like ☖
-	cat "$markdownSourceFile" > "$preTempFileStepOne" || echoCli "Cat alpha failed"
+
+	cat  "${1:-/dev/stdin}" > "$preTempFileStepOne" || echoCli "Cat alpha failed"
 	sed -i.bak 's/\\/☖/g' "$preTempFileStepOne" && echoLog "Sed replaced a backslash with a safe character"
 
 	while IFS= read -r line 
@@ -411,7 +412,17 @@ echoLog "2. Preprocess Markdown: Launching preProcessMarkdownVariables"
 # Useful for contact details, and so on. (sed command substitutes $HOME for the shell
 # variable contents of $HOME)
 
-cat "$markdownSourceFile" | sed "s@\$HOME@$HOME@g" | sed "s@\$OCTAVOPATH@$OCTAVOPATH@g" | preProcessMarkdownVariables > "$tempWorkingFile" || echoCli "preProcessMarkdownVariables reported an error" 
+cat "$markdownSourceFile" \
+	| sed "s@\$HOME@$HOME@g" \
+	| sed "s@\$OCTAVOPATH@$OCTAVOPATH@g" \
+	| sed 's/<task>/<div latex="true" class="task" id="Task">/g' \
+	| sed 's/<journal>/<div latex="true" class="journal" id="Journal">/g' \
+	| sed 's/<remember>/<div latex="true" class="highlight" id="Remember">/g' \
+	| sed 's/<\/task>/<\/div>/g' \
+	| sed 's/<\/journal>/<\/div>/g' \
+	| sed 's/<\/remember>/<\/div>/g' \
+	| preProcessMarkdownVariables > "$tempWorkingFile" \
+	|| echoCli "preProcessMarkdownVariables reported an error" 
 
 
 # If a Yaml variable called 'spokendeploy' has value 'no' then
@@ -552,7 +563,6 @@ echo "" > "$tempSubworkingFileTwo"
 
 cat "$tempWorkingFile" > "$tempSubworkingFileOne" || echoCli "Cat Foxtrot failed"
 
-
 touch "$tempSubworkingFileOne"
 touch "$tempSubworkingFileTwo"
 
@@ -586,6 +596,8 @@ done < "$tempSubworkingFileOne"
 sed -i.bak 's/☖/\\/g' "$tempSubworkingFileTwo" && echoLog "Sed replaced safe characters with backslash"
 
 
+
+
 cat "$tempSubworkingFileTwo" | sed "s@\$HOME@$HOME@g" | sed "s@\$OCTAVOPATH@$OCTAVOPATH@g" > "$tempWorkingFile"
 
 if [[ $redact = "yes" ]]
@@ -599,6 +611,9 @@ else
 	:
 
 fi
+
+
+
 
 
 ######################################################################################
