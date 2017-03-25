@@ -65,6 +65,8 @@ Notes:
 
 - On Ubuntu, I had a persistent Cabal installation fail that I managed to fix with the [following advice](http://stackoverflow.com/questions/20769183/cabal-update-failed-due-to-out-of-memory)
 
+- For scraping events from your Mac calendar and inserting dumping in a .CSV) [iCalBuddy](http://hasseg.org/icalBuddy/)
+
 ## Usage
 
 ~~~
@@ -192,18 +194,6 @@ At the moment, it isn't possible to use Markdown images within \<div\> tags beca
 - Create a installer for Homebrew
 
 - Re-write using Python, or at least move away from ZSH
-
-## Dependencies
-
-I believe the list below is accurate. If you're installing and find something missing, do please let me know.
-
-- [Pandoc](http://pandoc.org)
-
-- (For scraping events from your Mac calendar and inserting dumping in a .CSV) [iCalBuddy](http://hasseg.org/icalBuddy/)
-
-- A Latex package like [MacTex](https://en.wikipedia.org/wiki/MacTeX) 
-
-- For the OpenDyslexic document, the [OpenDyslexic font](http://opendyslexic.org)
 
 ## Acknowledgements
 
