@@ -421,6 +421,12 @@ cat "$markdownSourceFile" \
 	| sed 's/<\/task>/<\/div>/g' \
 	| sed 's/<\/journal>/<\/div>/g' \
 	| sed 's/<\/remember>/<\/div>/g' \
+	| sed 's/<do>/<span class="inlineDo">/g ' \
+	| sed 's/<pop>/<span class="inlinePopout">/g ' \
+	| sed 's/<key>/<span class="inlineKeyword">/g ' \
+	| sed 's/<\/do>/<\/span>/g' \
+	| sed 's/<\/pop>/<\/span>/g' \
+	| sed 's/<\/key>/<\/span>/g' \
 	| preProcessMarkdownVariables > "$tempWorkingFile" \
 	|| echoCli "preProcessMarkdownVariables reported an error" 
 
@@ -577,6 +583,7 @@ do
 
 	then
 
+		# To do: Check command is permitted
 
 		commandToRun=$(echo $line | egrep -o "&cmd.*cmd&" | sed "s/&cmd//g" | sed "s/cmd&//g")
 		commandOutput=$(eval "$commandToRun")
