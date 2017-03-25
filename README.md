@@ -226,3 +226,7 @@ Fix a bug where entire Deploy directory was uploaded with each FTP operation. No
 ### Version 0.2.0
 
 Add support for Microsoft Word .docx format.
+
+### Version 0.3.0
+
+Support nicer tags like `<task><task>` to denote tasks.
