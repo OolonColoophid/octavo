@@ -1,4 +1,4 @@
-# Octavo
+# Octavo v 0.3.0
 
 Create well-presented documents, in different formats like [this](examples/deployed/1intoctavoTuftePdfa986b13e22b4741f88a3e1042b2772f0.pdf), from a single [Markdown](https://en.wikipedia.org/wiki/Markdown) source.
 
@@ -211,22 +211,23 @@ Thanks to [John Gruber](http://daringfireball.net) for creating Markdown and [Jo
 
 ## Contributing
 
-Happy to look at any contributions.
+Happy to look at any contributions, particularly for Latex templates.
 
 ## History
 
-### Version 0.1.0
+### Version 0.3.0
 
-Initial release.
-
-### Version 0.1.1
-
-Fix a bug where entire Deploy directory was uploaded with each FTP operation. Now only new files are uploaded. Significant speed increase.
+Support nicer tags like `<task><\task>` to denote tasks.
 
 ### Version 0.2.0
 
 Add support for Microsoft Word .docx format.
 
-### Version 0.3.0
+### Version 0.1.1
 
-Support nicer tags like `<task><task>` to denote tasks.
+Fix a bug where entire Deploy directory was uploaded with each FTP operation. Now only new files are uploaded. Significant speed increase.
+
+### Version 0.1.0
+
+Initial release.
+
