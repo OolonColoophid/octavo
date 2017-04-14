@@ -1,0 +1,151 @@
+
+
+
+deploymentText:
+  Head:          "This document is available in"
+  Body:          ""
+  Foot:          "This document contains hyperlinks to [sections within it](
+
+
+skeletondir:    "/Users/ianuser/Dropbox/scripts/octavo/skeletons"
+
+
+
+
+crossrefYaml:  "/Users/ianuser/Dropbox/scripts/octavo/includes/pandoc-crossrefSettings.yaml"
+includedir:    "/Users/ianuser/Dropbox/scripts/octavo/includes"
+templatedir:   "/Users/ianuser/Dropbox/scripts/octavo/templates"
+deployconfig:  "/Users/ianuser/Dropbox/scripts/octavo/deployConfig"
+remoteserver:  "cccupsychology.com"
+
+
+
+
+template: "octavoTufteSolarisedPdf"
+  name: "Standard dark theme PDF"
+  format: "pdf"
+  executable: "pandoc"
+    arguments:
+      - "--latex-engine=xelatex"
+        filters:
+          - "filterPopout.py"
+          - "filterKeyword.py"
+          - "filterDo.py"
+          - "filterDivToTufte.py"
+
+
+
+template: "octavoTuftePdf"
+  name: "Standard PDF"
+  format: "pdf"
+  executable: "pandoc"
+    arguments:
+      - "--latex-engine=xelatex"
+        filters:
+          - "filterPopout.py"
+          - "filterKeyword.py"
+          - "filterDo.py"
+          - "filterDivToTufte.py"
+
+
+
+
+template: "octavoTufteBookPdf"
+  name: "Standard book PDF"
+  format: "pdf"
+  executable: "pandoc"
+    arguments:
+      - "--latex-engine=xelatex"
+        filters:
+          - "filterPopout.py"
+          - "filterKeyword.py"
+          - "filterDo.py"
+          - "filterDivToTufte.py"
+
+
+
+
+template: "octavoNormalPdf"
+  name: "Simplified Layout Pdf"
+  format: "pdf"
+  executable: "pandoc"
+    arguments:
+      - "--latex-engine=xelatex"
+        filters:
+          - "filterPopout.py"
+          - "filterKeyword.py"
+          - "filterDo.py"
+          - "filterDivToTufte.py"
+
+
+
+template: "octavoLargePdf"
+  name: "Simplified Layout Pdf"
+  format: "pdf"
+  executable: "pandoc"
+    arguments:
+      - "--latex-engine=xelatex"
+        filters:
+          - "filterPopout.py"
+          - "filterKeyword.py"
+          - "filterDo.py"
+          - "filterDivToTufte.py"
+
+
+
+template: "octavoOpenDyslexicPdf"
+  name: "Simplified Pdf with Open Dyslexic Font"
+  format: "pdf"
+  executable: "pandoc"
+    arguments:
+      - "--latex-engine=xelatex"
+        filters:
+          - "filterPopout.py"
+          - "filterKeyword.py"
+          - "filterDo.py"
+          - "filterDivToTufte.py"
+
+
+
+template: "octavoHtml"
+  name: "Simplified Pdf with Open Dyslexic Font"
+  format: "html"
+  executable: "pandoc"
+    arguments:
+      - "--mathml"
+      - "--self-contained"
+      - "--toc"
+      - "--css /Users/ianuser/Dropbox/scripts/octavo/templates/octavoHtmlTufte.css"
+      - "--latex-engine=xelatex"
+        filters:
+          - "filterDivToHtml.py"
+
+
+
+template: "octavoDocx"
+  name: "Microsoft Word format"
+  format: "docx"
+  executable: "pandoc"
+    arguments:
+      - "--latex-engine=xelatex"
+
+
+
+template: "octavoSpokenMacOs"
+  name: "spoken format"
+  format: "mp4"
+  executable: "pandoc"
+    filters:
+      - "filterDivToLatex.py"
+  executablesecond: "pandoc"
+    arguments:
+      - "-f html"
+      - "-t plain"
+  executablethird: "sed"
+    arguments:
+      - "sed 's/_//g; s/↩//g'"
+  executablefourth: "say"
+    arguments:
+      - "--voice='Alex'"
+      - "--quality=127"
+      - "--file-format='mp4f'"

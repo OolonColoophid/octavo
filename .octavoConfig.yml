@@ -1,0 +1,150 @@
+# Configuration file for Octavo
+
+# Deployment text for the document, telling the reader about other versions
+deploymentText:
+  head:          "This document is available in"
+  body:          ""
+  foot:          "This document contains hyperlinks to [sections within it](#overview), [external webpages](http://cccupsychology.com), and email addresses like [ian.hocking@canterbury.ac.uk](mailto:ian.hocking@canterbury.ac.uk)."
+
+# Location of skeleton files for creation of new Octavo documents
+skeletondir:    "$octavoPath/skeletons"
+
+# Document settings (these can be overriden in the Yaml of the Markdown file itself)
+# (Note: Some variables must be set in the Yaml itself
+# in order to be available to Pandoc and filters)
+crossrefYaml:  "$octavoPath/includes/pandoc-crossrefSettings.yaml"
+includedir:    "$octavoPath/includes"                                  # Location of text files to be inserted dynamically
+templatedir:   "$octavoPath/templates"                                 # Location of templates (Latex, html, etc.)
+deployconfig:  "$octavoPath/deployConfig"                              # Location of deployment methods (e.g. Pandoc, Say)
+remoteserver:  "cccupsychology.com"                                    # Remote server (have this in your .netrc file)
+
+# Edward Tufte style, solarised document
+
+template1: "octavoTufteSolarisedPdf" # The template file must be named format.tex
+  name: "Standard dark theme PDF"
+  format: "pdf"
+  executable: "pandoc"
+    arguments:
+      - "--latex-engine=xelatex"
+        filters:
+          - "filterPopout.py"
+          - "filterKeyword.py"
+          - "filterDo.py"
+          - "filterDivToTufte.py"
+
+# Edward Tufte style, document
+
+template2: "octavoTuftePdf"
+  name: "Standard PDF"
+  format: "pdf"
+  executable: "pandoc"
+    arguments:
+      - "--latex-engine=xelatex"
+        filters:
+          - "filterPopout.py"
+          - "filterKeyword.py"
+          - "filterDo.py"
+          - "filterDivToTufte.py"
+
+
+# Edward Tufte style, book
+
+template3: "octavoTufteBookPdf"
+  name: "Standard book PDF"
+  format: "pdf"
+  executable: "pandoc"
+    arguments:
+      - "--latex-engine=xelatex"
+        filters:
+          - "filterPopout.py"
+          - "filterKeyword.py"
+          - "filterDo.py"
+          - "filterDivToTufte.py"
+
+
+# Simple Pdf 
+
+template4: "octavoNormalPdf"
+  name: "Simplified Layout Pdf"
+  format: "pdf"
+  executable: "pandoc"
+    arguments:
+      - "--latex-engine=xelatex"
+        filters:
+          - "filterPopout.py"
+          - "filterKeyword.py"
+          - "filterDo.py"
+          - "filterDivToTufte.py"
+
+# Large Pdf 
+
+template5: "octavoLargePdf"
+  name: "Simplified Layout Pdf"
+  format: "pdf"
+  executable: "pandoc"
+    arguments:
+      - "--latex-engine=xelatex"
+        filters:
+          - "filterPopout.py"
+          - "filterKeyword.py"
+          - "filterDo.py"
+          - "filterDivToTufte.py"
+
+# Simplified Pdf with Open Dyslexic 
+
+template6: "octavoOpenDyslexicPdf"
+  name: "Simplified Pdf with Open Dyslexic Font"
+  format: "pdf"
+  executable: "pandoc"
+    arguments:
+      - "--latex-engine=xelatex"
+        filters:
+          - "filterPopout.py"
+          - "filterKeyword.py"
+          - "filterDo.py"
+          - "filterDivToTufte.py"
+
+# Webpage 
+
+template7: "octavoHtml"
+  name: "Simplified Pdf with Open Dyslexic Font"
+  format: "html"
+  executable: "pandoc"
+    arguments:
+      - "--mathml"
+      - "--self-contained"
+      - "--toc"
+      - "--css $octavoPath/templates/octavoHtmlTufte.css"
+      - "--latex-engine=xelatex"
+        filters:
+          - "filterDivToHtml.py"
+
+# Microsoft Word Document 
+
+template8: "octavoDocx"
+  name: "Microsoft Word format"
+  format: "docx"
+  executable: "pandoc"
+    arguments:
+      - "--latex-engine=xelatex"
+
+# Spoken 
+
+template9: "octavoSpokenMacOs" # This is not a filename, but a special class handled by Octavo.sh
+  name: "spoken format"
+  format: "mp4"
+  executable: "pandoc"
+    filters:
+      - "filterDivToLatex.py"
+  executable2: "pandoc"
+    arguments:
+      - "-f html"
+      - "-t plain"
+  executable3: "sed"
+    arguments:
+      - "sed 's/_//g; s/↩//g'"
+  executable: "say"
+    arguments:
+      - "--voice='Alex'"
+      - "--quality=127"
+      - "--file-format='mp4f'"

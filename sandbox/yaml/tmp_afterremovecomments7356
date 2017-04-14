@@ -1,0 +1,20 @@
+
+
+
+deploymentText:
+  Head: "This document is available in"
+  Body: ""
+  Foot: "This document contains hyperlinks to [sections within it](
+
+
+skeletondir: "replaced/skeletons"
+
+        
+
+
+
+crossrefYaml: "replaced/includes/pandoc-crossrefSettings.yaml"
+includedir: "replaced/includes"
+templatedir: "replaced/templates"
+deployconfig: "replaced/deployConfig"
+remoteserver: "cccupsychology.com"

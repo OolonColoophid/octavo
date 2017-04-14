@@ -1,0 +1,19 @@
+
+
+
+deploymentText:
+  Head:          "This document is available in"
+  Body:          ""
+  Foot:          "This document contains hyperlinks to [sections within it](
+
+
+skeletondir:    "/Users/ianuser/Dropbox/scripts/octavo/skeletons"
+
+
+
+
+crossrefYaml:  "/Users/ianuser/Dropbox/scripts/octavo/includes/pandoc-crossrefSettings.yaml"
+includedir:    "/Users/ianuser/Dropbox/scripts/octavo/includes"
+templatedir:   "/Users/ianuser/Dropbox/scripts/octavo/templates"
+deployconfig:  "/Users/ianuser/Dropbox/scripts/octavo/deployConfig"
+remoteserver:  "cccupsychology.com"

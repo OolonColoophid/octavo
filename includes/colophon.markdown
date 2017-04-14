@@ -1,9 +1,9 @@
 ---------- ------------------------------------------
-*Date*     &cmd date "+%D %T" cmd&
+*Date      <replace>date</replace>
 
-*Computer* &cmd hostname -s | sed 's/\.local//g' | sed 's/\b./\u&/g' cmd&
+*Computer* <replace>computer</replace>
 
-*MD5*      &cmd echo $mdFiveHash cmd&
+*Doc ID*   <replace>mdfive</replace>
 
 *Compiler* [Octavo](https://github.com/OolonColoophid/octavo)
 
