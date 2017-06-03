@@ -1,6 +1,26 @@
+# Configuration file for Octavo
+
+# Deployment text for the document, telling the reader about other versions
+deploymentText:
+  head:          "This document is available in"
+  body:          ""
+  foot:          "This document contains hyperlinks to [sections within it](#overview), [external webpages](http://cccupsychology.com), and email addresses like [ian.hocking@canterbury.ac.uk](mailto:ian.hocking@canterbury.ac.uk)."
+
+# Location of skeleton files for creation of new Octavo documents
+skeletondir:    "$octavoPath/skeletons"
+
+# Document settings (these can be overriden in the Yaml of the Markdown file itself)
+# (Note: Some variables must be set in the Yaml itself
+# in order to be available to Pandoc and filters)
+crossrefYaml:  "$octavoPath/includes/pandoc-crossrefSettings.yaml"
+includedir:    "$octavoPath/includes"                                  # Location of text files to be inserted dynamically
+templatedir:   "$octavoPath/templates"                                 # Location of templates (Latex, html, etc.)
+deployconfig:  "$octavoPath/deployConfig"                              # Location of deployment methods (e.g. Pandoc, Say)
+remoteserver:  "cccupsychology.com"                                    # Remote server (have this in your .netrc file)
+
 # Edward Tufte style, solarised document
 
-template: "octavoTufteSolarisedPdf" # The template file must be named format.tex
+template1: "octavoTufteSolarisedPdf" # The template file must be named format.tex
   name: "Standard dark theme PDF"
   format: "pdf"
   executable: "pandoc"
@@ -14,7 +34,7 @@ template: "octavoTufteSolarisedPdf" # The template file must be named format.tex
 
 # Edward Tufte style, document
 
-template: "octavoTuftePdf"
+template2: "octavoTuftePdf"
   name: "Standard PDF"
   format: "pdf"
   executable: "pandoc"
@@ -29,7 +49,7 @@ template: "octavoTuftePdf"
 
 # Edward Tufte style, book
 
-template: "octavoTufteBookPdf"
+template3: "octavoTufteBookPdf"
   name: "Standard book PDF"
   format: "pdf"
   executable: "pandoc"
@@ -44,7 +64,7 @@ template: "octavoTufteBookPdf"
 
 # Simple Pdf 
 
-template: "octavoNormalPdf"
+template4: "octavoNormalPdf"
   name: "Simplified Layout Pdf"
   format: "pdf"
   executable: "pandoc"
@@ -58,7 +78,7 @@ template: "octavoNormalPdf"
 
 # Large Pdf 
 
-template: "octavoLargePdf"
+template5: "octavoLargePdf"
   name: "Simplified Layout Pdf"
   format: "pdf"
   executable: "pandoc"
@@ -72,7 +92,7 @@ template: "octavoLargePdf"
 
 # Simplified Pdf with Open Dyslexic 
 
-template: "octavoOpenDyslexicPdf"
+template6: "octavoOpenDyslexicPdf"
   name: "Simplified Pdf with Open Dyslexic Font"
   format: "pdf"
   executable: "pandoc"
@@ -86,7 +106,7 @@ template: "octavoOpenDyslexicPdf"
 
 # Webpage 
 
-template: "octavoHtml"
+template7: "octavoHtml"
   name: "Simplified Pdf with Open Dyslexic Font"
   format: "html"
   executable: "pandoc"
@@ -94,14 +114,14 @@ template: "octavoHtml"
       - "--mathml"
       - "--self-contained"
       - "--toc"
-      - "--css $OCTAVOPATH/templates/octavoHtmlTufte.css"
+      - "--css $octavoPath/templates/octavoHtmlTufte.css"
       - "--latex-engine=xelatex"
         filters:
           - "filterDivToHtml.py"
 
 # Microsoft Word Document 
 
-template: "octavoDocx"
+template8: "octavoDocx"
   name: "Microsoft Word format"
   format: "docx"
   executable: "pandoc"
@@ -110,20 +130,20 @@ template: "octavoDocx"
 
 # Spoken 
 
-template: "octavoSpokenMacOs" # This is not a filename, but a special class handled by Octavo.sh
+template9: "octavoSpokenMacOs" # This is not a filename, but a special class handled by Octavo.sh
   name: "spoken format"
   format: "mp4"
   executable: "pandoc"
     filters:
       - "filterDivToLatex.py"
-  executablesecond: "pandoc"
+  executable2: "pandoc"
     arguments:
       - "-f html"
       - "-t plain"
-  executablethird: "sed"
+  executable3: "sed"
     arguments:
       - "sed 's/_//g; s/↩//g'"
-  executablefourth: "say"
+  executable: "say"
     arguments:
       - "--voice='Alex'"
       - "--quality=127"

@@ -1,24 +1,23 @@
 ---
-title:             "Version of MPSMD3ART Workshop 1, Introduction"
+title:             "MPSMD3ART Workshop 1, Introduction"
 title-meta:        "MPSMD3ART Workshop 1, Introduction"
 date:              "February 2017 to April"
 version:           1.0 
 headimage:         "$octavoPath/sandbox/media/hal"
 headquote:         "I'm sorry, Dave. I'm afraid I can't do that."
 headquoteauthor:   "HAL 9000, Discovery One"
-yamltest:          ""
 httpdestination:   "http://cccupsychology.com/deployIh/sandbox/"
 remotedirectory:   "sandbox/"
 deployto:          "$octavoPath/sandbox/deploy"
-formats:           "all"
+formats:           "octavoTuftPdf"
 preview:           ""
 ftpdeploy:         "yes"
 spokendeploy:      "yes"
 refreshcalendar:   "no"
 bibliography:      "$octavoPath/sandbox/bibliography.bib"
-mdfivehashset:     "no"
+mdfivehashset:     true
 redact:            "no"
-customfilters:     "exampleFilter.py"
+customfilters:     "" 
 includeyaml:       "$octavoPath/templates/documentDefault.yml"
 ...
 
@@ -27,27 +26,17 @@ includeyaml:       "$octavoPath/templates/documentDefault.yml"
 -----------------------  -------------------------------------
 *Data files required*    [Download here](https://www.dropbox.com/sh/o6qk2vgm6fjlit5/AABJsn2C_YlCKtkgm7VDlDn2a?dl=0)
 
-*Booklet Version*        & version &
+*Booklet Version*        <replace>version</replace>
 
-*Format*                 & documentFormat &
+*Format*                 <replace>documentFormat</replace>
 
 -----------------------  -------------------------------------
 
 # Objectives
 
-You will use a simple network design to learn about Tlearn, basic modelling principles, parameters, and the limitations of certain model designs
+You will use a simple network design to learn about Tlearn, basic modelling principles, parameters, and the limitations of certain model designs.
 
 <include>3artWorkshopBookletHeader</include>
-
-# Workshop
-
-Tlearn is a simple connectionist network program developed by Kim Plunkett and Jeffrey L. Elman. It’s a bit long in the tooth, but it is much more straightforward to use than most connectionist software, which makes it suitable as a teaching tool. That said, please remember:
-
-1. Save your work regularly
-
-2. Keep backups of the files you’re working on.
-
-Tlearn hasn’t been actively developed since 1999, and it does have some bugs.
 
 ## Level of Computing Knowledge Assumed
 

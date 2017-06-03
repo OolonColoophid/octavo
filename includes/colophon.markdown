@@ -1,11 +1,13 @@
----------- ------------------------------------------
-*Date      <replace>date</replace>
+------------- ------------------------------------------
+*Date*        <replace>date</replace>
 
-*Computer* <replace>computer</replace>
+*Word count*  <replace>wordCount</replace>
 
-*Doc ID*   <replace>mdfive</replace>
+*Computer*    <replace>computer</replace>
 
-*Compiler* [Octavo](https://github.com/OolonColoophid/octavo)
+*Doc ID*      <replace>mdfive</replace>
 
----------- ------------------------------------------
+*Compiler*    [Octavo](https://github.com/OolonColoophid/octavo)
+
+------------- ------------------------------------------
 

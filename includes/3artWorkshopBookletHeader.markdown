@@ -56,5 +56,3 @@ Tlearn is a simple connectionist network program developed by Kim Plunkett and J
 
 Tlearn hasn’t been actively developed since 1999, and it does have some bugs.
 
-\newpage
-

@@ -20,3 +20,7 @@ tblPrefix:
 eqnPrefix:
   - "Equation"
   - "Equations"
+figureTitle: "Figure"
+tableTitle: "Table"
+loftitle: "# List of Figures"
+lotTitle: "# List of Tablas"

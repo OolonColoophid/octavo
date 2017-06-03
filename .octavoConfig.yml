@@ -3,8 +3,6 @@
 # Deployment text for the document, telling the reader about other versions
 deploymentText:
   head:          "This document is available in"
-  body:          ""
-  foot:          "This document contains hyperlinks to [sections within it](#overview), [external webpages](http://cccupsychology.com), and email addresses like [ian.hocking@canterbury.ac.uk](mailto:ian.hocking@canterbury.ac.uk)."
 
 # Location of skeleton files for creation of new Octavo documents
 skeletondir:    "$octavoPath/skeletons"
@@ -12,7 +10,6 @@ skeletondir:    "$octavoPath/skeletons"
 # Document settings (these can be overriden in the Yaml of the Markdown file itself)
 # (Note: Some variables must be set in the Yaml itself
 # in order to be available to Pandoc and filters)
-crossrefYaml:  "$octavoPath/includes/pandoc-crossrefSettings.yaml"
 includedir:    "$octavoPath/includes"                                  # Location of text files to be inserted dynamically
 templatedir:   "$octavoPath/templates"                                 # Location of templates (Latex, html, etc.)
 deployconfig:  "$octavoPath/deployConfig"                              # Location of deployment methods (e.g. Pandoc, Say)
@@ -20,8 +17,9 @@ remoteserver:  "cccupsychology.com"                                    # Remote 
 
 # Edward Tufte style, solarised document
 
-template1: "octavoTufteSolarisedPdf" # The template file must be named format.tex
-  name: "Standard dark theme PDF"
+template0: "octavoTufteSolarisedPdf" 
+  name: "standard dark theme PDF"
+  templateextension: ".tex"
   format: "pdf"
   executable: "pandoc"
     arguments:
@@ -31,11 +29,14 @@ template1: "octavoTufteSolarisedPdf" # The template file must be named format.te
           - "filterKeyword.py"
           - "filterDo.py"
           - "filterDivToTufte.py"
+          - "pandoc-crossref"
+          - "pandoc-citeproc"
 
 # Edward Tufte style, document
 
-template2: "octavoTuftePdf"
-  name: "Standard PDF"
+template1: "octavoTuftePdf"
+  name: "standard PDF"
+  templateextension: ".tex"
   format: "pdf"
   executable: "pandoc"
     arguments:
@@ -45,12 +46,16 @@ template2: "octavoTuftePdf"
           - "filterKeyword.py"
           - "filterDo.py"
           - "filterDivToTufte.py"
+          - "pandoc-crossref"
+          - "pandoc-citeproc"
+
 
 
 # Edward Tufte style, book
 
-template3: "octavoTufteBookPdf"
-  name: "Standard book PDF"
+template2: "octavoTufteBookPdf"
+  name: "standard book PDF"
+  templateextension: ".tex"
   format: "pdf"
   executable: "pandoc"
     arguments:
@@ -60,12 +65,16 @@ template3: "octavoTufteBookPdf"
           - "filterKeyword.py"
           - "filterDo.py"
           - "filterDivToTufte.py"
+          - "pandoc-crossref"
+          - "pandoc-citeproc"
+
 
 
 # Simple Pdf 
 
-template4: "octavoNormalPdf"
-  name: "Simplified Layout Pdf"
+template3: "octavoNormalPdf"
+  name: "simplified Layout PDF"
+  templateextension: ".tex"
   format: "pdf"
   executable: "pandoc"
     arguments:
@@ -75,11 +84,15 @@ template4: "octavoNormalPdf"
           - "filterKeyword.py"
           - "filterDo.py"
           - "filterDivToTufte.py"
+          - "pandoc-crossref"
+          - "pandoc-citeproc"
+
 
 # Large Pdf 
 
-template5: "octavoLargePdf"
-  name: "Simplified Layout Pdf"
+template4: "octavoLargePdf"
+  name: "simplified layout PDF with large text"
+  templateextension: "tex"
   format: "pdf"
   executable: "pandoc"
     arguments:
@@ -89,11 +102,15 @@ template5: "octavoLargePdf"
           - "filterKeyword.py"
           - "filterDo.py"
           - "filterDivToTufte.py"
+          - "pandoc-crossref"
+          - "pandoc-citeproc"
+
 
 # Simplified Pdf with Open Dyslexic 
 
-template6: "octavoOpenDyslexicPdf"
-  name: "Simplified Pdf with Open Dyslexic Font"
+template5: "octavoOpenDyslexicPdf"
+  name: "simplified PDF with Open Dyslexic font"
+  templateextension: "tex"
   format: "pdf"
   executable: "pandoc"
     arguments:
@@ -103,11 +120,14 @@ template6: "octavoOpenDyslexicPdf"
           - "filterKeyword.py"
           - "filterDo.py"
           - "filterDivToTufte.py"
+          - "pandoc-crossref"
+          - "pandoc-citeproc"
+
 
 # Webpage 
 
-template7: "octavoHtml"
-  name: "Simplified Pdf with Open Dyslexic Font"
+template6: "octavoHtml"
+  name: "webpage"
   format: "html"
   executable: "pandoc"
     arguments:
@@ -118,33 +138,44 @@ template7: "octavoHtml"
       - "--latex-engine=xelatex"
         filters:
           - "filterDivToHtml.py"
+          - "pandoc-crossref"
+          - "pandoc-citeproc"
+
 
 # Microsoft Word Document 
 
-template8: "octavoDocx"
+template7: "octavoDocx"
   name: "Microsoft Word format"
   format: "docx"
   executable: "pandoc"
     arguments:
       - "--latex-engine=xelatex"
+    filters:
+      - "pandoc-crossref"
+      - "pandoc-citeproc"
+
 
 # Spoken 
 
-template9: "octavoSpokenMacOs" # This is not a filename, but a special class handled by Octavo.sh
+template8: "octavoSpokenMacOs" # This is not a filename, but a special class handled by Octavo.sh
   name: "spoken format"
   format: "mp4"
   executable: "pandoc"
     filters:
       - "filterDivToLatex.py"
-  executable2: "pandoc"
-    arguments:
-      - "-f html"
-      - "-t plain"
-  executable3: "sed"
-    arguments:
-      - "sed 's/_//g; s/↩//g'"
-  executable: "say"
-    arguments:
-      - "--voice='Alex'"
-      - "--quality=127"
-      - "--file-format='mp4f'"
+      - "pandoc-crossref"
+      - "pandoc-citeproc"
+
+
+#   executable1: "pandoc"
+#     arguments:
+#       - "-f html"
+#       - "-t plain"
+#   executable2: "sed"
+#     arguments:
+#       - "sed 's/_//g; s/↩//g'"
+#   executable: "say"
+#     arguments:
+#       - "--voice='Alex'"
+#       - "--quality=127"
+#       - "--file-format='mp4f'"
