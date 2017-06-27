@@ -1370,6 +1370,8 @@ function templateNumToFilters () {
 					deployAction+="-o "
 					deployAction+="$deployto/$filenameSourceFile.$_format"
 
+debug "filters are ${_filters[*]}"
+					debug "deployAction is $deployAction"
 					echo "$deployAction"
 
 				}
@@ -1445,7 +1447,6 @@ function templateNumToFilters () {
 		# Check arguments
 
 		[[ "${arg_f:-}" ]]     || help      "Setting a filename with -f or --file is required"
-		[[ "${LOG_LEVEL:-}" ]] || emergency "Cannot continue without LOG_LEVEL. "
 
 		debug "__i_am_main_script: ${__i_am_main_script}"
 		debug "__file: ${__file}"
@@ -1473,11 +1474,13 @@ function templateNumToFilters () {
 
 		# debug mode
 		if [[ "${arg_d:?}" = "1" ]]; then
-			set -o xtrace
+			# set -o xtrace
 			LOG_LEVEL="7"
 			# Enable error backtracing
 			trap '__b3bp_err_report "${FUNCNAME:-.}" ${LINENO}' ERR
 		fi
+		
+		[[ "${LOG_LEVEL:-}" ]] || emergency "Cannot continue without LOG_LEVEL. "
 
 		# verbose mode
 		if [[ "${arg_v:?}" = "1" ]]; then

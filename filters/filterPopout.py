@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 """
 Pandoc filter to convert divs with class="exturl" to LaTeX

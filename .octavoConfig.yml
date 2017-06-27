@@ -150,9 +150,9 @@ template7: "octavoDocx"
   executable: "pandoc"
     arguments:
       - "--latex-engine=xelatex"
-    filters:
-      - "pandoc-crossref"
-      - "pandoc-citeproc"
+        filters:
+          - "pandoc-crossref"
+          - "pandoc-citeproc"
 
 
 # Spoken 
