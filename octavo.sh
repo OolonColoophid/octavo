@@ -1230,6 +1230,8 @@ function templateNumToArguments () {
 			affix="_executable_arguments"
 			# shellcheck disable=SC1087
 			storedArguments="$prefix$affix[@]"
+debug "storedArguments are ${!storedArguments}"
+
 			echo "${!storedArguments}"
 			
 			# Restore 'unbound' error checking 
@@ -1348,7 +1350,8 @@ function templateNumToFilters () {
 					_templateExtension="$(echo "$number" | templateNumToExtension)"
 
 
-					IFS=' ' read -r -a _arguments <<< "$(echo "$number" | templateNumToArguments)" # break formats into array
+					_arguments="$(echo "$number" | templateNumToArguments)"
+
 					IFS=' ' read -r -a _filters <<< "$(echo "$number" | templateNumToFilters)" # break formats into array
 
 					markdownSourceFileBasename="$(basename $markdownSourceFile)"
@@ -1415,7 +1418,8 @@ debug "filters are ${_filters[*]}"
 
 					if [[ "$DUMMY_RUN" == true ]]; then
 
-						echo "Pandoc command:"
+						echo "Pandoc command (not executed):"
+						echo
 						echo $pandocCommand
 						echo
 
@@ -1478,6 +1482,8 @@ debug "filters are ${_filters[*]}"
 			LOG_LEVEL="7"
 			# Enable error backtracing
 			trap '__b3bp_err_report "${FUNCNAME:-.}" ${LINENO}' ERR
+		else
+			LOG_LEVEL="6"
 		fi
 		
 		[[ "${LOG_LEVEL:-}" ]] || emergency "Cannot continue without LOG_LEVEL. "

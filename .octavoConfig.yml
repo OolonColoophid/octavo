@@ -128,6 +128,7 @@ template5: "octavoOpenDyslexicPdf"
 
 template6: "octavoHtml"
   name: "webpage"
+  templateextension: ".html"
   format: "html"
   executable: "pandoc"
     arguments:

@@ -1,0 +1,4 @@
+OPTIONS	octavoNew.sh	/^OPTIONS=(title metatitle author date version headi/
+__b3bp_log	octavo.sh	/^function __b3bp_log () {$/
+defaults	octavoNew.sh	/^defaults() {$/
+help	octavoNew.sh	/^help() {$/
