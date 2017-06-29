@@ -1414,11 +1414,18 @@ debug "filters are ${_filters[*]}"
 					 markdownSourcePrepared="$(splice "$markdownSourcePrepared" "<replace>wordCount</replace>" "$wordCount" "overwrite")"
 
 
-					 echo "$markdownSourcePrepared" > ~/Desktop/pandocOutput.markdown
 
 					if [[ "$DUMMY_RUN" == true ]]; then
 
-						echo "Pandoc command (not executed):"
+						if [[ "$pandocCommand" == *"SpokenMacOs"* ]]; then
+
+							echo "Spoken file would be created"
+
+							continue
+
+						fi
+						
+						echo "Pandoc command (not executed) would be:"
 						echo
 						echo $pandocCommand
 						echo
@@ -1432,14 +1439,13 @@ debug "filters are ${_filters[*]}"
 
 							cd "$__dir"
 						else 
-							echo "$markdownSourcePrepared" | eval "$(echo $pandocCommand)"
+echo "$markdownSourcePrepared" | eval "$(echo $pandocCommand)"
 							
 						fi
 
 					fi
-
-
 				fi
+
 
 			done
 
