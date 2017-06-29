@@ -449,6 +449,19 @@ function checkSet () {
 }
 
 
+function randomString () {
+
+	debug "Function: generateID"
+
+	# This function generates a random (ish) five-character mixture
+	# of upper and lower case characters
+
+	seed=$(($(date +%s%n) + $RANDOM)) 
+	echo $seed | md5 | base64 | head -c 5
+
+}
+
+
 function splice () {
 
 	debug "Function: splice"
@@ -670,6 +683,72 @@ function yamlAddCustomYaml () {
 
 		######################################################################################
 
+function createSpokenVersion () {
+
+	debug "Function: createSpokenVersion"
+
+	# - takes multiline source text
+	# - writes a spoken version file
+
+	# Improvements: make this work for all variable names with underscores,
+	# move it to the end of the yamlParseToBashVariables function
+
+	pipedInput="$(cat)" # Capture multi-line input from Stdin
+
+
+# Here is what worked in the original version of Octavo:
+# octavoSpoken, "spoken format", sed "s@& documentFormat &@$deployDescription[$counter]@g" | pandoc  $customfilterfour --filter="$OCTAVOPATH/filters/filterDivToLatex.py" $customfilterone $customfiltertwo $customfilterthree "$numberSections" | pandoc -f html -t plain | sed 's/_//g' | sed 's/↩//g' | say --voice='Alex'--quality=127 --file-format='mp4f' -o "$deployto/$basenameSourceFile$element$mdFive.mp4",.mp4
+
+for indexReq in "${!deployFormatRequestedStatus[@]}" # Loop through the available templates
+
+
+			do
+
+
+				if [[ "${deployFormatRequestedStatus[indexReq]}" == *"true"* ]]; then
+
+					templateName=$(echo "$indexReq" | templateNumToTemplate)
+
+					if [[ "$templateName" == "octavoSpokenMacOs" ]]; then
+
+						
+						filters=$(echo "$indexReq" | templateNumToFilters)
+
+						_format="$(echo "$indexReq" | templateNumToFormat)"
+
+						name="$(echo "$indexReq" | templateNumToTemplate)"
+
+					fi
+				fi
+			done
+
+# Note that the code to generate the filename is copied from templateNumToPandocCommand 
+			markdownSourceFileBasename="$(basename $markdownSourceFile)"
+			filenameSourceFile="${markdownSourceFileBasename%.*}" # trim extension
+
+			# shellcheck disable=SC2154
+			if [[ "${mdfivehashset}" == "true" ]]; then
+				filenameSourceFile+="_$mdFiveHashOutput"
+			fi
+
+			filenameSourceFile="$filenameSourceFile$name"
+
+
+
+spokenCommand="pandoc $filters | pandoc -f html -t plain | sed 's/_//g' | sed 's/↩//g' | say --voice='Alex' --quality=127 --file-format='mp4f' -o \"$localStagingDir/$filenameSourceFile.$_format\""
+
+
+if [[ "$DUMMY_RUN" == true ]]; then
+
+	echo "Pandoc command (not executed):"
+	echo
+	echo "$spokenCommand"
+else
+
+	echo "$pipedInput" | eval "$(echo $spokenCommand)"
+
+fi
+}
 
 		function addDeploymentText () {
 			debug "Function: addDeploymentText"
@@ -711,8 +790,8 @@ function yamlAddCustomYaml () {
 			# Returns a piece of the 'deployment' text telling the user
 			# which formats the document exists in
 
-			pipedInput="$1" # Capture input from Stdin
-			availableFormat="$pipedInput"
+			availableFormat="$1"
+
 
 			textBody+="["
 			textBody+="$(echo "$availableFormat" | formatToTemplateName | sed 's/,//g')"
@@ -727,6 +806,8 @@ function yamlAddCustomYaml () {
 
 			fi
 
+			textBody+="$availableFormat | sed 's/,//g'"
+
 			textBody+="."
 			textBody+="$(echo "$availableFormat" | formatToTemplateExtension | sed 's/,//g')"
 			textBody+=")"
@@ -735,7 +816,7 @@ function yamlAddCustomYaml () {
 			# if 'and' is used here when it's
 			# the last loop
 			textBody+=", "
-			
+		debug "Text body is $textBody"	
 			echo "$textBody"
 
 		}
@@ -997,7 +1078,7 @@ function yamlAddCustomYaml () {
 			debug "Function: formatToTemplateExtension"
 
 			# Receives a format, e.g. docx
-			# Pipes back the file extension, e.g. pdf
+			# Pipes back the file extension, e.g. .docx
 			pipedInput="$(cat)" # Capture input from Stdin
 			# shellcheck disable=SC2034
 			requestedFormat="$pipedInput"
@@ -1361,8 +1442,12 @@ function templateNumToFilters () {
 					if [[ "${mdfivehashset}" == "true" ]]; then
 						filenameSourceFile+="_$mdFiveHashOutput"
 					fi
+					
+					name="$(echo "$number" | templateNumToTemplate)"
 
 					# Build up deployment command
+
+					filenameSourceFile="$filenameSourceFile$name"
 					deployAction="$_executable "
 
 					# shellcheck disable=SC2124
@@ -1371,7 +1456,7 @@ function templateNumToFilters () {
 					deployAction+="$_arguments "
 					# deployAction+="--verbose "
 					deployAction+="-o "
-					deployAction+="$deployto/$filenameSourceFile.$_format"
+					deployAction+="$localStagingDir/$filenameSourceFile.$_format"
 
 debug "filters are ${_filters[*]}"
 					debug "deployAction is $deployAction"
@@ -1419,7 +1504,7 @@ debug "filters are ${_filters[*]}"
 
 						if [[ "$pandocCommand" == *"SpokenMacOs"* ]]; then
 
-							echo "Spoken file would be created"
+	echo "$markdownSourcePrepared" | createSpokenVersion
 
 							continue
 
@@ -1432,19 +1517,23 @@ debug "filters are ${_filters[*]}"
 
 					else
 
-						if [[ "$markdownSourceFile" != "$(basename "$markdownSourceFile")" ]]; then 
-							cd "$(dirname $markdownSourceFile)"
+						if [[ "$markdownSourceFile" != "$(basename "$markdownSourceFile")" ]]; then cd "$(dirname $markdownSourceFile)"; fi
+
+						if [[ "$pandocCommand" == *"SpokenMacOs"* ]]; then
+					
+							echo "$markdownSourcePrepared" | createSpokenVersion
+
+						else
 
 							echo "$markdownSourcePrepared" | eval "$(echo $pandocCommand)"
+						
+						fi
 
-							cd "$__dir"
-						else 
-echo "$markdownSourcePrepared" | eval "$(echo $pandocCommand)"
+						if [[ "$markdownSourceFile" != "$(basename "$markdownSourceFile")" ]]; then cd "$__dir"; fi
 							
 						fi
 
 					fi
-				fi
 
 
 			done
@@ -1555,8 +1644,7 @@ debug "sourceFileBasename = $sourceFileBasename"
 			declare -x octavoPath=${__dir}
 		fi	
 
-
-
+		
 
 
 
@@ -1573,6 +1661,12 @@ debug "sourceFileBasename = $sourceFileBasename"
 		sourceMarkdownFileYaml "$markdownSourceFile"       # Set Bash variables from Markdown source yaml
 
 		checkSet                                           # Verify variables are set appropriately
+		
+		# Set a local staging directory for deployed files
+		localStagingDir="$deployto/.$(randomString)"
+
+		mkdir "$localStagingDir"
+
 
 		markdownSourcePrepared="$(markdownSourcePrepare)"  # Finalised Markdown for deployment
 
@@ -1584,13 +1678,47 @@ debug "sourceFileBasename = $sourceFileBasename"
 			echo "$markdownSourcePrepared"
 		fi
 
+		
+	if [[ "$ftpdeploy" == "no" ]]; then
 
-		# Replace special tag
+	:
+
+else
 
 
-		############################
+	# Begin FTP if required
+
+if [[ -a "$HOME/.netrc" ]] ; then
+	
+cd "$localStagingDir"
+
+if [[ "$DUMMY_RUN" != true ]]; then
+
+	ftp -i -v "$remoteserver" > "/dev/null" <<ENDOFCOMMANDS
+
+	cd $remotedirectory
+	mput *.*
+	quit
+
+ENDOFCOMMANDS
+fi
+
+else
+
+	echo "Could not find ~/.netrc file for FTP session"
 
 
+fi
+	
+
+	fi
+
+# Move files out of staging area
+if [[ "$DUMMY_RUN" != true ]]; then
+
+	cp -R "$localStagingDir/" "$deployto/" && rm -r "$localStagingDir"
+
+fi
 
 
 

@@ -92,7 +92,7 @@ template3: "octavoNormalPdf"
 
 template4: "octavoLargePdf"
   name: "simplified layout PDF with large text"
-  templateextension: "tex"
+  templateextension: ".tex"
   format: "pdf"
   executable: "pandoc"
     arguments:
@@ -110,7 +110,7 @@ template4: "octavoLargePdf"
 
 template5: "octavoOpenDyslexicPdf"
   name: "simplified PDF with Open Dyslexic font"
-  templateextension: "tex"
+  templateextension: ".tex"
   format: "pdf"
   executable: "pandoc"
     arguments:
@@ -162,10 +162,12 @@ template8: "octavoSpokenMacOs" # This is not a filename, but a special class han
   name: "spoken format"
   format: "mp4"
   executable: "pandoc"
-    filters:
-      - "filterDivToLatex.py"
-      - "pandoc-crossref"
-      - "pandoc-citeproc"
+    arguments:
+      - ""
+        filters:
+          - "filterDivToLatex.py"
+          - "pandoc-crossref"
+          - "pandoc-citeproc"
 
 
 #   executable1: "pandoc"
