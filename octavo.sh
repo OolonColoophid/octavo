@@ -456,6 +456,7 @@ function randomString () {
 	# This function generates a random (ish) five-character mixture
 	# of upper and lower case characters
 
+	#shellcheck disable=SC2004
 	seed=$(($(date +%s%n) + $RANDOM)) 
 	echo $seed | md5 | base64 | head -c 5
 
@@ -489,6 +490,7 @@ function splice () {
 				echo "$line"
 			fi
 
+			#shellcheck disable=SC2001
 			echo "$line" | sed "s@$pattern@$replacement@g" 
 
 		     continue	
@@ -640,6 +642,7 @@ function yamlAddCustomYaml () {
 				exit 77
 			fi
 
+			#shellcheck disable=SC2034
 			includeYaml="$(cat "$includeYamlFilename")"
 			echo "$pipedInput" | awk -v includeYamlFilename="$includeYamlFilename" '/includeyaml/{system("cat " includeYamlFilename);next}1' 
 
@@ -723,7 +726,7 @@ for indexReq in "${!deployFormatRequestedStatus[@]}" # Loop through the availabl
 			done
 
 # Note that the code to generate the filename is copied from templateNumToPandocCommand 
-			markdownSourceFileBasename="$(basename $markdownSourceFile)"
+			markdownSourceFileBasename="$(basename "$markdownSourceFile")"
 			filenameSourceFile="${markdownSourceFileBasename%.*}" # trim extension
 
 			# shellcheck disable=SC2154
@@ -735,6 +738,7 @@ for indexReq in "${!deployFormatRequestedStatus[@]}" # Loop through the availabl
 
 
 
+	#shellcheck disable=SC2089
 spokenCommand="pandoc $filters | pandoc -f html -t plain | sed 's/_//g' | sed 's/↩//g' | say --voice='Alex' --quality=127 --file-format='mp4f' -o \"$localStagingDir/$filenameSourceFile.$_format\""
 
 
@@ -744,8 +748,9 @@ if [[ "$DUMMY_RUN" == true ]]; then
 	echo
 	echo "$spokenCommand"
 else
-
-	echo "$pipedInput" | eval "$(echo $spokenCommand)"
+	
+	#shellcheck disable=SC2116
+	echo "$pipedInput" | eval "$(echo "$spokenCommand")"
 
 fi
 }
@@ -778,7 +783,7 @@ fi
 
 			deploymentTextBody="$(echo "$deploymentTextBody" | rev | sed 's/ ,//' | sed 's/ ,/ dna /' | rev)" # Add the final 'and' to the list of names
 
-			deploymentTextAll="This document is available in $(echo "$deploymentTextBody".)"
+			deploymentTextAll="This document is available in $deploymentTextBody."
 
 			splice "$pipedInput" "<replace>deployments</replace>" "$deploymentTextAll" "overwrite"
 		
@@ -797,6 +802,7 @@ fi
 			textBody+="$(echo "$availableFormat" | formatToTemplateName | sed 's/,//g')"
 			textBody+="]"
 			textBody+="("
+			# shellcheck disable=SC2154
 			textBody+="$httpdestination"
 			textBody+="$sourceFileBasename"
 
@@ -805,9 +811,9 @@ fi
 				textBody+="_$mdFiveHashOutput"
 
 			fi
-
+			
+			# shellcheck disable=SC2001
 			textBody+="$(echo "$availableFormat" | sed 's/,//g')"
-
 			textBody+="."
 			textBody+="$(echo "$availableFormat" | formatToTemplateExtension | sed 's/,//g')"
 			textBody+=")"
@@ -840,6 +846,7 @@ fi
 			dateOutput="$(date "+%D %T")"
 			# Note computerOutput only works for MacOS in this form
 			hostName="$(hostname -s | sed 's/\.local//g' | sed 's/\b./\u&/g')"
+			# shellcheck disable=SC2086
 			hostName="$(tr '[:lower:]' '[:upper:]' <<< ${hostName:0:1})${hostName:1}" # Trick to upper case hostname
 
 			sed "s@\$HOME@$HOME@g; s@\$octavoPath@$octavoPath@g" \
@@ -1102,6 +1109,7 @@ fi
 				currentFormat_ext="${!storedFormat_ext}" # Echo variable of, e.g., template1_name
 
 				if [[ $requestedFormat == *"$currentFormat"* ]]; then
+					# shellcheck disable=SC2001
 					format_ext="$(echo "$requestedFormat" | sed "s/$currentFormat/$currentFormat_ext/g")"
 				fi
 
@@ -1144,6 +1152,7 @@ fi
 				currentFormat_name="${!storedFormat_name}" # Echo variable of, e.g., template1_name
 
 				if [[ $requestedFormat == *"$currentFormat"* ]]; then
+					# shellcheck disable=SC2001
 					format_Name="$(echo "$requestedFormat" | sed "s/$currentFormat/$currentFormat_name/g")"
 				fi
 
@@ -1435,7 +1444,9 @@ function templateNumToFilters () {
 
 					IFS=' ' read -r -a _filters <<< "$(echo "$number" | templateNumToFilters)" # break formats into array
 
-					markdownSourceFileBasename="$(basename $markdownSourceFile)"
+					markdownSourceFileBasename="$(basename "$markdownSourceFile")"
+
+					# shellcheck disable=SC2086
 					filenameSourceFile="${markdownSourceFileBasename%.*}" # trim extension
 
 					# shellcheck disable=SC2154
@@ -1493,12 +1504,15 @@ debug "filters are ${_filters[*]}"
 					pandocCommand="$(echo "$indexReq" | templateNumToPandocCommand)"
 
 					 markdownSourceTemp="$markdownSourcePrepared"
+					
+					 # shellcheck disable=SC2154
 					 markdownSourcePrepared="$(splice "$markdownSourceTemp" "<replace>version</replace>" "$version" "overwrite")"
 
-					 wordCount="$(wc -w <(echo $markdownSourcePrepared) | sed 's/\/.*$//g' | sed 's/ //g')"
+					 wordCount="$(wc -w <(echo "$markdownSourcePrepared") | sed 's/\/.*$//g' | sed 's/ //g')"
 					 markdownSourcePrepared="$(splice "$markdownSourcePrepared" "<replace>wordCount</replace>" "$wordCount" "overwrite")"
 
 					 templateName="$(echo "$indexReq" | templateNumToName)"
+					 # shellcheck disable=SC2086
 					 templateName="$(tr '[:lower:]' '[:upper:]' <<< ${templateName:0:1})${templateName:1}" # Uppercase initial character
 					 markdownSourcePrepared="$(splice "$markdownSourcePrepared" "<replace>documentFormat</replace>" "$templateName" "overwrite")"
 
@@ -1515,11 +1529,12 @@ debug "filters are ${_filters[*]}"
 						
 						echo "Pandoc command (not executed) would be:"
 						echo
-						echo $pandocCommand
+						echo "$pandocCommand"
 						echo
 
 					else
 
+						# shellcheck disable=SC2086
 						if [[ "$markdownSourceFile" != "$(basename "$markdownSourceFile")" ]]; then cd "$(dirname $markdownSourceFile)"; fi
 
 						if [[ "$pandocCommand" == *"SpokenMacOs"* ]]; then
@@ -1528,7 +1543,8 @@ debug "filters are ${_filters[*]}"
 
 						else
 
-							echo "$markdownSourcePrepared" | eval "$(echo $pandocCommand)"
+							# shellcheck disable=SC2116
+							echo "$markdownSourcePrepared" | eval "$(echo "$pandocCommand")"
 						
 						fi
 
@@ -1544,6 +1560,18 @@ debug "filters are ${_filters[*]}"
 			# No more unbound errors expected
 			set -o nounset
 
+		}
+
+		function printOutputIfAsked {
+
+			# Echoes back finalised version of Markdown with
+			# all changes made
+
+			debug "Function: printOutputIfAsked"
+
+			if [[ "${arg_o:?}" = "1" ]]; then
+				echo "$markdownSourcePrepared"
+			fi
 		}
 
 		# Check arguments
@@ -1676,32 +1704,31 @@ debug "sourceFileBasename = $sourceFileBasename"
 
 		getRequestedDeployFormats | pandocDeploy
 
-		#print output
-		if [[ "${arg_o:?}" = "1" ]]; then
-			echo "$markdownSourcePrepared"
-		fi
-
-		
-	if [[ "$ftpdeploy" == "no" ]]; then
-
-	:
-
-else
+printOutputIfAsked
 
 
-	# Begin FTP if required
 
-if [[ -a "$HOME/.netrc" ]] ; then
-	
-cd "$localStagingDir"
+		# shellcheck disable=SC2154
+		if [[ "$ftpdeploy" == "no" ]]; then
 
-if [[ "$DUMMY_RUN" != true ]]; then
+			:
 
-	ftp -i -v "$remoteserver" > "/dev/null" <<ENDOFCOMMANDS
+		else
 
-	cd $remotedirectory
-	mput *.*
-	quit
+
+			# Begin FTP if required
+
+			if [[ -a "$HOME/.netrc" ]] ; then
+
+				cd "$localStagingDir"
+
+				if [[ "$DUMMY_RUN" != true ]]; then
+
+					ftp -i -v "$remoteserver" > "/dev/null" <<ENDOFCOMMANDS
+
+					cd $remotedirectory
+					mput *.*
+					quit
 
 ENDOFCOMMANDS
 fi
@@ -1712,16 +1739,16 @@ else
 
 
 fi
-	
+
 
 	fi
 
-# Move files out of staging area
-if [[ "$DUMMY_RUN" != true ]]; then
+	# Move files out of staging area
+	if [[ "$DUMMY_RUN" != true ]]; then
 
-	cp -R "$localStagingDir/" "$deployto/" && rm -r "$localStagingDir"
+		cp -R "$localStagingDir/" "$deployto/" && rm -r "$localStagingDir"
 
-fi
+	fi
 
 
 
