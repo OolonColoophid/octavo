@@ -9,7 +9,7 @@ headquoteauthor:   "HAL 9000, Discovery One"
 httpdestination:   "http://cccupsychology.com/deployIh/sandbox/"
 remotedirectory:   "sandbox/"
 deployto:          "$octavoPath/sandbox/deploy"
-formats:           "all"
+formats:           "octavoTuftePdf"
 preview:           ""
 ftpdeploy:         "yes"
 ftppath:           "deployIh/sandbox"
@@ -21,6 +21,7 @@ redact:            "no"
 customfilters:     "" 
 includeyaml:       "$octavoPath/templates/documentDefault.yml"
 ...
+
 
 # Introduction to Tlearn {#intro}
 
@@ -474,7 +475,7 @@ There are two other important functions to look at. Remember, we're trying to mo
 
 # Versions {#versions}
 
-& deployments &
+<replace>deployments</replace>
 
 <include>licence</include>
 

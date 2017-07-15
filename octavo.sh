@@ -750,7 +750,7 @@ else
 fi
 }
 
-		function addDeploymentText () {
+	function addDeploymentText () {
 			debug "Function: addDeploymentText"
 
 			# Receives entire text of file; outputs entire text of file
@@ -780,7 +780,7 @@ fi
 
 			deploymentTextAll="This document is available in $(echo "$deploymentTextBody".)"
 
-			splice "$pipedInput" "& deployments &" "$deploymentTextAll" "overwrite"
+			splice "$pipedInput" "<replace>deployments</replace>" "$deploymentTextAll" "overwrite"
 		
 		}
 
@@ -806,7 +806,7 @@ fi
 
 			fi
 
-			textBody+="$availableFormat | sed 's/,//g'"
+			textBody+="$(echo "$availableFormat" | sed 's/,//g')"
 
 			textBody+="."
 			textBody+="$(echo "$availableFormat" | formatToTemplateExtension | sed 's/,//g')"
@@ -1176,7 +1176,7 @@ fi
 			set -o nounset
 
 		}
-	
+
 		function templateNumToName () {
 
 			debug "Function: templateNumToName"
@@ -1498,6 +1498,9 @@ debug "filters are ${_filters[*]}"
 					 wordCount="$(wc -w <(echo $markdownSourcePrepared) | sed 's/\/.*$//g' | sed 's/ //g')"
 					 markdownSourcePrepared="$(splice "$markdownSourcePrepared" "<replace>wordCount</replace>" "$wordCount" "overwrite")"
 
+					 templateName="$(echo "$indexReq" | templateNumToName)"
+					 templateName="$(tr '[:lower:]' '[:upper:]' <<< ${templateName:0:1})${templateName:1}" # Uppercase initial character
+					 markdownSourcePrepared="$(splice "$markdownSourcePrepared" "<replace>documentFormat</replace>" "$templateName" "overwrite")"
 
 
 					if [[ "$DUMMY_RUN" == true ]]; then
