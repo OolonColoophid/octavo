@@ -1,0 +1,22 @@
+---
+title:             "MPSMD3ART Workshop 1, Introduction"
+title-meta:        "MPSMD3ART Workshop 1, Introduction"
+date:              "February 2017 to April"
+version:           1.0 
+headimage:         "$octavoPath/sandbox/media/hal"
+headquote:         "I'm sorry, Dave. I'm afraid I can't do that."
+headquoteauthor:   "HAL 9000, Discovery One"
+httpdestination:   "http://cccupsychology.com/deployIh/sandbox/"
+remotedirectory:   "sandbox/"
+deployto:          "$octavoPath/sandbox/deploy"
+formats:           "octavoTuftePdf"
+preview:           ""
+ftpdeploy:         "yes"
+ftppath:           "deployIh/sandbox"
+spokendeploy:      "yes"
+refreshcalendar:   "no"
+bibliography:      "$octavoPath/sandbox/bibliography.bib"
+mdfivehashset:     true
+redact:            "no"
+customfilters:     "" 
+includeyaml:       "$octavoPath/templates/documentDefault.yml"

@@ -8,7 +8,7 @@ linespread:        "1.3"
 numbersections:    "--number-sections"
 citation-style:    "https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl"
 link-citations:    false
-solariseddarkon:   false 
+solariseddarkon:   false
 solariseddarkoff:  true
 autoEqnLabels:     true
 figPrefix:
@@ -22,5 +22,5 @@ eqnPrefix:
   - "Equations"
 figureTitle: "Figure"
 tableTitle: "Table"
-loftitle: "# List of Figures"
-lotTitle: "# List of Tablas"
+lofTitle: "List of Figures"
+lotTitle: "List of Tables"

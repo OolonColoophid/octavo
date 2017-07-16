@@ -152,6 +152,7 @@ usage: octavo.sh -f <file> [-c <file>] [-ybvdhn]
 -d --debug         Enables debug mode
 -n --no-color      Disable color output
 -o --output        Print processed Markdown
+-p --pandocverbose Verbose Pandoc output to standard output
 -u --dummy         Dummy run
 -v --verbose       Enable verbose mode; print script as it is executed
 -y --yaml          Print Yaml of Markdown file to standard output
@@ -493,7 +494,7 @@ function splice () {
 			#shellcheck disable=SC2001
 			echo "$line" | sed "s@$pattern@$replacement@g" 
 
-		     continue	
+			continue	
 		fi
 		echo "$line"
 	done < <(echo "$sourceText" )
@@ -600,20 +601,12 @@ function yamlSplitFromMarkdown () {
 	# - takes file text
 	# - returns file text
 
-	# Improvements:
-	# This only works in the yaml is at the head of file. Why not be
-	# flexible and have it allowed anywhere?
 
 	pipedInput="$(cat)" # Capture multi-line input from Stdin
 
+	echo "$pipedInput" | sed -n '/^---$/,/^---$/p' | sed '/^---$/d'
 
-	yamlHeaderSize="$(echo "$pipedInput" | egrep -n "\.\.\." | sed 's/:...//g')"
-
-	debug "Will split Markdown at $yamlHeaderSize"
-
-	echo "$pipedInput" | head -n "$yamlHeaderSize" | sed "s/^---$//g; s/^...$//g"
-
-}
+	}
 
 function yamlAddCustomYaml () {
 
@@ -648,7 +641,7 @@ function yamlAddCustomYaml () {
 
 			;;
 		*)
-			debug "Did not find yaml to include"
+			debug "No request to include yaml"
 			echo "$pipedInput"
 			;;
 
@@ -670,7 +663,7 @@ function yamlAddCustomYaml () {
 
 		pipedInput="$(cat)" # Capture multi-line input from Stdin
 
-		# Find quotes marked with a hash and remove them.
+		# Find comments marked with a hash and remove them.
 		#shellcheck disable=SC2001
 		echo "$pipedInput" | \
 			sed 's/ *#.*//g'
@@ -686,23 +679,23 @@ function yamlAddCustomYaml () {
 
 		######################################################################################
 
-function createSpokenVersion () {
+		function createSpokenVersion () {
 
-	debug "Function: createSpokenVersion"
+			debug "Function: createSpokenVersion"
 
-	# - takes multiline source text
-	# - writes a spoken version file
+			# - takes multiline source text
+			# - writes a spoken version file
 
-	# Improvements: make this work for all variable names with underscores,
-	# move it to the end of the yamlParseToBashVariables function
+			# Improvements: make this work for all variable names with underscores,
+			# move it to the end of the yamlParseToBashVariables function
 
-	pipedInput="$(cat)" # Capture multi-line input from Stdin
+			pipedInput="$(cat)" # Capture multi-line input from Stdin
 
 
-# Here is what worked in the original version of Octavo:
-# octavoSpoken, "spoken format", sed "s@& documentFormat &@$deployDescription[$counter]@g" | pandoc  $customfilterfour --filter="$OCTAVOPATH/filters/filterDivToLatex.py" $customfilterone $customfiltertwo $customfilterthree "$numberSections" | pandoc -f html -t plain | sed 's/_//g' | sed 's/↩//g' | say --voice='Alex'--quality=127 --file-format='mp4f' -o "$deployto/$basenameSourceFile$element$mdFive.mp4",.mp4
+			# Here is what worked in the original version of Octavo:
+			# octavoSpoken, "spoken format", sed "s@& documentFormat &@$deployDescription[$counter]@g" | pandoc  $customfilterfour --filter="$OCTAVOPATH/filters/filterDivToLatex.py" $customfilterone $customfiltertwo $customfilterthree "$numberSections" | pandoc -f html -t plain | sed 's/_//g' | sed 's/↩//g' | say --voice='Alex'--quality=127 --file-format='mp4f' -o "$deployto/$basenameSourceFile$element$mdFive.mp4",.mp4
 
-for indexReq in "${!deployFormatRequestedStatus[@]}" # Loop through the available templates
+			for indexReq in "${!deployFormatRequestedStatus[@]}" # Loop through the available templates
 
 
 			do
@@ -714,7 +707,7 @@ for indexReq in "${!deployFormatRequestedStatus[@]}" # Loop through the availabl
 
 					if [[ "$templateName" == "octavoSpokenMacOs" ]]; then
 
-						
+
 						filters=$(echo "$indexReq" | templateNumToFilters)
 
 						_format="$(echo "$indexReq" | templateNumToFormat)"
@@ -725,7 +718,7 @@ for indexReq in "${!deployFormatRequestedStatus[@]}" # Loop through the availabl
 				fi
 			done
 
-# Note that the code to generate the filename is copied from templateNumToPandocCommand 
+			# Note that the code to generate the filename is copied from templateNumToPandocCommand 
 			markdownSourceFileBasename="$(basename "$markdownSourceFile")"
 			filenameSourceFile="${markdownSourceFileBasename%.*}" # trim extension
 
@@ -738,24 +731,24 @@ for indexReq in "${!deployFormatRequestedStatus[@]}" # Loop through the availabl
 
 
 
-	#shellcheck disable=SC2089
-spokenCommand="pandoc $filters | pandoc -f html -t plain | sed 's/_//g' | sed 's/↩//g' | say --voice='Alex' --quality=127 --file-format='mp4f' -o \"$localStagingDir/$filenameSourceFile.$_format\""
+			#shellcheck disable=SC2089
+			spokenCommand="pandoc $filters | pandoc -f html -t plain | sed 's/_//g' | sed 's/↩//g' | say --voice='Alex' --quality=127 --file-format='mp4f' -o \"$localStagingDir/$filenameSourceFile.$_format\""
 
 
-if [[ "$DUMMY_RUN" == true ]]; then
+			if [[ "$DUMMY_RUN" == true ]]; then
 
-	echo "Pandoc command (not executed):"
-	echo
-	echo "$spokenCommand"
-else
-	
-	#shellcheck disable=SC2116
-	echo "$pipedInput" | eval "$(echo "$spokenCommand")"
+				echo "Pandoc command (not executed):"
+				echo
+				echo "$spokenCommand"
+			else
 
-fi
-}
+				#shellcheck disable=SC2116
+				echo "$pipedInput" | eval "$(echo "$spokenCommand")"
 
-	function addDeploymentText () {
+			fi
+		}
+
+		function addDeploymentText () {
 			debug "Function: addDeploymentText"
 
 			# Receives entire text of file; outputs entire text of file
@@ -786,7 +779,7 @@ fi
 			deploymentTextAll="This document is available in $deploymentTextBody."
 
 			splice "$pipedInput" "<replace>deployments</replace>" "$deploymentTextAll" "overwrite"
-		
+
 		}
 
 		function buildDeploymentText () {
@@ -811,7 +804,7 @@ fi
 				textBody+="_$mdFiveHashOutput"
 
 			fi
-			
+
 			# shellcheck disable=SC2001
 			textBody+="$(echo "$availableFormat" | sed 's/,//g')"
 			textBody+="."
@@ -822,7 +815,7 @@ fi
 			# if 'and' is used here when it's
 			# the last loop
 			textBody+=", "
-		debug "Text body is $textBody"	
+			debug "Text body is $textBody"	
 			echo "$textBody"
 
 		}
@@ -962,12 +955,9 @@ fi
 
 			debug "Function: parseMarkdownSource"
 
-			sourceCutPoint=$(egrep -n "\.\.\." < "$sourceFile" | sed 's/:...//g') 
-			sourceFileLength="$(sed -n '$=' < "$sourceFile")"
-			sourceBodyLength="$((sourceFileLength-sourceCutPoint))"
+			sourceYaml="$(cat "$1" | sed -n '/^---$/,/^---$/p')"
 
-			sourceYaml="$(head -n "$sourceCutPoint" < "$sourceFile")"
-			sourceBody="$(tail -"$sourceBodyLength" < "$sourceFile")"
+			sourceBody="$(cat "$1" | sed '/^---$/,/^---$/{//!d;}' | sed '/^---$/d')"
 
 			case "$exportPreference" in
 				yaml) echo "$sourceYaml" | expandStrings | yamlAddCustomYaml | yamlRemoveComments
@@ -1056,7 +1046,7 @@ fi
 		function markdownSourcePrepare() {
 
 			echo "$markdownSourceFile" | \
-				getMarkdownFileYaml | yamlAddCustomYaml
+				getMarkdownFileYaml
 
 			echo "$markdownSourceFile" | \
 				getMarkdownFileBody | \
@@ -1066,12 +1056,12 @@ fi
 
 
 		}
-	
+
 		function templateCount () {
 
-# Receives nothing
-# Pipes back the number of available templates
-# in .octavoConfig.yml
+			# Receives nothing
+			# Pipes back the number of available templates
+			# in .octavoConfig.yml
 
 			debug "Function: templateCount"
 
@@ -1092,7 +1082,7 @@ fi
 
 			# Ingore 'unbound' errors for the time being
 			set +o nounset
-			
+
 			availableFormatCount="$(templateCount)" # get number of elements available 
 
 			# Iterate through all templates
@@ -1102,7 +1092,7 @@ fi
 			do
 				storedFormat="template$indexAvail"
 				currentFormat="${!storedFormat}" # Echo variable of, e.g., template1
-			
+
 
 				storedFormat_ext="template$indexAvail"
 				storedFormat_ext+="_format"
@@ -1135,7 +1125,7 @@ fi
 
 			# Ingore 'unbound' errors for the time being
 			set +o nounset
-			
+
 			availableFormatCount="$(templateCount)" # get number of elements available 
 
 			# Iterate through all templates
@@ -1145,7 +1135,7 @@ fi
 			do
 				storedFormat="template$indexAvail"
 				currentFormat="${!storedFormat}" # Echo variable of, e.g., template1
-			
+
 
 				storedFormat_name="template$indexAvail"
 				storedFormat_name+="_name"
@@ -1202,14 +1192,14 @@ fi
 			prefix=$storedTemplate
 			affix="_name"
 			storedName="$prefix$affix"
-			
+
 			echo "${!storedName}"
 
 			# Restore 'unbound' error checking 
 			set -o nounset
 
 		}	
-	
+
 		function templateNumToFormat () {
 
 			debug "Function: templateNumToFormat"
@@ -1226,18 +1216,18 @@ fi
 			prefix=$storedTemplate
 			affix="_format"
 			storedFormat="$prefix$affix"
-			
+
 			echo "${!storedFormat}"
 
 			# Restore 'unbound' error checking 
 			set -o nounset
 
 		}	
-	
+
 		function templateNumToExecutable () {
 
 			debug "Function: templateNumToExecutable"
-		
+
 			# Receives a template number, 0+
 			# Pipes back the name of the executable 
 			pipedInput="$(cat)" # Capture input from Stdin
@@ -1250,7 +1240,7 @@ fi
 			prefix=$storedTemplate
 			affix="_executable"
 			storedExecutable="$prefix$affix"
-			
+
 			# Check executable against whitelist
 			if [ -z "${_executable+x}" ]; then 
 				:
@@ -1275,11 +1265,11 @@ fi
 
 		}	
 
-	
+
 		function templateNumToExtension () {
 
 			debug "Function: templateNumToExtension"
-		
+
 			# Receives a template number, 0+
 			# Pipes back the name of the template extension 
 			pipedInput="$(cat)" # Capture input from Stdin
@@ -1292,8 +1282,8 @@ fi
 			prefix=$storedTemplateExtension
 			affix="_templateextension"
 			storedExtension="$prefix$affix"
-						
-			
+
+
 			echo "${!storedExtension}"
 
 
@@ -1302,7 +1292,7 @@ fi
 
 		}	
 
-function templateNumToArguments () {
+		function templateNumToArguments () {
 
 			debug "Function: templateNumToArguments"
 
@@ -1320,17 +1310,17 @@ function templateNumToArguments () {
 			affix="_executable_arguments"
 			# shellcheck disable=SC1087
 			storedArguments="$prefix$affix[@]"
-debug "storedArguments are ${!storedArguments}"
+			debug "storedArguments are ${!storedArguments}"
 
 			echo "${!storedArguments}"
-			
+
 			# Restore 'unbound' error checking 
 			set -o nounset
 
 
-				}
+		}
 
-function templateNumToFilters () {
+		function templateNumToFilters () {
 
 			debug "Function: templateNumToFilters"
 
@@ -1348,9 +1338,9 @@ function templateNumToFilters () {
 			affix="_executable_arguments__filters"
 			# shellcheck disable=SC1087
 			storedFilters="$prefix$affix[@]"
-			
+
 			__filterstring="${!storedFilters}"
-			
+
 			IFS=' ' read -r -a __filters <<< "$__filterstring"
 
 			# Add a redaction filter, if requested
@@ -1370,7 +1360,7 @@ function templateNumToFilters () {
 			# Add '--filter=' to each of the requested filters
 			for indexF in "${!__filters[@]}"
 			do
-				
+
 				case ${__filters[indexF]} in
 					*pandoc-citeproc*)
 						__filters[indexF]="--filter=\"pandoc-citeproc\""
@@ -1381,354 +1371,233 @@ function templateNumToFilters () {
 					*)
 						__filters[indexF]="--filter=\"$octavoPath/filters/${__filters[indexF]}\""
 						;;
-			
-				esac
 
-			done
+					esac
 
-
-			echo "${__filters[@]}"
-
-			# Restore 'unbound' error checking 
-			set -o nounset
+				done
 
 
-				}
+				echo "${__filters[@]}"
 
-				function templateFormatToName () {
-
-# Before I do this, I might want to rationalise the name/format/blank reference issue
-# in the Yaml
-
-# Function is passed 'name'
-
-# Bash variables look like this:
-# template6=("octavoHtml")
-# teplate6_name=("Webpage")
-
-# Get number of available formats
-
-# Iterate through them
-
-# When 'name' finds a match, return the 'format'
-
-:
-
-				}
+				# Restore 'unbound' error checking 
+				set -o nounset
 
 
+			}
 
-				function templateNumToPandocCommand () {
+			function templateFormatToName () {
 
+				# Before I do this, I might want to rationalise the name/format/blank reference issue
+				# in the Yaml
 
-					debug "Function: templateNumToPandocCommand"
+				# Function is passed 'name'
 
-					# Ingore 'unbound' errors for the time being
-					set +o nounset
+				# Bash variables look like this:
+				# template6=("octavoHtml")
+				# teplate6_name=("Webpage")
 
-					# Receives a template number, 0+
-					# Pipes back the pandoc command to produce that
-					# version
-					pipedInput="$(cat)" # Capture input from Stdin
-					number="$pipedInput"
+				# Get number of available formats
 
-					_template="$(echo "$number" | templateNumToTemplate)"
-					# shellcheck disable=SC2034
-					_name="$(echo "$number" | templateNumToName)"
-					_format="$(echo "$number" | templateNumToFormat)"
-					_executable="$(echo "$number" | templateNumToExecutable)"
-					_templateExtension="$(echo "$number" | templateNumToExtension)"
+				# Iterate through them
 
+				# When 'name' finds a match, return the 'format'
 
-					_arguments="$(echo "$number" | templateNumToArguments)"
+				:
 
-					IFS=' ' read -r -a _filters <<< "$(echo "$number" | templateNumToFilters)" # break formats into array
-
-					markdownSourceFileBasename="$(basename "$markdownSourceFile")"
-
-					# shellcheck disable=SC2086
-					filenameSourceFile="${markdownSourceFileBasename%.*}" # trim extension
-
-					# shellcheck disable=SC2154
-					if [[ "${mdfivehashset}" == "true" ]]; then
-						filenameSourceFile+="_$mdFiveHashOutput"
-					fi
-					
-					name="$(echo "$number" | templateNumToTemplate)"
-
-					# Build up deployment command
-
-					filenameSourceFile="$filenameSourceFile$name"
-					deployAction="$_executable "
-
-					# shellcheck disable=SC2124
-					if [ -z "${_filters[0]+x}" ]; then : ; else deployAction+="${_filters[@]} "; fi
-					deployAction+="--template=\"$octavoPath/templates/$_template$_templateExtension\" "
-					deployAction+="$_arguments "
-					# deployAction+="--verbose "
-					deployAction+="-o "
-					deployAction+="$localStagingDir/$filenameSourceFile.$_format"
-
-debug "filters are ${_filters[*]}"
-					debug "deployAction is $deployAction"
-					echo "$deployAction"
-
-				}
-
-		pandocDeploy() {
-
-			debug "Function: pandocDeploy"
+			}
 
 
-			# Receives:
-			# A single line of true/false statements that correspond to
-			# the formats in .octavoConfig.yml. True means that the user
-			# wishes to have that format produced
 
-			pipedInput="$(cat)" # Capture multi-line input from Stdin
-
-			echo "$pipedInput" | egrep --quiet "true" || 
-			{ error "Requested formats not found"; exit 77 ;} 
-
-			# shellcheck disable=SC2034
-			IFS=' ' read -r -a deployFormatRequestedStatus <<< "$pipedInput" # put true/false request status for each available template into array
-
-			for indexReq in "${!deployFormatRequestedStatus[@]}" # Loop through the available templates
+			function templateNumToPandocCommand () {
 
 
-			do
+				debug "Function: templateNumToPandocCommand"
+
+				# Ingore 'unbound' errors for the time being
+				set +o nounset
+
+				# Receives a template number, 0+
+				# Pipes back the pandoc command to produce that
+				# version
+				pipedInput="$(cat)" # Capture input from Stdin
+				number="$pipedInput"
+
+				_template="$(echo "$number" | templateNumToTemplate)"
+				# shellcheck disable=SC2034
+				_name="$(echo "$number" | templateNumToName)"
+				_format="$(echo "$number" | templateNumToFormat)"
+				_executable="$(echo "$number" | templateNumToExecutable)"
+				_templateExtension="$(echo "$number" | templateNumToExtension)"
 
 
-				if [[ "${deployFormatRequestedStatus[indexReq]}" == "true" ]]; then
+				_arguments="$(echo "$number" | templateNumToArguments)"
 
-					pandocCommand="$(echo "$indexReq" | templateNumToPandocCommand)"
+				IFS=' ' read -r -a _filters <<< "$(echo "$number" | templateNumToFilters)" # break formats into array
 
-					 markdownSourceTemp="$markdownSourcePrepared"
-					
-					 # shellcheck disable=SC2154
-					 markdownSourcePrepared="$(splice "$markdownSourceTemp" "<replace>version</replace>" "$version" "overwrite")"
+				markdownSourceFileBasename="$(basename "$markdownSourceFile")"
 
-					 wordCount="$(wc -w <(echo "$markdownSourcePrepared") | sed 's/\/.*$//g' | sed 's/ //g')"
-					 markdownSourcePrepared="$(splice "$markdownSourcePrepared" "<replace>wordCount</replace>" "$wordCount" "overwrite")"
+				# shellcheck disable=SC2086
+				filenameSourceFile="${markdownSourceFileBasename%.*}" # trim extension
 
-					 templateName="$(echo "$indexReq" | templateNumToName)"
-					 # shellcheck disable=SC2086
-					 templateName="$(tr '[:lower:]' '[:upper:]' <<< ${templateName:0:1})${templateName:1}" # Uppercase initial character
-					 markdownSourcePrepared="$(splice "$markdownSourcePrepared" "<replace>documentFormat</replace>" "$templateName" "overwrite")"
+				# shellcheck disable=SC2154
+				if [[ "${mdfivehashset}" == "true" ]]; then
+					filenameSourceFile+="_$mdFiveHashOutput"
+				fi
+
+				name="$(echo "$number" | templateNumToTemplate)"
+
+				# Build up deployment command
+
+				filenameSourceFile="$filenameSourceFile$name"
+				deployAction="$_executable "
+
+				# shellcheck disable=SC2124
+				if [ -z "${_filters[0]+x}" ]; then : ; else deployAction+="${_filters[@]} "; fi
+				deployAction+="--template=\"$octavoPath/templates/$_template$_templateExtension\" "
+				deployAction+="$_arguments "
+				# deployAction+="--verbose "
+				deployAction+="-o "
+				deployAction+="$localStagingDir/$filenameSourceFile.$_format"
+
+				
+			if [[ "$PANDOC_VERBOSE" == true ]]; then
+
+				deployAction+=" --verbose"
+
+			fi
+
+				debug "filters are ${_filters[*]}"
+				debug "deployAction is $deployAction"
+				echo "$deployAction"
+
+			}
+
+			pandocDeploy() {
+
+				debug "Function: pandocDeploy"
 
 
-					if [[ "$DUMMY_RUN" == true ]]; then
+				# Receives:
+				# A single line of true/false statements that correspond to
+				# the formats in .octavoConfig.yml. True means that the user
+				# wishes to have that format produced
 
-						if [[ "$pandocCommand" == *"SpokenMacOs"* ]]; then
+				pipedInput="$(cat)" # Capture multi-line input from Stdin
 
-	echo "$markdownSourcePrepared" | createSpokenVersion
+				echo "$pipedInput" | egrep --quiet "true" || 
+				{ error "Requested formats not found"; exit 77 ;} 
 
-							continue
+				# shellcheck disable=SC2034
+				IFS=' ' read -r -a deployFormatRequestedStatus <<< "$pipedInput" # put true/false request status for each available template into array
 
-						fi
-						
-						echo "Pandoc command (not executed) would be:"
-						echo
-						echo "$pandocCommand"
-						echo
+				for indexReq in "${!deployFormatRequestedStatus[@]}" # Loop through the available templates
 
-					else
 
+				do
+
+
+					if [[ "${deployFormatRequestedStatus[indexReq]}" == "true" ]]; then
+
+						pandocCommand="$(echo "$indexReq" | templateNumToPandocCommand)"
+
+						markdownSourceTemp="$markdownSourcePrepared"
+
+						# shellcheck disable=SC2154
+						markdownSourcePrepared="$(splice "$markdownSourceTemp" "<replace>version</replace>" "$version" "overwrite")"
+
+						wordCount="$(wc -w <(echo "$markdownSourcePrepared") | sed 's/\/.*$//g' | sed 's/ //g')"
+						markdownSourcePrepared="$(splice "$markdownSourcePrepared" "<replace>wordCount</replace>" "$wordCount" "overwrite")"
+
+						templateName="$(echo "$indexReq" | templateNumToName)"
 						# shellcheck disable=SC2086
-						if [[ "$markdownSourceFile" != "$(basename "$markdownSourceFile")" ]]; then cd "$(dirname $markdownSourceFile)"; fi
+						templateName="$(tr '[:lower:]' '[:upper:]' <<< ${templateName:0:1})${templateName:1}" # Uppercase initial character
+						markdownSourcePrepared="$(splice "$markdownSourcePrepared" "<replace>documentFormat</replace>" "$templateName" "overwrite")"
 
-						if [[ "$pandocCommand" == *"SpokenMacOs"* ]]; then
-					
-							echo "$markdownSourcePrepared" | createSpokenVersion
+
+						if [[ "$DUMMY_RUN" == true ]]; then
+
+							if [[ "$pandocCommand" == *"SpokenMacOs"* ]]; then
+
+								echo "$markdownSourcePrepared" | createSpokenVersion
+
+								continue
+
+							fi
+
+							echo "Pandoc command (not executed) would be:"
+							echo
+							echo "$pandocCommand"
+							echo
 
 						else
 
-							# shellcheck disable=SC2116
-							echo "$markdownSourcePrepared" | eval "$(echo "$pandocCommand")"
-						
-						fi
+							# shellcheck disable=SC2086
+							if [[ "$markdownSourceFile" != "$(basename "$markdownSourceFile")" ]]; then cd "$(dirname $markdownSourceFile)"; fi
 
-						if [[ "$markdownSourceFile" != "$(basename "$markdownSourceFile")" ]]; then cd "$__dir"; fi
-							
+							if [[ "$pandocCommand" == *"SpokenMacOs"* ]]; then
+
+								echo "$markdownSourcePrepared" | createSpokenVersion
+
+							else
+
+								# shellcheck disable=SC2116
+								echo "$markdownSourcePrepared" | eval "$(echo "$pandocCommand")"
+
+							fi
+
+							if [[ "$markdownSourceFile" != "$(basename "$markdownSourceFile")" ]]; then cd "$__dir"; fi
+
 						fi
 
 					fi
 
 
-			done
+				done
 
-			# No more unbound errors expected
-			set -o nounset
+				# No more unbound errors expected
+				set -o nounset
 
-		}
+			}
 
-		function printOutputIfAsked {
+			function printOutputIfAsked {
 
-			# Echoes back finalised version of Markdown with
-			# all changes made
+				# Echoes back finalised (ish) version of Markdown with
+				# all changes made
 
-			debug "Function: printOutputIfAsked"
+				debug "Function: printOutputIfAsked"
 
-			if [[ "${arg_o:?}" = "1" ]]; then
-				echo "$markdownSourcePrepared"
-			fi
-		}
+				if [[ "${arg_o:?}" = "1" ]]; then
+					echo "$markdownSourcePrepared"
+				fi
+			}
 
-		# Check arguments
+			function ftpUploadIfAsked {
 
-		[[ "${arg_f:-}" ]]     || help      "Setting a filename with -f or --file is required"
+				# If requested (in yaml) then upload via FTP
 
-		debug "__i_am_main_script: ${__i_am_main_script}"
-		debug "__file: ${__file}"
-		debug "__dir: ${__dir}"
-		debug "__base: ${__base}"
-		debug "OSTYPE: ${OSTYPE}"
+				debug "Function: ftpUploadIfAsked"
 
-		debug "arg_f: ${arg_f}"
-		# shellcheck disable=SC2154
-		debug "arg_c: ${arg_c}"
-		debug "arg_y: ${arg_y}"
-		# shellcheck disable=SC2154
-		debug "arg_v: ${arg_v}"
-		# shellcheck disable=SC2154
-		debug "arg_h: ${arg_h}"
-		# shellcheck disable=SC2154
-		debug "arg_b: ${arg_b}"
-		# shellcheck disable=SC2154
-		debug "arg_o: ${arg_o}"
+				# shellcheck disable=SC2154
+				if [[ "$ftpdeploy" == "no" ]]; then
+
+					:
+
+				else
 
 
+					# Begin FTP if required
 
-		### Command-line argument switches (like -d for debugmode, -h for showing helppage)
-		##############################################################################
+					if [[ -a "$HOME/.netrc" ]] ; then
 
-		# debug mode
-		if [[ "${arg_d:?}" = "1" ]]; then
-			# set -o xtrace
-			LOG_LEVEL="7"
-			# Enable error backtracing
-			trap '__b3bp_err_report "${FUNCNAME:-.}" ${LINENO}' ERR
-		else
-			LOG_LEVEL="6"
-		fi
-		
-		[[ "${LOG_LEVEL:-}" ]] || emergency "Cannot continue without LOG_LEVEL. "
+						cd "$localStagingDir"
 
-		# verbose mode
-		if [[ "${arg_v:?}" = "1" ]]; then
-			set -o verbose
-		fi
+						if [[ "$DUMMY_RUN" != true ]]; then
 
-		# no color mode
-		if [[ "${arg_n:?}" = "1" ]]; then
-			NO_COLOR="true"
-		fi
+							ftp -i -v "$remoteserver" > "/dev/null" <<ENDOFCOMMANDS
 
-		# help mode
-		if [[ "${arg_h:?}" = "1" ]]; then
-			# Help exists with code 1
-			help "Help using ${0}"
-		fi
-
-		# Do we have a source file?
-		if [ ! -f "${arg_f}" ]; then
-			error "Specified Markdown source not found"
-			exit 77
-		fi
-
-		# Is this a dummy run?
-		if [[ "${arg_u:?}" = "1" ]]; then
-			DUMMY_RUN="true"
-		else
-			DUMMY_RUN="false"
-		fi
-
-
-		debug "Setting markdownSourceFile"
-
-		declare -x markdownSourceFile="${arg_f}"
-
-		markdownSourceFileWithoutPath="$(basename "$markdownSourceFile")"
-		sourceFileBasename="${markdownSourceFileWithoutPath%.*}" 
-debug "sourceFileBasename = $sourceFileBasename"
-		debug "markdownSourceFile = $markdownSourceFile"
-
-		# Ubuntu: mdFiveHashOutput="$(md5sum "$markdownSourceFile | awk '{print $1;}')"
-		mdFiveHashOutput="$(md5 -q "$markdownSourceFile")"
-
-
-		# Set the path to the Octavo directory, containing
-		# config file, templates, and so on
-
-		# If user has not specified a config file, use default location,
-		# which is the path to this script
-
-		if [[ "${arg_c:-}" ]]; then
-			if [ ! -f "${arg_c}" ]; then
-				error "Specified Octavo config file not found"
-				exit 77
-			fi
-
-			declare -x octavoPath=${arg_c}
-
-		else
-			declare -x octavoPath=${__dir}
-		fi	
-
-		
-
-
-
-		######################################################################################
-		######################################################################################
-
-		#  MAIN
-
-		######################################################################################
-		######################################################################################
-
-		sourceOctavoConfig "$octavoPath/.octavoConfig.yml" # Set Bash variables from global yaml
-
-		sourceMarkdownFileYaml "$markdownSourceFile"       # Set Bash variables from Markdown source yaml
-
-		checkSet                                           # Verify variables are set appropriately
-		
-		# Set a local staging directory for deployed files
-		localStagingDir="$deployto/.$(randomString)"
-
-		mkdir "$localStagingDir"
-
-
-		markdownSourcePrepared="$(markdownSourcePrepare)"  # Finalised Markdown for deployment
-
-
-		getRequestedDeployFormats | pandocDeploy
-
-printOutputIfAsked
-
-
-
-		# shellcheck disable=SC2154
-		if [[ "$ftpdeploy" == "no" ]]; then
-
-			:
-
-		else
-
-
-			# Begin FTP if required
-
-			if [[ -a "$HOME/.netrc" ]] ; then
-
-				cd "$localStagingDir"
-
-				if [[ "$DUMMY_RUN" != true ]]; then
-
-					ftp -i -v "$remoteserver" > "/dev/null" <<ENDOFCOMMANDS
-
-					cd $remotedirectory
-					mput *.*
-					quit
+							cd $remotedirectory
+							mput *.*
+							quit
 
 ENDOFCOMMANDS
 fi
@@ -1743,13 +1612,165 @@ fi
 
 	fi
 
-	# Move files out of staging area
+
+
+}
+
+function moveFilesFromStagingToDeployDir {
+
+	debug "Function: moveFilesFromStagingToDeployDir"
+
+	# Move files out of staging area to the directory
+	# where the user requested they be put
+
 	if [[ "$DUMMY_RUN" != true ]]; then
 
 		cp -R "$localStagingDir/" "$deployto/" && rm -r "$localStagingDir"
 
 	fi
 
+}
 
 
+# Check arguments
+
+[[ "${arg_f:-}" ]]     || help      "Setting a filename with -f or --file is required"
+
+debug "__i_am_main_script: ${__i_am_main_script}"
+debug "__file: ${__file}"
+debug "__dir: ${__dir}"
+debug "__base: ${__base}"
+debug "OSTYPE: ${OSTYPE}"
+
+debug "arg_f: ${arg_f}"
+# shellcheck disable=SC2154
+debug "arg_c: ${arg_c}"
+debug "arg_y: ${arg_y}"
+# shellcheck disable=SC2154
+debug "arg_v: ${arg_v}"
+# shellcheck disable=SC2154
+debug "arg_h: ${arg_h}"
+# shellcheck disable=SC2154
+debug "arg_b: ${arg_b}"
+# shellcheck disable=SC2154
+debug "arg_o: ${arg_o}"
+
+
+
+### Command-line argument switches (like -d for debugmode, -h for showing helppage)
+##############################################################################
+
+# debug mode
+if [[ "${arg_d:?}" = "1" ]]; then
+	# set -o xtrace
+	LOG_LEVEL="7"
+	# Enable error backtracing
+	trap '__b3bp_err_report "${FUNCNAME:-.}" ${LINENO}' ERR
+else
+	LOG_LEVEL="6"
+fi
+
+[[ "${LOG_LEVEL:-}" ]] || emergency "Cannot continue without LOG_LEVEL. "
+
+# verbose mode
+if [[ "${arg_v:?}" = "1" ]]; then
+	set -o verbose
+fi
+
+# no color mode
+if [[ "${arg_n:?}" = "1" ]]; then
+	NO_COLOR="true"
+fi
+
+# help mode
+if [[ "${arg_h:?}" = "1" ]]; then
+	# Help exists with code 1
+	help "Help using ${0}"
+fi
+
+# Do we have a source file?
+if [ ! -f "${arg_f}" ]; then
+	error "Specified Markdown source not found"
+	exit 77
+fi
+
+# Is this a dummy run?
+if [[ "${arg_u:?}" = "1" ]]; then
+	DUMMY_RUN="true"
+else
+	DUMMY_RUN="false"
+fi
+
+# Ask pandoc to be verbose if requested
+if [[ "${arg_p:?}" = "1" ]]; then
+	PANDOC_VERBOSE="true"
+else
+	PANDOC_VERBOSE="false"
+fi
+
+
+
+debug "Setting markdownSourceFile"
+
+declare -x markdownSourceFile="${arg_f}"
+
+markdownSourceFileWithoutPath="$(basename "$markdownSourceFile")"
+sourceFileBasename="${markdownSourceFileWithoutPath%.*}" 
+debug "sourceFileBasename = $sourceFileBasename"
+debug "markdownSourceFile = $markdownSourceFile"
+
+# Ubuntu: mdFiveHashOutput="$(md5sum "$markdownSourceFile | awk '{print $1;}')"
+mdFiveHashOutput="$(md5 -q "$markdownSourceFile")"
+
+
+# Set the path to the Octavo directory, containing
+# config file, templates, and so on
+
+# If user has not specified a config file, use default location,
+# which is the path to this script
+
+if [[ "${arg_c:-}" ]]; then
+	if [ ! -f "${arg_c}" ]; then
+		error "Specified Octavo config file not found"
+		exit 77
+	fi
+
+	declare -x octavoPath=${arg_c}
+
+else
+	declare -x octavoPath=${__dir}
+fi	
+
+
+
+
+
+######################################################################################
+######################################################################################
+
+#  MAIN
+
+######################################################################################
+######################################################################################
+
+sourceOctavoConfig "$octavoPath/.octavoConfig.yml" # Set Bash variables from global yaml
+
+sourceMarkdownFileYaml "$markdownSourceFile"       # Set Bash variables from Markdown source yaml
+
+checkSet                                           # Verify variables are set appropriately
+
+
+localStagingDir="$deployto/.$(randomString)"       # Set a local staging directory for deployed files
+
+mkdir "$localStagingDir"                           # Create it
+
+markdownSourcePrepared="$(markdownSourcePrepare)"  # Finalised Markdown for deployment
+
+getRequestedDeployFormats | pandocDeploy           # Execute pandoc as necessary
+
+printOutputIfAsked                                 # Maybe print finalised (ish) Markdown
+
+ftpUploadIfAsked                                   # Maybe send files to web server
+
+moveFilesFromStagingToDeployDir                    # Move files to final destination
 

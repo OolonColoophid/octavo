@@ -1,3 +1,5 @@
+
+
 # Introduction to Tlearn {#intro}
 
 -----------------------  -------------------------------------
@@ -457,29 +459,4 @@ There are two other important functions to look at. Remember, we're trying to mo
 The header image featuring HAL from *2001: A Space Odyssey* was made by Pixabay [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en), via [Wikimedia Commons](https://commons.wikimedia.org/wiki/File%3AArtificial-intelligence-155161_1280.png).
 
 <include>colophon</include>
-
----
-title:             "MPSMD3ART Workshop 1, Introduction"
-title-meta:        "MPSMD3ART Workshop 1, Introduction"
-date:              "February 2017 to April"
-version:           1.0 
-headimage:         "$octavoPath/sandbox/media/hal"
-headquote:         "I'm sorry, Dave. I'm afraid I can't do that."
-headquoteauthor:   "HAL 9000, Discovery One"
-httpdestination:   "http://cccupsychology.com/deployIh/sandbox/"
-remotedirectory:   "sandbox/"
-deployto:          "$octavoPath/sandbox/deploy"
-formats:           "octavoTuftePdf"
-preview:           ""
-ftpdeploy:         "yes"
-ftppath:           "deployIh/sandbox"
-spokendeploy:      "yes"
-refreshcalendar:   "no"
-bibliography:      "$octavoPath/sandbox/bibliography.bib"
-mdfivehashset:     true
-redact:            "no"
-customfilters:     "" 
-includeyaml:       "$octavoPath/templates/documentDefault.yml"
----
-
 
