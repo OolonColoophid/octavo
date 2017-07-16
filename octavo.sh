@@ -955,9 +955,10 @@ function yamlAddCustomYaml () {
 
 			debug "Function: parseMarkdownSource"
 
-			sourceYaml="$(cat "$1" | sed -n '/^---$/,/^---$/p')"
-
-			sourceBody="$(cat "$1" | sed '/^---$/,/^---$/{//!d;}' | sed '/^---$/d')"
+			# shellcheck disable=SC2002
+			sourceYaml="$(cat "$sourceFile" | sed -n '/^---$/,/^---$/p')"
+			# shellcheck disable=SC2002
+			sourceBody="$(cat "$sourceFile" | sed '/^---$/,/^---$/{//!d;}' | sed '/^---$/d')"
 
 			case "$exportPreference" in
 				yaml) echo "$sourceYaml" | expandStrings | yamlAddCustomYaml | yamlRemoveComments
@@ -1465,6 +1466,7 @@ function yamlAddCustomYaml () {
 				deployAction+=" --verbose"
 
 			fi
+
 
 				debug "filters are ${_filters[*]}"
 				debug "deployAction is $deployAction"
