@@ -1,7 +1,5 @@
-author:            "Dr Ian Hocking, Psychology Programme"
+author:            "Dr Ian Hocking"
 papersize:         A4
-toc-depth:         1
-toc:               1
 colorlinks:        1
 boxlinks:          true
 linespread:        "1.3"
@@ -11,6 +9,7 @@ link-citations:    false
 solariseddarkon:   false
 solariseddarkoff:  true
 autoEqnLabels:     true
+refreshcalendar:   "no"
 figPrefix:
   - "Figure"
   - "Figures"
@@ -24,3 +23,5 @@ figureTitle: "Figure"
 tableTitle: "Table"
 lofTitle: "List of Figures"
 lotTitle: "List of Tables"
+toc:                true
+toc-depth:          1

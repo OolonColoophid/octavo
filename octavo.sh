@@ -1363,6 +1363,7 @@ function yamlAddCustomYaml () {
 			# shellcheck disable=SC2154
 			if [[ $redact = "true" ]] ; then 
 			
+				# shellcheck disable=SC2145
 				echo "--filter=\"$octavoPath/filters/filterRedactions.py\" ${__filters[@]}" 
 			
 			else

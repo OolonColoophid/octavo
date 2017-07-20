@@ -1,11 +1,11 @@
 ---
-title:             "title"
-title-meta:        "title"
-date:              "date"
+title:             "Untitled"
+title-meta:        "Untitled"
+date:              ""
 version:           1.0 
 headimage:         "$HOME/Dropbox/Scripts/octavo/media/default/default"
-headquote:         "A light heretofore unknown"
-headquoteauthor:   "Gutenberg"
+headquote:         ""
+headquoteauthor:   ""
 httpdestination:   "http://cccupsychology.com/deployIh/scratch/"
 remotedirectory:   "scratch/"
 deployto:          "$HOME/Dropbox/CCCU/text/scratch"
@@ -15,8 +15,8 @@ ftpdeploy:         "no"
 ftppath:           "deployIh/scratch"
 spokendeploy:      "no"
 bibliography:      ""
-mdfivehashset:     true
-redact:            "no"
+mdfivehashset:     false
+redact:            false
 customfilters:     "" 
 includeyaml:       "$octavoPath/templates/documentDefault.yml"
 ---

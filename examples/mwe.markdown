@@ -19,6 +19,8 @@ mdfivehashset:     false
 redact:            false
 customfilters:     "" 
 includeyaml:       "$octavoPath/templates/documentDefault.yml"
+toc:               false
+toc-depth:         0
 ---
 
 <task>Run the analysis</task>
