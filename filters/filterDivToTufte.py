@@ -1,13 +1,7 @@
 #!/usr/bin/env python
 
 """
-Pandoc filter to convert divs with latex="true" to LaTeX
-environments in LaTeX output. The first class
-will be regarded as the name of the latex environment
-e.g.
-<div latex="true" class="note abc">...</div>
-will becomes
-\begin{note}...\end{note}
+Pandoc filter to assit with creating Tufte-style PDFs 
 """
 
 from pandocfilters import toJSONFilter, RawBlock, Div

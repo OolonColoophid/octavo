@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 """
-Pandoc filter to convert divs with class="exturl" to LaTeX
-exturl environments in LaTeX
+Pandoc filter for inline keywords, marked as
+<key>keyword</key> in the Markdown document
 """
 
 from pandocfilters import toJSONFilter, RawInline, Span 

@@ -2,7 +2,7 @@
 
 """
 
-This isn't working yet
+Pandoc filter for assisting with html output
 
 """
 

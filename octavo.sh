@@ -371,20 +371,6 @@ function checkSet () {
 	set +o nounset
 
 	# shellcheck disable=SC2154
-	if [ -z "${skeletondir+x}" ]; then
-
-		error "Required yaml variable \$skeletondir has not been set." 
-		exit 77	 
-
-	elif  [ ! -d "$skeletondir" ]; then
-
-
-		error "The directory of 'skeletons' for new Octavo documents has been set to $skeletondir. However, this directory does not seem to exist."
-		exit 77
-
-	fi 
-
-	# shellcheck disable=SC2154
 	if [ -z "${templatedir+x}" ]; then
 
 		error "Required yaml variable \$templatedir has not been set." 
@@ -848,7 +834,7 @@ function yamlAddCustomYaml () {
 				| sed "s@<replace>mdfive</replace>@$mdFiveHashOutput@g" \
 				| sed 's/<task>/<div latex="true" class="task" id="Task">/g' \
 				| sed 's/<journal>/<div latex="true" class="journal" id="Journal">/g' \
-				| sed 's/<answer>/<div latex="true" class="highlight" id="Answer">/g' \
+				| sed 's/<answer>/<div latex="true" class="answer" id="Answer">/g' \
 				| sed 's/<remember>/<div latex="true" class="highlight" id="Remember">/g' \
 				| sed 's/<highlight>/<div latex="true" class="highlight" id="Highlight">/g' \
 				| sed 's/<\/task>/<\/div>/g' \
@@ -1343,11 +1329,7 @@ function yamlAddCustomYaml () {
 			__filterstring="${!storedFilters}"
 
 			IFS=' ' read -r -a __filters <<< "$__filterstring"
-
-			# Add a redaction filter, if requested
-			# shellcheck disable=SC2154
-			if [[ $redact = "true" ]] ; then __filters+=("$octavoPath/filters/filterRedactions.py") ; fi
-
+			
 			# Add custom filters, if found
 			# shellcheck disable=SC2154
 			if [ -z "${customfilters+x}" ]; then 
@@ -1377,8 +1359,20 @@ function yamlAddCustomYaml () {
 
 				done
 
-
+			# Prepend a redaction filter, if requested
+			# shellcheck disable=SC2154
+			if [[ $redact = "true" ]] ; then 
+			
+				echo "--filter=\"$octavoPath/filters/filterRedactions.py\" ${__filters[@]}" 
+			
+			else
+			
 				echo "${__filters[@]}"
+			
+			fi
+
+
+
 
 				# Restore 'unbound' error checking 
 				set -o nounset

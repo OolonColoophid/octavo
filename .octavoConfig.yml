@@ -4,9 +4,6 @@
 deploymentText:
   head:          "This document is available in"
 
-# Location of skeleton files for creation of new Octavo documents
-skeletondir:    "$octavoPath/skeletons"
-
 # Document settings (these can be overriden in the Yaml of the Markdown file itself)
 # (Note: Some variables must be set in the Yaml itself
 # in order to be available to Pandoc and filters)

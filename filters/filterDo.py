@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 """
-Pandoc filter to convert divs with class="exturl" to LaTeX
-exturl environments in LaTeX
+Pandoc filter to assist in producing 'instruction' style
+<do>Do this</do>
+in Octavo Markdown files
 """
 
 from pandocfilters import toJSONFilter, RawInline, Span 

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 """
-Pandoc filter to convert divs with class="redaction" to LaTeX
-redaction environments in LaTeX
+Pandoc filter for inline keywords, marked as
+<key>keyword</key> in the Markdown document
 """
 
 from pandocfilters import toJSONFilter, RawBlock, Div, Str, Para

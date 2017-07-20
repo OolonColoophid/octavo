@@ -1,13 +1,7 @@
 #!/usr/bin/env python3
 
 """
-Pandoc filter to convert divs with latex="true" to LaTeX
-environments in LaTeX output. The first class
-will be regarded as the name of the latex environment
-e.g.
-<div latex="true" class="note abc">...</div>
-will becomes
-\begin{note}...\end{note}
+Pandoc filter for assisting with docx output
 """
 
 from pandocfilters import toJSONFilter, RawBlock, Div
@@ -27,7 +21,7 @@ def latexdivs(key, value, format, meta):
                 else:
                     label = '\\label{' + ident + '}'
                 return([latex('\\begin{quotation}\\textbf{' + ident + '}')] + contents +
-                       [latex('\\end{quotation}')])
+                       [latex('now then now then\\end{quotation}')])
 
 if __name__ == "__main__":
     toJSONFilter(latexdivs)

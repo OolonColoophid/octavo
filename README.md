@@ -1,19 +1,14 @@
 # Octavo v 0.3.0
 
-Create well-presented documents, in different formats like [this](examples/deployed/1intoctavoTuftePdfa986b13e22b4741f88a3e1042b2772f0.pdf), from a single [Markdown](https://en.wikipedia.org/wiki/Markdown) source.
+Go from a single [Markdown](https://en.wikipedia.org/wiki/Markdown) source file to well-presented documents like [this](examples/deployed/1intoctavoTuftePdfa986b13e22b4741f88a3e1042b2772f0.pdf). Octavo is wrapper for the excellent [pandoc](http://pandoc.org/).
 
-Octavo is wrapper for the excellent [pandoc](http://pandoc.org/), which translates between different document formats. If you're producing finished-product documents like PDFs or HTML from a text source such as Markdown, you'll need two things: (a) a way of crafting your Markdown files to exploit certain features (see below) and (b) nice templates that take advantage of these features. Octavo supplies the (a) and (b).
+If you're producing finished-product documents like PDFs or HTML from a text source such as Markdown, you'll need two things: (a) a way of crafting your Markdown files to exploit certain features (see below) and (b) nice templates that take advantage of these features. Octavo supplies the (a) and (b).
 
-Why does it exist? As a [psychology lecturer](https://www.canterbury.ac.uk/social-and-applied-sciences/psychology-politics-and-sociology/staff/Profile.aspx?staff=e0fe64b03fece667), I wanted a way to write statistics workshop booklets in Markdown (without all that tedious mucking around in Latex) and have my computer produce multiple versions, insert commonly-used text, grab calendar items (like a week-by-week breakdown of teaching sessions) and drop them into the document, run arbitrary UNIX commands and pipe their output into the final documents, as well as do the usual stuff like produce a References section in APA style and handle equations well. I also wanted it to last for several years, if not decades. I did the former. We'll see about the latter. 
+Why does it exist? As a [psychology lecturer](https://www.canterbury.ac.uk/social-and-applied-sciences/psychology-politics-and-sociology/staff/Profile.aspx?staff=e0fe64b03fece667), I wanted a way to write statistics workshop booklets in Markdown (without all that tedious mucking around in Latex) and have my computer produce multiple versions, insert commonly-used text, as well as do the usual stuff like produce a References section in APA style. And handle equations. I also wanted it to last for several years, if not decades. I did the former. We'll see about the latter. 
 
-This tool has been developed on macOS (Yosemite) but should be easily portable to other UNIX-like operating systems such as Linux. I've very happy to accept pull requests.
+This tool has been developed on macOS (Yosemite) but should be easily portable to other UNIX-like operating systems such as Linux. I'm very happy to accept pull requests.
 
-This repository contains the handouts from my Level 5 statistics module in Psychology, MPSMD2RES, both as Markdown source and Octavo-produced documents, so you can see what Octavo does.
-
-## Warning
-
-This software is provided as-is. It works on my system, but it might hose yours.
-
+This repository contains some example documents.
 
 ## In Action
 
@@ -23,21 +18,37 @@ This software is provided as-is. It works on my system, but it might hose yours.
 
 Octavo is a tool for multiple document deployment.
 
-1. Template-based
+1. Use templates for specific readers (large text, dark background, etc.)
 
-2. Produces any document (PDF, HTML, .Docx, spoken word etc.) using the excellent [pandoc](http://pandoc.org) and Octavo-specific templates, and inserts live links to these alternative versions
+2. Produce any document type (PDF, HTML, .Docx, spoken word etc.) using the excellent [pandoc](http://pandoc.org). Octavo can upload all versions to web server and insert smart text in all documents with appropriate hyperlinks, like this:
 
-3. Mark sections as redacted; these can either be included in the final document or not
+> This document is available in standard PDF, large text PDF, and Microsoft Word format. 
 
-4. Common text can be inserted from any external text file
+3. You can mark sections as redactable, then set a [Yaml](https://en.wikipedia.org/wiki/YAML) field in the Markdown file telling Octavo either show redacted content or hide it. Like this:
 
-5. Include the output of arbitrary shell commands
+> redact: "no"
 
-6. [Latex equations](https://www.sharelatex.com/learn/Mathematical_expressions) are supported without a problem; as are [standard citations](https://www.sharelatex.com/learn/Bibliography_management_with_bibtex)
+4. Include text from other files, like:
 
-7. If you've got sessions---for example, workshop sessions---in your calendar and want to include these in your final documents, you can do that
+> <include>licence</include>
 
-8. Octavo will, if asked, FTP all document versions to a web server, so that all that the reader of an Octavo document needs to do is click a hyperlink to get a different version of the document. (Note that the ftp command on macOS, and other Unix-like systems, will draw upon settings contained in your [.netrc](http://www.mavetju.org/unix/netrc.php) file.)
+5. Put text in boxes. Because my usage is for students, I've got 'task', 'journal' and 'highlight'. Like this:
+
+> <task>
+> Run the analysis
+> </task>
+
+6. [Latex equations](https://www.sharelatex.com/learn/Mathematical_expressions) are supported without a problem; as are [standard citations](https://www.sharelatex.com/learn/Bibliography_management_with_bibtex). In this example, the equation is Cohen's D, which is described by the part between \$\$ and \$\$; the part in curly brackets will label this as an equation (you then provide lists of equations; or tables, or figures):
+
+> $$ d=\frac{\bar{x}_{1}-\bar{x}_{2}}{s}  $$ {#eq:cohensD}
+
+=---
+Got to here 
+=---
+
+
+
+
 
 ## Installing
 
@@ -65,7 +76,6 @@ Notes:
 
 - On Ubuntu, I had a persistent Cabal installation fail that I managed to fix with the [following advice](http://stackoverflow.com/questions/20769183/cabal-update-failed-due-to-out-of-memory)
 
-- For scraping events from your Mac calendar and inserting dumping in a .CSV) [iCalBuddy](http://hasseg.org/icalBuddy/)
 
 ## Usage
 

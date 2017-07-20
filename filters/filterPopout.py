@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 """
-Pandoc filter to convert divs with class="exturl" to LaTeX
-exturl environments in LaTeX
+Pandoc filter to assist in producing 'popout' style
+<pop>Do this</pop>
+in Octavo Markdown
 """
 
 from pandocfilters import toJSONFilter, RawInline, Span 
