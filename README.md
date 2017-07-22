@@ -10,7 +10,7 @@ This tool has been developed on macOS (Yosemite) but should be easily portable t
 
 ## In Action
 
-[![Video demonstrating Octavo](media/octavoDemo.png)](https://youtu.be/qr45fn9xpBU)
+[![Video demonstrating Octavo](media/octavoDemoVersions.png)](https://youtu.be/qr45fn9xpBU)
 
 ## Features
 
@@ -77,33 +77,11 @@ octavo.sh -f <file> [-c <file>] [-ybvdhn]
 -y --yaml          Print Yaml of Markdown file to standard output
 -h --help          This page
 
-Octavo: Markdown to rendered documents using Pandoc.
-
 ~~~
 
 ## Setup
 
 Your Markdown file should have a wodge of [YAML](https://en.wikipedia.org/wiki/YAML) at the top that follows the example in the examples folder. Have a look at each setting and tweak to suit your needs. These YAML settings will be applied to document in which it is found.
-
-## Vim
-
-If you use Vim like me, you might find the following useful. Note that I'm launching Octavo on the current document using a plugin called [asyncrun](https://github.com/skywind3000/asyncrun.vim), which permits it to run in the background. 
-
-Use :Octavo to run Octavo on the current document:
-
-> command Octavo AsyncRun ! octavo.sh -f % 
-
-Use :OctavoDebug to do the same, but with debug mode on:
-
-> command OctavoDebugMode AsyncRun ! octavo.sh -f % -d
-
-For quick access, map your leader key and 'o' to launch Octavo:
-
-> noremap <leader>o :Octavo<CR> " leader-O launches Octavo
-
-Use :Octivate to add minimal Yaml to the top of your file, just enough to create a minimal Octavo document (note that you'll need to replace '~/Dropbox/Scripts/octavo' with the correct path to your Octavo directory):
-
-> command Octivate 0r ~/Dropbox/Scripts/octavo/octivate.markdown
 
 ### Files
 
@@ -124,6 +102,26 @@ Use :Octivate to add minimal Yaml to the top of your file, just enough to create
 - sandbox: Here you'll find an advanced document called 1art.markdown, which uses several Octavo features.
 
 - templates: Octavo-styled Pandoc templates.
+
+## Vim
+
+If you use Vim like me, you might find the following useful. Note that I'm launching Octavo on the current document using a plugin called [asyncrun](https://github.com/skywind3000/asyncrun.vim), which permits it to run in the background. 
+
+Use :Octavo to run Octavo on the current document:
+
+> command Octavo AsyncRun ! octavo.sh -f % 
+
+Use :OctavoDebug to do the same, but with debug mode on:
+
+> command OctavoDebugMode AsyncRun ! octavo.sh -f % -d
+
+For quick access, map your leader key and 'o' to launch Octavo:
+
+> noremap <leader>o :Octavo<CR> " leader-O launches Octavo
+
+Use :Octivate to add minimal Yaml to the top of your file, just enough to create a minimal Octavo document (note that you'll need to replace '~/Dropbox/Scripts/octavo' with the correct path to your Octavo directory):
+
+> command Octivate 0r ~/Dropbox/Scripts/octavo/octivate.markdown
 
 ## Roadmap
 
