@@ -24,21 +24,25 @@ Octavo is a tool for multiple document deployment.
 
 3. You can mark sections as redactable, then set a [Yaml](https://en.wikipedia.org/wiki/YAML) field in the Markdown file telling Octavo either show redacted content or hide it. Like this:
 
-> redact: "no"
+`redact: false`
 
 4. Include text from other files, like:
 
-> <include>licence</include>
+`<include>licence</include>`
 
 5. Put text in boxes. Because my usage is for students, I've got 'task', 'journal' and 'highlight'. Like this:
 
-> <task>
-> Run the analysis
-> </task>
+`<task>`
+`Run the analysis`
+`</task>`
 
 6. [Latex equations](https://www.sharelatex.com/learn/Mathematical_expressions) are supported without a problem; as are [standard citations](https://www.sharelatex.com/learn/Bibliography_management_with_bibtex). In this example, the equation is Cohen's D, which is described by the part between \$\$ and \$\$; the part in curly brackets will label this as an equation (you then provide lists of equations; or tables, or figures):
 
 > $$ d=\frac{\bar{x}_{1}-\bar{x}_{2}}{s}  $$ {#eq:cohensD}
+
+Which gets you:
+
+![Cohen's D](media/octavoDemoCohensD.png "Cohen's D")
 
 ## Installing
 
@@ -109,19 +113,19 @@ If you use Vim like me, you might find the following useful. Note that I'm launc
 
 Use :Octavo to run Octavo on the current document:
 
-> command Octavo AsyncRun ! octavo.sh -f % 
+`command Octavo AsyncRun ! octavo.sh -f %`
 
 Use :OctavoDebug to do the same, but with debug mode on:
 
-> command OctavoDebugMode AsyncRun ! octavo.sh -f % -d
+`command OctavoDebugMode AsyncRun ! octavo.sh -f % -d`
 
 For quick access, map your leader key and 'o' to launch Octavo:
 
-> noremap <leader>o :Octavo<CR> " leader-O launches Octavo
+`noremap <leader>o :Octavo<CR> " leader-O launches Octavo`
 
 Use :Octivate to add minimal Yaml to the top of your file, just enough to create a minimal Octavo document (note that you'll need to replace '~/Dropbox/Scripts/octavo' with the correct path to your Octavo directory):
 
-> command Octivate 0r ~/Dropbox/Scripts/octavo/octivate.markdown
+`command Octivate 0r ~/Dropbox/Scripts/octavo/octivate.markdown`
 
 ## Roadmap
 
@@ -143,7 +147,7 @@ Refactored.
 
 ### Version 0.3.0
 
-Support nicer tags like `<task><\task>` to denote tasks.
+Support nicer tags like `<task></task>` to denote tasks.
 
 ### Version 0.2.0
 
