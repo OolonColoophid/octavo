@@ -10,7 +10,7 @@ This tool has been developed on macOS (Yosemite) but should be easily portable t
 
 ## In Action
 
-[![Video demonstrating Octavo](media/octavoDemoVersions.png)](https://youtu.be/qr45fn9xpBU)
+[![Video demonstrating Octavo](media/octavoDemo.png)](https://youtu.be/qr45fn9xpBU)
 
 ## Features
 
@@ -20,7 +20,7 @@ Octavo is a tool for multiple document deployment.
 
 2. Produce any document type (PDF, HTML, .Docx, spoken word etc.) using the excellent [pandoc](http://pandoc.org). Octavo can upload all versions to web server and insert smart text in all documents with appropriate hyperlinks, like this:
 
-![Octavo versions text](media/octavoDemo.png "Octavo versions text")
+![Octavo versions text](media/octavoDemoVersions.png "Octavo versions text")
 
 3. You can mark sections as redactable, then set a [Yaml](https://en.wikipedia.org/wiki/YAML) field in the Markdown file telling Octavo either show redacted content or hide it. Like this:
 
