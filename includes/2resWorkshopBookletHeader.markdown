@@ -8,31 +8,31 @@ Use this booklet in conjunction with your own *Research Journal*, where you will
 
 (If you're looking at a non-standard, accessible version of this document, some of the formatting below will be simplified.)
 
-<div latex="true" class="task" id="Task"> 
+<task>
 
 - When I ask you to complete a task, like calculate a mean, it will be formatted like this.
 
-</div>
+</task>
 
-<div latex="true" class="journal" id="Journal">
+<journal>
 
 - This is what a Research Journal reminder looks like. I'll use these when asking you to make a note.
 
-</div>
+</journal>
 
 ## Other Aspects of this Booklet
 
-<div latex="true" class="highlight" id="Remember">
+<highlight>
 
 - This formatting will be used to highlight something important.
 
-</div>
+</highlight>
 
-<div latex="true" class="answer" id="Answer"> 
+<answer>
 
 Here I'll provide answers to questions. Note that this version of the document won't be available until after your workshop.
 
-</div>
+</answer>
 
 ## Mathematics and Statistics Help
 

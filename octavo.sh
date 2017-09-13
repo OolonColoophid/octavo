@@ -1351,6 +1351,9 @@ function yamlAddCustomYaml () {
 					*pandoc-crossref*)
 						__filters[indexF]="--filter=\"pandoc-crossref\""
 						;;
+					*pandoc-csv2table*)
+						__filters[indexF]="--filter=\"pandoc-csv2table\""
+						;;
 					*)
 						__filters[indexF]="--filter=\"$octavoPath/filters/${__filters[indexF]}\""
 						;;
