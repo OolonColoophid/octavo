@@ -1,9 +1,7 @@
 \documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
-$if(fontfamily)$
-\usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
-$else$
+
 \usepackage{lmodern}
-$endif$
+
 $if(linestretch)$
 \usepackage{setspace}
 \usepackage{framed}
@@ -11,6 +9,7 @@ $if(linestretch)$
 $endif$
 %This ensures maketitle will not include a date
 \date{}
+
 
 % For color boxes
 \usepackage[most]{tcolorbox}
@@ -117,9 +116,9 @@ $endif$
 $if(euro)$
   \newcommand{\euro}{€}
 $endif$
-$if(dyslexicfont)$
-    \setmainfont{$dyslexicfont$}
-$endif$
+
+\setmainfont[Scale=1]{OpenDyslexic3}
+
 $if(sansfont)$
     \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
 $endif$
@@ -327,6 +326,7 @@ $endif$
 $if(lof)$
 \listoffigures
 $endif$
+
 $body$
 
 $if(natbib)$

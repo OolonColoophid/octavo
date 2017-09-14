@@ -99,9 +99,6 @@ template4: "octavoLargePdf"
     arguments:
       - "--latex-engine=xelatex"
         filters:
-          - "filterPopout.py"
-          - "filterKeyword.py"
-          - "filterDo.py"
           - "filterDivToTufte.py"
           - "pandoc-crossref"
           - "pandoc-citeproc"
@@ -118,9 +115,6 @@ template5: "octavoOpenDyslexicPdf"
     arguments:
       - "--latex-engine=xelatex"
         filters:
-          - "filterPopout.py"
-          - "filterKeyword.py"
-          - "filterDo.py"
           - "filterDivToTufte.py"
           - "pandoc-crossref"
           - "pandoc-citeproc"
