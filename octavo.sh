@@ -485,7 +485,7 @@ function splice () {
 		echo "$line"
 	done < <(echo "$sourceText" )
 
-	debug "Function: splice completed for pattern $pattern"
+	debug "Function: splice completed for pattern $pattern, which was replaced by $replacement in $mode mode"
 
 }
 
@@ -1172,6 +1172,7 @@ function yamlAddCustomYaml () {
 			pipedInput="$(cat)" # Capture input from Stdin
 			number="$pipedInput"
 
+
 			# Ingore 'unbound' errors for the time being
 			set +o nounset
 
@@ -1180,8 +1181,8 @@ function yamlAddCustomYaml () {
 			affix="_name"
 			storedName="$prefix$affix"
 
-			echo "${!storedName}"
 
+			echo "${!storedName}"
 			# Restore 'unbound' error checking 
 			set -o nounset
 
@@ -1496,6 +1497,7 @@ function yamlAddCustomYaml () {
 				do
 
 
+
 					if [[ "${deployFormatRequestedStatus[indexReq]}" == "true" ]]; then
 
 						pandocCommand="$(echo "$indexReq" | templateNumToPandocCommand)"
@@ -1506,19 +1508,23 @@ function yamlAddCustomYaml () {
 						markdownSourcePrepared="$(splice "$markdownSourceTemp" "<replace>version</replace>" "$version" "overwrite")"
 
 						wordCount="$(wc -w <(echo "$markdownSourcePrepared") | sed 's/\/.*$//g' | sed 's/ //g')"
+
+
 						markdownSourcePrepared="$(splice "$markdownSourcePrepared" "<replace>wordCount</replace>" "$wordCount" "overwrite")"
+
 
 						templateName="$(echo "$indexReq" | templateNumToName)"
 						# shellcheck disable=SC2086
 						templateName="$(tr '[:lower:]' '[:upper:]' <<< ${templateName:0:1})${templateName:1}" # Uppercase initial character
-						markdownSourcePrepared="$(splice "$markdownSourcePrepared" "<replace>documentFormat</replace>" "$templateName" "overwrite")"
+						debug "templateName is $templateName"
+						markdownSourcePreparedFinal="$(splice "$markdownSourcePrepared" "<replace>documentFormat</replace>" "$templateName" "overwrite")"
 
 
 						if [[ "$DUMMY_RUN" == true ]]; then
 
 							if [[ "$pandocCommand" == *"SpokenMacOs"* ]]; then
 
-								echo "$markdownSourcePrepared" | createSpokenVersion
+								echo "$markdownSourcePreparedFinal" | createSpokenVersion
 
 								continue
 
@@ -1536,12 +1542,12 @@ function yamlAddCustomYaml () {
 
 							if [[ "$pandocCommand" == *"SpokenMacOs"* ]]; then
 
-								echo "$markdownSourcePrepared" | createSpokenVersion
+								echo "$markdownSourcePreparedFinal" | createSpokenVersion
 
 							else
 
 								# shellcheck disable=SC2116
-								echo "$markdownSourcePrepared" | eval "$(echo "$pandocCommand")"
+								echo "$markdownSourcePreparedFinal" | eval "$(echo "$pandocCommand")"
 
 							fi
 
