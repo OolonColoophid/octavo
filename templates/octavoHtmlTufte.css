@@ -31,7 +31,13 @@
 	    padding: 25px;
 	    margin: 25px; 
 	}
-	
+.groupwork { 		
+		width: 45%;
+	    border: 25px solid #800080;
+	    padding: 25px;
+	    margin: 25px; 
+	}
+		
 .caption { text-align: left;
 	padding: 2%;
 	font-style: italic;

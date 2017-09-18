@@ -622,7 +622,7 @@ function yamlAddCustomYaml () {
 			fi
 
 			#shellcheck disable=SC2034
-			includeYaml="$(cat "$includeYamlFilename")"
+			includeYaml="$(cat "$includeYamlFilename" | expandStrings)"
 			echo "$pipedInput" | awk -v includeYamlFilename="$includeYamlFilename" '/includeyaml/{system("cat " includeYamlFilename);next}1' 
 
 			;;
@@ -834,11 +834,13 @@ function yamlAddCustomYaml () {
 				| sed "s@<replace>mdfive</replace>@$mdFiveHashOutput@g" \
 				| sed 's/<task>/<div latex="true" class="task" id="Task">/g' \
 				| sed 's/<journal>/<div latex="true" class="journal" id="Journal">/g' \
+				| sed 's/<groupwork>/<div latex="true" class="groupwork" id="groupwork">/g' \
 				| sed 's/<answer>/<div latex="true" class="answer" id="Answer">/g' \
 				| sed 's/<remember>/<div latex="true" class="highlight" id="Remember">/g' \
 				| sed 's/<highlight>/<div latex="true" class="highlight" id="Highlight">/g' \
 				| sed 's/<\/task>/<\/div>/g' \
 				| sed 's/<\/journal>/<\/div>/g' \
+				| sed 's/<\/groupwork>/<\/div>/g' \
 				| sed 's/<\/remember>/<\/div>/g' \
 				| sed 's/<\/highlight>/<\/div>/g' \
 				| sed 's/<\/answer>/<\/div>/g' \
@@ -1547,7 +1549,7 @@ function yamlAddCustomYaml () {
 							else
 
 								# shellcheck disable=SC2116
-								echo "$markdownSourcePreparedFinal" | eval "$(echo "$pandocCommand")"
+								echo "$markdownSourcePreparedFinal" | expandStrings | eval "$(echo "$pandocCommand")"
 
 							fi
 

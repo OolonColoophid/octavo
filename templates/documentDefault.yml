@@ -2,6 +2,7 @@ author:            "Dr Ian Hocking"
 papersize:         A4
 colorlinks:        1
 boxlinks:          true
+templatedir:       "$octavoPath/templates"
 linespread:        "1.3"
 numbersections:    "--number-sections"
 citation-style:    "https://raw.githubusercontent.com/citation-style-language/styles/master/apa.csl"

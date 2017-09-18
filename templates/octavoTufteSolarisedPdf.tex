@@ -265,16 +265,19 @@ colframe=colourMellow,coltext=colourLight,colback=colourPaper!50!colourDark, ove
     rectangle node[text=colourPaper,font=\sffamily\bfseries\tiny,rotate=90] {GO} ([xshift=4mm]frame.north west);\end{tcbclipinterior}}}
 
 % Set up coloured 'call outs'
-\tcbset{textmarker/.style={skin=enhancedmiddle jigsaw,breakable, boxrule=0mm,leftrule=5mm,rightrule=5mm,boxsep=0mm,arc=0mm,outer arc=0mm, left=3mm,right=3mm,top=4mm,bottom=4mm,toptitle=1mm,bottomtitle=1mm,oversize}}
+
+  \tcbset{textmarker/.style={skin=enhancedmiddle jigsaw,breakable, boxrule=0mm,leftrule=5mm,rightrule=5mm,boxsep=0mm,arc=0mm,outer arc=0mm, left=3mm,right=3mm,top=4mm,bottom=4mm,toptitle=1mm,bottomtitle=1mm,oversize}}
 
 \newtcolorbox{highlight}{enlarge top by=0.5cm,textmarker,colback=colourLight!5!colourPaper,colframe=colourLight,coltext=colourLight}
 
 \newtcolorbox{task}{enlarge top by=0.5cm,textmarker,colback=colourSoothing!5!colourPaper,
-colframe=colourSoothing,coltext=colourLight}
+colframe=colourSoothing,coltext=colourLight,coltitle=colourSoothing!90!colourPaper,title=Task,attach boxed title to top left={yshift=3pt,xshift=4.6mm}, boxed title style={colback=colourSoothing!3!colourPaper } }
 
-\newtcolorbox{journal}{enlarge top by=0.5cm,textmarker,colback=colourMellow!5!colourPaper,colframe=colourMellow,coltext=colourLight} 
+\newtcolorbox{journal}{enlarge top by=0.5cm,textmarker,colback=colourMellow!5!colourPaper,colframe=colourMellow,coltext=colourLight,coltitle=colourMellow!90!colourPaper,title=In Your Journal,attach boxed title to top left={yshift=3pt,xshift=4.6mm}, boxed title style={colback=colourMellow!3!colourPaper } }
 
-% Set up 'answer boxes'
+\newtcolorbox{groupwork}{enlarge top by=0.5cm,textmarker,colback=colourRich!5!colourPaper,colframe=colourRich,coltext=colourLight,coltitle=colourRich!90!colourPaper,title=Group Work,attach boxed title to top left={yshift=3pt,xshift=4.6mm}, boxed title style={colback=colourRich!3!colourPaper } }
+
+    % Set up 'answer boxes'
 \tcbset{answerbox/.style={enlarge top by=0.5cm,enhanced jigsaw, breakable,title=Answer, colback=base02, colbacktitle=base00, colframe=base0,coltext=base1}}
 \newtcolorbox{answer}{answerbox}
 

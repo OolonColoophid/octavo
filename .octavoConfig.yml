@@ -8,7 +8,6 @@ deploymentText:
 # (Note: Some variables must be set in the Yaml itself
 # in order to be available to Pandoc and filters)
 includedir:    "$octavoPath/includes"                                  # Location of text files to be inserted dynamically
-templatedir:   "$octavoPath/templates"                                 # Location of templates (Latex, html, etc.)
 deployconfig:  "$octavoPath/deployConfig"                              # Location of deployment methods (e.g. Pandoc, Say)
 remoteserver:  "cccupsychology.com"                                    # Remote server (have this in your .netrc file)
 

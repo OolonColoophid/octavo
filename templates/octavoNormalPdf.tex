@@ -32,65 +32,7 @@ $if(solariseddarkoff)$
 \definecolor{colourPaper}{RGB}{242, 242, 242}
 \definecolor{colourDark}{RGB}{6, 66, 92}
 
-\newtcbox{\boxexturl}{fontupper=\ttfamily,enhanced,nobeforeafter,tcbox raise base,boxrule=0.4pt,top=0mm,bottom=0mm,
-  right=0mm,left=4mm,arc=1pt,boxsep=2pt,before upper={\vphantom{dlg}},
-  colframe=colourMellow,coltext=colourDark,colback=colourPaper!50!white,
-  overlay={\begin{tcbclipinterior}\fill[colourMellow] (frame.south west)
-    rectangle node[text=white,font=\sffamily\bfseries\tiny,rotate=90] {GO} ([xshift=4mm]frame.north west);\end{tcbclipinterior}}}
-
-% Email box is currently unused
-\newtcbox{\boxemail}{fontupper=\ttfamily,enhanced,nobeforeafter,tcbox raise base,boxrule=0.4pt,top=0mm,bottom=0mm,
-  right=0mm,left=4mm,arc=1pt,boxsep=2pt,before upper={\vphantom{dlg}},
-  colframe=colourLight,coltext=colourDark,colback=colourPaper!50!white,
-  overlay={\begin{tcbclipinterior}\fill[colourLight] (frame.south west)
-    rectangle node[text=white,font=\sffamily\bfseries\tiny,rotate=90] {@} ([xshift=4mm]frame.north west);\end{tcbclipinterior}}}
-    
-\newtcbox{\boxinturl}{fontupper=\ttfamily,enhanced,nobeforeafter,tcbox raise base,boxrule=0.4pt,top=0mm,bottom=0mm,
-  right=0mm,left=4mm,arc=1pt,boxsep=2pt,before upper={\vphantom{dlg}},
-  colframe=colourSoothing,coltext=colourDark,colback=colourPaper!50!white,
-  overlay={\begin{tcbclipinterior}\fill[colourSoothing] (frame.south west)
-    rectangle node[text=white,font=\sffamily\bfseries\tiny,rotate=90] {GO} ([xshift=4mm]frame.north west);\end{tcbclipinterior}}}
-
-% Set up coloured 'call outs'
-\tcbset{textmarker/.style={skin=enhancedmiddle jigsaw,breakable, boxrule=0mm,leftrule=5mm,rightrule=5mm,boxsep=0mm,arc=0mm,outer arc=0mm, left=3mm,right=3mm,top=4mm,bottom=4mm,toptitle=1mm,bottomtitle=1mm,oversize}}
-\newtcolorbox{highlight}{enlarge top by=0.5cm,textmarker,colback=colourLight!5!white,colframe=colourLight}
-\newtcolorbox{task}{enlarge top by=0.5cm,textmarker,colback=colourSoothing!5!white,
-colframe=colourSoothing}
-\newtcolorbox{journal}{enlarge top by=0.5cm,textmarker,colback=colourMellow!5!white,colframe=colourMellow} 
-
-% Set up 'answer boxes'
-\tcbset{answerbox/.style={enlarge top by=0.5cm,enhanced jigsaw, breakable,title=Answer, colback=colourPaper, colbacktitle=colourDark!75!white, colframe=colourDark}}
-\newtcolorbox{answer}{answerbox}
-
-% Set up 'inline boxes'
-\DeclareTotalTCBox{\inlineHyper}{ O{colourMellow} v O{} }
-{ box align=base, fontupper=\ttfamily,nobeforeafter,tcbox raise base,arc=0pt,outer arc=0pt,
-  top=0pt,bottom=0pt,left=0mm,right=0mm,
-  leftrule=0pt,rightrule=0pt,toprule=0.2mm,bottomrule=0.2mm,boxsep=0.9mm,
-  colback=#1!10!white,colframe=#1!50!black,#3}{#2}
-
-\DeclareTotalTCBox{\inlineKeyword}{ O{colourLight} v O{} }
-{ box align=base, fontupper=\ttfamily,nobeforeafter,tcbox raise base,arc=0pt,outer arc=0pt,
-  top=0pt,bottom=0pt,left=0mm,right=0mm,
-  leftrule=0pt,rightrule=0pt,toprule=0.2mm,bottomrule=0.2mm,boxsep=0.9mm,
-  colback=#1!10!white,colframe=#1!50!black,#3}{#2}
-
-\DeclareTotalTCBox{\inlinePopout}{ O{colourSoothing} v O{} }
-{ box align=base, fontupper=\ttfamily,nobeforeafter,tcbox raise base,arc=0pt,outer arc=0pt,
-  top=0pt,bottom=0pt,left=0mm,right=0mm,
-  leftrule=0pt,rightrule=0pt,toprule=0.2mm,bottomrule=0.2mm,boxsep=0.9mm,
-  colback=#1!10!white,colframe=#1!50!black,#3}{#2}
-
-\DeclareTotalTCBox{\inlineDo}{ O{colourRich} v O{} }
-{ box align=base, fontupper=\ttfamily,nobeforeafter,tcbox raise base,arc=2pt,outer arc=2pt,
-  top=0pt,bottom=0pt,left=0mm,right=0mm,
-  leftrule=0.2mm,rightrule=0.2mm,toprule=0.2mm,bottomrule=0.2mm,boxsep=0.9mm,
-  coltext=white,colback=colourRich,colframe=colourRich,#3}{#2}
-
-\DeclareTotalTCBox{\inlineDo}{ s v } {verbatim,colupper=white,colback=colourRich,colframe=colourRich} {\IfBooleanTF{#1}{\textcolor{red}{\ttfamily\bfseries > }}{}
-     \lstinline[]^#2^}
-
-
+\input{$templatedir$/includeColouredBoxes.tex}
 
 $endif$
 
