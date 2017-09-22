@@ -22,7 +22,9 @@ Use this booklet in conjunction with your own *Research Journal*, where you will
 
 <groupwork>
 
-- Occasionally, I'll ask you to work with others in the seminar. I'll put these instructions in a box like this.
+- Occasionally, I'll ask you to work with others in the seminar, in groups of three or four. I'll put these instructions in a box like this.
+
+- Group work will involve writing notes. Make sure you put these in your Journal.
 
 </groupwork>
 

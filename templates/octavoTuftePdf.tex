@@ -40,9 +40,8 @@ $endif$
 % longtable
 \usepackage{longtable}
 
- \usepackage{comment} % For hidden comments
 
-\usepackage{framed}
+%\usepackage{framed}
 
 % IH added this to stop the error 'Argument of \MakeTextLowercase has an extra }
 \def\tightlist{}
@@ -98,19 +97,13 @@ $endif$
 \let\originaltoprule\toprule
 
 % url
-\usepackage{url}
+% \usepackage{url}
 
 % qr codes!
-\usepackage[nolinks]{qrcode}
+%\usepackage[nolinks]{qrcode}
 
 
-% hyperref
-\usepackage{hyperref}
-% Next three lines added by IH
-% to make sure links are colored
-$if(colorlinks)$
-\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
-$endif$
+
 
 
 
@@ -128,7 +121,7 @@ $endif$
 \usepackage{multicol}
 
 % lipsum
-\usepackage{lipsum}
+%\usepackage{lipsum}
 
 % These commands are used to pretty-print LaTeX commands
 \newcommand{\doccmd}[1]{\texttt{\textbackslash#1}}% command name -- adds backslash automatically
@@ -139,23 +132,6 @@ $endif$
 \newcommand{\docpkg}[1]{\texttt{#1}}% package name
 \newcommand{\doccls}[1]{\texttt{#1}}% document class name
 \newcommand{\docclsopt}[1]{\texttt{#1}}% document class option name
-
-% Shaded
-% \newenvironment{Shaded}{}{}
-% \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
-% \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
-% \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
-% \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
-% \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
-% \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
-% \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
-% \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
-% \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
-% \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
-% \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
-% \newcommand{\RegionMarkerTok}[1]{{#1}}
-% \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
-% \newcommand{\NormalTok}[1]{{#1}}
 
 
 

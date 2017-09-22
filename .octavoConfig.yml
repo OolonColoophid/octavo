@@ -43,9 +43,9 @@ template1: "octavoTuftePdf"
           - "filterKeyword.py"
           - "filterDo.py"
           - "filterDivToTufte.py"
+          - "pandoc-csv2table"
           - "pandoc-crossref"
           - "pandoc-citeproc"
-          - "pandoc-csv2table"
 
 
 

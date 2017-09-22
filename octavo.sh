@@ -150,6 +150,7 @@ usage: octavo.sh -f <file> [-c <file>] [-ybvdhn]
 -b --bash          Print Bash variables to standard output
 -c --config [arg]  Specify a configuration Yaml file. Default is .octavoConfig.yml in the script directory.
 -d --debug         Enables debug mode
+-l --latex         Print intermediate Latex
 -n --no-color      Disable color output
 -o --output        Print processed Markdown
 -p --pandocverbose Verbose Pandoc output to standard output
@@ -1545,6 +1546,14 @@ function yamlAddCustomYaml () {
 							if [[ "$pandocCommand" == *"SpokenMacOs"* ]]; then
 
 								echo "$markdownSourcePreparedFinal" | createSpokenVersion
+# Uncomment to have Octavo produce latex
+
+							elif [[ "$pandocCommand" == *".tex"* ]]; then
+
+								pandocCommand="$(echo $pandocCommand | sed 's/-o .*//')"
+								pandocCommand="$pandocCommand -t latex"
+
+								echo "$markdownSourcePreparedFinal" | expandStrings | eval "$(echo "$pandocCommand")"
 
 							else
 
@@ -1714,6 +1723,14 @@ if [[ "${arg_p:?}" = "1" ]]; then
 	PANDOC_VERBOSE="true"
 else
 	PANDOC_VERBOSE="false"
+fi
+
+
+# Ask pandoc to be verbose if requested
+if [[ "${arg_l:?}" = "1" ]]; then
+	LATEX="true"
+else
+	LATEX="false"
 fi
 
 
