@@ -833,12 +833,12 @@ function yamlAddCustomYaml () {
 				| sed "s@<replace>date</replace>@$dateOutput@g" \
 				| sed "s@<replace>computer</replace>@$hostName@g" \
 				| sed "s@<replace>mdfive</replace>@$mdFiveHashOutput@g" \
-				| sed 's/<task>/<div latex="true" class="task" id="Task">/g' \
-				| sed 's/<journal>/<div latex="true" class="journal" id="Journal">/g' \
-				| sed 's/<groupwork>/<div latex="true" class="groupwork" id="groupwork">/g' \
-				| sed 's/<answer>/<div latex="true" class="answer" id="Answer">/g' \
-				| sed 's/<remember>/<div latex="true" class="highlight" id="Remember">/g' \
-				| sed 's/<highlight>/<div latex="true" class="highlight" id="Highlight">/g' \
+				| sed 's/<task>/<div latex="true" class="task">/g' \
+				| sed 's/<journal>/<div latex="true" class="journal">/g' \
+				| sed 's/<groupwork>/<div latex="true" class="groupwork">/g' \
+				| sed 's/<answer>/<div latex="true" class="answer">/g' \
+				| sed 's/<remember>/<div latex="true" class="highlight">/g' \
+				| sed 's/<highlight>/<div latex="true" class="highlight">/g' \
 				| sed 's/<\/task>/<\/div>/g' \
 				| sed 's/<\/journal>/<\/div>/g' \
 				| sed 's/<\/groupwork>/<\/div>/g' \
