@@ -1548,12 +1548,12 @@ function yamlAddCustomYaml () {
 								echo "$markdownSourcePreparedFinal" | createSpokenVersion
 # Uncomment to have Octavo produce latex
 
-							elif [[ "$pandocCommand" == *".tex"* ]]; then
+#							elif [[ "$pandocCommand" == *".tex"* ]]; then
 
-								pandocCommand="$(echo $pandocCommand | sed 's/-o .*//')"
-								pandocCommand="$pandocCommand -t latex"
+#								pandocCommand="$(echo $pandocCommand | sed 's/-o .*//')"
+#								pandocCommand="$pandocCommand -t latex"
 
-								echo "$markdownSourcePreparedFinal" | expandStrings | eval "$(echo "$pandocCommand")"
+#								echo "$markdownSourcePreparedFinal" | expandStrings | eval "$(echo "$pandocCommand")"
 
 							else
 

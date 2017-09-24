@@ -25,4 +25,4 @@ tableTitle: "Table"
 lofTitle: "List of Figures"
 lotTitle: "List of Tables"
 toc:                true
-toc-depth:          1
+toc-depth:          2 

@@ -1,0 +1,11 @@
+
+% Hyperlinks
+% Use box
+\let\oldhref\href
+\renewcommand{\href}[2]{\boxexturl{\oldhref{#1}{#2}}}
+
+% Use box
+\let\oldhyperlink\hyperlink
+\renewcommand{\hyperlink}[2]{\boxinturl{\oldhyperlink{#1}{#2}}}
+
+

@@ -1,0 +1,63 @@
+% Using the Solarised package from here: http://ethanschoonover.com/solarized
+
+
+% Works
+\newtcbox{\boxexturl}{enhanced,nobeforeafter,tcbox raise base,boxrule=0.4pt,top=0mm,bottom=0mm,
+  right=0mm,left=4mm,arc=1pt,boxsep=2pt,before upper={\vphantom{dlg}},
+  colframe=colourMellow,coltext=white,colback=colourPaper!50!white,
+  overlay={\begin{tcbclipinterior}\fill[colourMellow] (frame.south west)
+    rectangle node[text=white,font=\sffamily\bfseries\tiny,rotate=90] {GO} ([xshift=4mm]frame.north west);\end{tcbclipinterior}}}
+   
+\newtcbox{\boxinturl}{enhanced,nobeforeafter,tcbox raise base,boxrule=0.4pt,top=0mm,bottom=0mm,
+  right=0mm,left=4mm,arc=1pt,boxsep=2pt,before upper={\vphantom{dlg}},
+  colframe=colourSoothing,coltext=colourDark,colback=colourPaper!50!white,
+  overlay={\begin{tcbclipinterior}\fill[colourSoothing] (frame.south west)
+    rectangle node[text=white,font=\sffamily\bfseries\tiny,rotate=90] {GO} ([xshift=4mm]frame.north west);\end{tcbclipinterior}}}
+% Set up coloured 'call outs'
+
+\tcbset{textmarker/.style={skin=enhancedmiddle jigsaw,breakable, boxrule=0mm,leftrule=5mm,rightrule=5mm,boxsep=0mm,arc=0mm,outer arc=0mm, center=3mm,right=3mm,top=10mm,bottom=4mm,toptitle=0mm,bottomtitle=1mm,oversize}}
+
+\newtcolorbox{journal}{textmarker,enlarge top by=0.5cm,colback=colourLight!5!colourPaper,
+colframe=colourLight,coltitle=base2,coltext=base1,title=In Your Journal,attach boxed title to top center={yshift=-22pt}, boxed title style={colback=colourLight!5!colourPaper,colframe=colourLight} }
+
+\newtcolorbox{highlight}{textmarker,enlarge top by=0.5cm,colback=colourSoothing!5!colourPaper,
+colframe=colourSoothing,coltitle=base2,coltext=base1,title=Note,attach boxed title to top center={yshift=-22pt}, boxed title style={colback=colourSoothing!3!colourPaper,colframe=colourSoothing} }
+
+\newtcolorbox{task}{textmarker,enlarge top by=0.5cm,colback=colourMellow!5!colourPaper,colframe=colourMellow,coltitle=base2,coltext=base1,title=Task,attach boxed title to top center={yshift=-22pt}, boxed title style={colback=colourMellow!3!colourPaper,colframe=colourMellow} }
+
+
+\newtcolorbox{groupwork}{textmarker,enlarge top by=0.5cm,colback=colourRich!5!colourPaper,colframe=colourRich,coltitle=base2,coltext=base1,title=Group Work,attach boxed title to top center={yshift=-22pt}, boxed title style={colback=colourRich!3!colourPaper,colframe=colourRich }} 
+
+
+    % Set up 'answer boxes'
+\tcbset{answerbox/.style={enlarge top by=0.5cm,enhanced jigsaw, breakable,title=Answer, colback=base02, colbacktitle=base00, colframe=base0,coltext=base1}}
+\newtcolorbox{answer}{answerbox}
+
+% Set up 'inline boxes'
+\DeclareTotalTCBox{\inlineHyper}{ O{colourMellow} v O{} }
+{ box align=base, fontupper=\ttfamily,nobeforeafter,tcbox raise base,arc=0pt,outer arc=0pt,
+  top=0pt,bottom=0pt,left=0mm,right=0mm,
+  leftrule=0pt,rightrule=0pt,toprule=0.2mm,bottomrule=0.2mm,boxsep=0.9mm,
+  colback=#1!10!white,colframe=#1!50!black,#3}{#2}
+
+\DeclareTotalTCBox{\inlineKeyword}{ O{colourSoothing} v O{} }
+{ box align=base, fontupper=\ttfamily,nobeforeafter,tcbox raise base,arc=0pt,outer arc=0pt,
+  top=0pt,bottom=0pt,left=0mm,right=0mm,
+  leftrule=0pt,rightrule=0pt,toprule=0.2mm,bottomrule=0.2mm,boxsep=0.9mm,
+  coltext=colourSoothing,colback=colourPaper!50!colourDark,colframe=#1!50!black,#3}{#2}
+
+\DeclareTotalTCBox{\inlinePopout}{ O{colourSoothing} v O{} }
+{ box align=base, fontupper=\ttfamily,nobeforeafter,tcbox raise base,arc=0pt,outer arc=0pt,
+  top=0pt,bottom=0pt,left=0mm,right=0mm,
+  leftrule=0pt,rightrule=0pt,toprule=0.2mm,bottomrule=0.2mm,boxsep=0.9mm,
+  coltext=colourSoothing,colback=colourPaper!50!colourDark,colframe=#1!50!black,#3}{#2}
+
+\DeclareTotalTCBox{\inlineDo}{ O{colourRich} v O{} }
+{ box align=base, fontupper=\ttfamily,nobeforeafter,tcbox raise base,arc=2pt,outer arc=2pt,
+  top=0pt,bottom=0pt,left=0mm,right=0mm,
+  leftrule=0.2mm,rightrule=0.2mm,toprule=0.2mm,bottomrule=0.2mm,boxsep=0.9mm,
+  coltext=colourSoothing,colback=colourPaper!50!colourDark,colframe=#1!50!black,#3}{#2}
+
+\DeclareTotalTCBox{\inlineDo}{ s v } {verbatim,colupper=white,colback=colourRich,colframe=colourRich} {\IfBooleanTF{#1}{\textcolor{red}{\ttfamily\bfseries > }}{}
+     \lstinline[]^#2^}
+

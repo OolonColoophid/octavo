@@ -1,0 +1,12 @@
+
+% Insert headimage at top right of first page
+$if(headimage)$
+\begin{marginfigure}
+$if(solariseddarkoff)$
+\includegraphics{$headimage$}
+$endif$
+\epigraph{$headquote$}{\textit{$headquoteauthor$}}
+\end{marginfigure}
+$endif$
+
+

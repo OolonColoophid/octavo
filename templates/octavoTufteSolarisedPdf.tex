@@ -1,149 +1,67 @@
 % tufte-handout.tex - DESC
 % Iago Mosqueira - JRC. 2013
-% Updated by Ian Hocking 2016
-%
+% Updated by Ian Hocking 2016/7
+
+% Set document class
 \documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{tufte-handout}
+
+% Packages
+\usepackage{lmodern}
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{skins}
+\tcbuselibrary{breakable}
+\usepackage{array}
+\usepackage{epigraph}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+
+% Includes
+\input{$templatedir$/latexIncludes/solarisedColours.tex}
+\input{$templatedir$/latexIncludes/solarisedColouredBoxes.tex}
+\input{$templatedir$/latexIncludes/tufteSpacing.tex}
+\input{$templatedir$/latexIncludes/boxedHyperlinks.tex}
 
 %This ensures maketitle will not include a date
 \date{}
 
-% For color boxes
-\usepackage[most]{tcolorbox}
-\tcbuselibrary{skins}
-\tcbuselibrary{breakable}
 
-% For coloured swatches
-\newcommand\crule[3][black]{\textcolor{#1}{\rule{#2}{#3}}}
+% Default settings
 
-
-
-
-% IH added this:
-% longtable
-\usepackage{longtable}
-
- \usepackage{comment} % For hidden comments
-
-\usepackage{framed}
-
-% IH added this to stop the error 'Argument of \MakeTextLowercase has an extra }
-\def\tightlist{}
-
-% IH added this - apparently it improves kerning etc.
+\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+$if(euro)$
+  \newcommand{\euro}{€}
+$endif$
+$if(dyslexicfont)$
+    \setmainfont{$dyslexicfont$}
+$endif$
+$if(sansfont)$
+    \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
+$endif$
+$if(monofont)$
+    \setmonofont[Mapping=tex-ansi$if(monofontoptions)$,$for(monofontoptions)$$monofontoptions$$sep$,$endfor$$endif$]{$monofont$}
+$endif$
+$if(mathfont)$
+    \setmathfont(Digits,Latin,Greek)[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
+$endif$
+$if(CJKmainfont)$
+    \usepackage{xeCJK}
+    \setCJKmainfont[$for(CJKoptions)$$CJKoptions$$sep$,$endfor$]{$CJKmainfont$}
+$endif$
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
 \usepackage{microtype}
-
-\usepackage{fontspec}
-
-$if(mainfont)$
-\setmainfont{$mainfont$}% IH added this to make the template honour 'mainfont'
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+$if(geometry)$
+\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$
-
-% Set up the spacing using fontspec features
-\renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
-\renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
-
-% A package that will add nice chapter opening pages
-% \usepackage[grey,utopia]{quotchap}
-% ams
-\usepackage{amssymb,amsmath}
-
-% Set up the images/graphics package
-\usepackage{graphicx}
-\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
-\graphicspath{{graphics/}}
-
-% natbib
-\usepackage{natbib}
-\bibliographystyle{plainnat}
-
-% biblatex
-$if(biblatex)$
-\usepackage{biblatex}
-$if(biblio-files)$
-\bibliography{$biblio-files$}
-$endif$
-$endif$
-
-% multiplecol
-%\usepackage{multicol}
-
-
-
-% For nice quotes
-\usepackage{epigraph}
-
-% booktabs
-\usepackage{booktabs}
-\usepackage{array}% http://ctan.org/pkg/array
-%\setlength{\defaultaddspace}{2em}% Adjusted line spacing
-\setlength{\extrarowheight}{5pt}
-\let\originaltoprule\toprule
-
-% url
-\usepackage{url}
-
-% qr codes!
-\usepackage[nolinks]{qrcode}
-
-
-% hyperref
 \usepackage{hyperref}
-% Next three lines added by IH
-% to make sure links are colored
 $if(colorlinks)$
 \PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
 $endif$
-
-
-
-% units.
-\usepackage{units}
-
-% fancyvrb
-\usepackage{fancyvrb}
-\fvset{fontsize=\normalsize}
-\DefineShortVerb[commandchars=\\\{\}]{\|}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-
-
-% multiplecol
-\usepackage{multicol}
-
-% lipsum
-\usepackage{lipsum}
-
-% These commands are used to pretty-print LaTeX commands
-\newcommand{\doccmd}[1]{\texttt{\textbackslash#1}}% command name -- adds backslash automatically
-\newcommand{\docopt}[1]{\ensuremath{\langle}\textrm{\textit{#1}}\ensuremath{\rangle}}% optional command argument
-\newcommand{\docarg}[1]{\textrm{\textit{#1}}}% (required) command argument
-\newenvironment{docspec}{\begin{quote}\noindent}{\end{quote}}% command specification environment
-\newcommand{\docenv}[1]{\textsf{#1}}% environment name
-\newcommand{\docpkg}[1]{\texttt{#1}}% package name
-\newcommand{\doccls}[1]{\texttt{#1}}% document class name
-\newcommand{\docclsopt}[1]{\texttt{#1}}% document class option name
-
-% Shaded
-% \newenvironment{Shaded}{}{}
-% \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
-% \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
-% \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
-% \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
-% \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
-% \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
-% \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
-% \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
-% \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
-% \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
-% \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
-% \newcommand{\RegionMarkerTok}[1]{{#1}}
-% \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
-% \newcommand{\NormalTok}[1]{{#1}}
-
-
-
-
-%%%%%%%%
-%% Next bit added by IH 2 May
 \hypersetup{unicode=true,
 $if(title-meta)$
             pdftitle={$title-meta$},
@@ -154,7 +72,16 @@ $endif$
 $if(keywords)$
             pdfkeywords={$for(keywords)$$keywords$$sep$; $endfor$},
 $endif$
-            breaklinks=false}      
+$if(colorlinks)$
+            colorlinks=true,
+            linkcolor=colourDark,
+            citecolor=Blue,
+            urlcolor=colourDark,
+$else$
+            pdfborder={0 0 0},
+$endif$
+            breaklinks=false}
+\urlstyle{same}  % don't use monospace font for urls
 $if(lang)$
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
@@ -169,174 +96,143 @@ $for(polyglossia-otherlangs)$
 $endfor$
 \fi
 $endif$
-%%%%%%%%%
-
-\urlstyle{sf}  % don't use monospace font for urls
-
-$if(boxlinks)$
-%Change behaviour of href so that it uses boxexturl
-\let\oldhref\href
-\renewcommand{\href}[2]{\boxexturl{\oldhref{#1}{#2}}}
-
-%Change behaviour of href so that it uses boxexturl
-\let\oldhyperlink\hyperlink
-\renewcommand{\hyperlink}[2]{\boxinturl{\oldhyperlink{#1}{#2}}}
+$if(natbib)$
+\usepackage{natbib}
+\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
 $endif$
-
+$if(biblatex)$
+\usepackage$if(biblio-style)$[style=$biblio-style$]$endif${biblatex}
+$if(biblatexoptions)$\ExecuteBibliographyOptions{$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$}$endif$
+$for(bibliography)$
+\addbibresource{$bibliography$}
+$endfor$
+$endif$
+$if(listings)$
+\usepackage{listings}
+$endif$
+$if(lhs)$
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+$endif$
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+$if(verbatim-in-note)$
+\usepackage{fancyvrb}
+\VerbatimFootnotes % allows verbatim text in footnotes
+$endif$
+$if(tables)$
+\usepackage{longtable,booktabs}
+$endif$
+$if(graphics)$
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+$endif$
+$if(links-as-notes)$
+% Make links footnotes instead of hotlinks:
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+$endif$
+$if(strikeout)$
+\usepackage[normalem]{ulem}
+% avoid problems with \sout in headers with hyperref:
+\pdfstringdefDisableCommands{\renewcommand{\sout}{}}
+$endif$
+$if(indent)$
+$else$
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+$endif$
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 $if(numbersections)$
 \setcounter{secnumdepth}{5}
 $else$
 \setcounter{secnumdepth}{0}
 $endif$
-
+$if(subparagraph)$
+$else$
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+$endif$
+$if(dir)$
+\ifxetex
+  % load bidi as late as possible as it modifies e.g. graphicx
+  $if(latex-dir-rtl)$
+  \usepackage[RTLdocument]{bidi}
+  $else$
+  \usepackage{bidi}
+  $endif$
+\fi
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \TeXXeTstate=1
+  \newcommand{\RL}[1]{\beginR #1\endR}
+  \newcommand{\LR}[1]{\beginL #1\endL}
+  \newenvironment{RTL}{\beginR}{\endR}
+  \newenvironment{LTR}{\beginL}{\endL}
+\fi
+$endif$
+$for(header-includes)$
+$header-includes$
+$endfor$
 
 $if(title)$
-\title{$title$ \\ \small $subtitle$}
+\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+$endif$
+$if(subtitle)$
+\providecommand{\subtitle}[1]{}
+\subtitle{$subtitle$}
 $endif$
 $if(author)$
 \author{$for(author)$$author$$sep$ \and $endfor$}
 $endif$
-
-\interfootnotelinepenalty=10000 % Should stop footnotes being broken across pages
-
-$if(linespread)$
-\linespread{$linespread$} % a bit more space between paras
+$if(institute)$
+\institute{$for(institute)$$institute$$sep$ \and $endfor$}
 $endif$
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SOLARISED DARK BEGINS
-% Using the Solarised package from here: http://ethanschoonover.com/solarized
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% Creates a new command that allows us to set global
-% colour (affects text, but may also affect things like fleurons!)
-\makeatletter
-\newcommand{\globalcolor}[1]{%
-  \color{#1}\global\let\default@color\current@color
-}
-\makeatother
-
-\definecolor{base03}{RGB}{0,43,54}
-\definecolor{base02}{RGB}{7,54,66}
-\definecolor{base01}{RGB}{88,110,117}
-\definecolor{base00}{RGB}{101,123,131}
-\definecolor{base0}{RGB}{131,148,150}
-\definecolor{base1}{RGB}{147,161,161}
-\definecolor{base2}{RGB}{238,232,213}
-\definecolor{base3}{RGB}{253,246,227}
-\definecolor{yellow}{RGB}{181,137,0}
-\definecolor{orange}{RGB}{203,75,22}
-\definecolor{red}{RGB}{220,50,47}
-\definecolor{magenta}{RGB}{211,54,130}
-\definecolor{violet}{RGB}{108,113,196}
-\definecolor{blue}{RGB}{38,139,210}
-\definecolor{cyan}{RGB}{42,161,152}
-\definecolor{green}{RGB}{133,153,0}
-
-% My own colour names
-\definecolor{colourRich}{RGB}{129, 67, 116} % like cyan
-\definecolor{colourMellow}{RGB}{203,75,22} % like orange 
-\definecolor{colourSoothing}{RGB}{181,137,0} % like yellow
-\definecolor{colourLight}{RGB}{131,148,150} % like base0
-\definecolor{colourPaper}{RGB}{0,43,54}  % like base03
-\definecolor{colourDark}{RGB}{7,54,66} %  like base02
-
-\renewcommand{\familydefault}{\sfdefault} % sans serif now, since this is about accessibility
-% \color{base0} % body text colour
-\AtBeginDocument{\globalcolor{base0}} % switch main colour to white(ish)
-\pagecolor{base03} % background colour
-
-\newtcbox{\boxexturl}{fontupper=\ttfamily,enhanced,nobeforeafter,tcbox raise base,boxrule=0.4pt,top=0mm,bottom=0mm,
-  right=0mm,left=4mm,arc=1pt,boxsep=2pt,before upper={\vphantom{dlg}},
-  colframe=colourMellow,coltext=colourLight,colback=colourPaper!50!colourDark,
-  overlay={\begin{tcbclipinterior}\fill[colourMellow] (frame.south west)
-    rectangle node[text=colourPaper,font=\sffamily\bfseries\tiny,rotate=90] {GO} ([xshift=4mm]frame.north west);\end{tcbclipinterior}}}
-
-% Email box is currently unused
-\newtcbox{\boxemail}{fontupper=\ttfamily,enhanced,nobeforeafter,tcbox raise base,boxrule=0.4pt,top=0mm,bottom=0mm,
-  right=0mm,left=4mm,arc=1pt,boxsep=2pt,before upper={\vphantom{dlg}},
-colframe=colourMellow,coltext=colourLight,colback=colourPaper!50!colourDark,  overlay={\begin{tcbclipinterior}\fill[colourLight] (frame.south west)
-    rectangle node[text=colourPaper,font=\sffamily\bfseries\tiny,rotate=90] {@} ([xshift=4mm]frame.north west);\end{tcbclipinterior}}}
-    
-\newtcbox{\boxinturl}{fontupper=\ttfamily,enhanced,nobeforeafter,tcbox raise base,boxrule=0.4pt,top=0mm,bottom=0mm,
-  right=0mm,left=4mm,arc=1pt,boxsep=2pt,before upper={\vphantom{dlg}},
-colframe=colourMellow,coltext=colourLight,colback=colourPaper!50!colourDark, overlay={\begin{tcbclipinterior}\fill[colourSoothing] (frame.south west)
-    rectangle node[text=colourPaper,font=\sffamily\bfseries\tiny,rotate=90] {GO} ([xshift=4mm]frame.north west);\end{tcbclipinterior}}}
-
-% Set up coloured 'call outs'
-
-  \tcbset{textmarker/.style={skin=enhancedmiddle jigsaw,breakable, boxrule=0mm,leftrule=5mm,rightrule=5mm,boxsep=0mm,arc=0mm,outer arc=0mm, left=3mm,right=3mm,top=4mm,bottom=4mm,toptitle=1mm,bottomtitle=1mm,oversize}}
-
-\newtcolorbox{highlight}{enlarge top by=0.5cm,textmarker,colback=colourLight!5!colourPaper,colframe=colourLight,coltext=colourLight}
-
-\newtcolorbox{task}{enlarge top by=0.5cm,textmarker,colback=colourSoothing!5!colourPaper,
-colframe=colourSoothing,coltext=colourLight,coltitle=colourSoothing!90!colourPaper,title=Task,attach boxed title to top left={yshift=3pt,xshift=4.6mm}, boxed title style={colback=colourSoothing!3!colourPaper } }
-
-\newtcolorbox{journal}{enlarge top by=0.5cm,textmarker,colback=colourMellow!5!colourPaper,colframe=colourMellow,coltext=colourLight,coltitle=colourMellow!90!colourPaper,title=In Your Journal,attach boxed title to top left={yshift=3pt,xshift=4.6mm}, boxed title style={colback=colourMellow!3!colourPaper } }
-
-\newtcolorbox{groupwork}{enlarge top by=0.5cm,textmarker,colback=colourRich!5!colourPaper,colframe=colourRich,coltext=colourLight,coltitle=colourRich!90!colourPaper,title=Group Work,attach boxed title to top left={yshift=3pt,xshift=4.6mm}, boxed title style={colback=colourRich!3!colourPaper } }
-
-    % Set up 'answer boxes'
-\tcbset{answerbox/.style={enlarge top by=0.5cm,enhanced jigsaw, breakable,title=Answer, colback=base02, colbacktitle=base00, colframe=base0,coltext=base1}}
-\newtcolorbox{answer}{answerbox}
-
-% Set up 'inline boxes'
-\DeclareTotalTCBox{\inlineHyper}{ O{colourMellow} v O{} }
-{ box align=base, fontupper=\ttfamily,nobeforeafter,tcbox raise base,arc=0pt,outer arc=0pt,
-  top=0pt,bottom=0pt,left=0mm,right=0mm,
-  leftrule=0pt,rightrule=0pt,toprule=0.2mm,bottomrule=0.2mm,boxsep=0.9mm,
-  colback=#1!10!white,colframe=#1!50!black,#3}{#2}
-
-\DeclareTotalTCBox{\inlineKeyword}{ O{colourSoothing} v O{} }
-{ box align=base, fontupper=\ttfamily,nobeforeafter,tcbox raise base,arc=0pt,outer arc=0pt,
-  top=0pt,bottom=0pt,left=0mm,right=0mm,
-  leftrule=0pt,rightrule=0pt,toprule=0.2mm,bottomrule=0.2mm,boxsep=0.9mm,
-  coltext=colourSoothing,colback=colourPaper!50!colourDark,colframe=#1!50!black,#3}{#2}
-
-\DeclareTotalTCBox{\inlinePopout}{ O{colourSoothing} v O{} }
-{ box align=base, fontupper=\ttfamily,nobeforeafter,tcbox raise base,arc=0pt,outer arc=0pt,
-  top=0pt,bottom=0pt,left=0mm,right=0mm,
-  leftrule=0pt,rightrule=0pt,toprule=0.2mm,bottomrule=0.2mm,boxsep=0.9mm,
-  coltext=colourSoothing,colback=colourPaper!50!colourDark,colframe=#1!50!black,#3}{#2}
-
-\DeclareTotalTCBox{\inlineDo}{ O{colourRich} v O{} }
-{ box align=base, fontupper=\ttfamily,nobeforeafter,tcbox raise base,arc=2pt,outer arc=2pt,
-  top=0pt,bottom=0pt,left=0mm,right=0mm,
-  leftrule=0.2mm,rightrule=0.2mm,toprule=0.2mm,bottomrule=0.2mm,boxsep=0.9mm,
-  coltext=colourSoothing,colback=colourPaper!50!colourDark,colframe=#1!50!black,#3}{#2}
-
-\DeclareTotalTCBox{\inlineDo}{ s v } {verbatim,colupper=white,colback=colourRich,colframe=colourRich} {\IfBooleanTF{#1}{\textcolor{red}{\ttfamily\bfseries > }}{}
-     \lstinline[]^#2^}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SOLARISED DARK ENDS
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
+% IH added this to stop the error 'Argument of \MakeTextLowercase has an extra }
+\def\tightlist{}
 
 \begin{document}
 
+$if(large)$
+\large
+$endif$
 
-%\large - Added by IH. For other sizes, see http://texblog.org/2012/08/29/changing-the-font-size-in-latex/
 $if(title)$
 \maketitle
 $endif$
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
 
-%\begin{flushleft} % Coloured swatches showing theme
-%\crule[colourRich]{0.4cm}{0.25cm} \crule[colourMellow]{0.4cm}{0.25cm} \crule[colourSoothing]{0.4cm}{0.25cm} 
 
-%\crule[colourLight]{0.4cm}{0.25cm} \crule[colourPaper]{0.4cm}{0.25cm} \crule[colourDark]{0.4cm}{0.25cm}  
-%\end{flushleft}
 
-%$if(date)$
-%\date{$date$}
-%$endif$
 
+% Insert headimage at top right of first page
 $if(headimage)$
-%$headimage$
 \begin{marginfigure}
 \epigraph{$headquote$}{\textit{$headquoteauthor$}}
 \end{marginfigure}
@@ -344,17 +240,17 @@ $endif$
 
 
 
+$for(include-before)$
+$include-before$
 
-% Next toc ... body added by IH
+$endfor$
 $if(toc)$
 {
 $if(colorlinks)$
-\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
+\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$base1$endif$}
 $endif$
 \setcounter{tocdepth}{$toc-depth$}
 \tableofcontents
-%\addtocontents{toc}{~\hfill\textbf{Page}\par} % added by IH
-\addtocontents{toc}{~\hfill\par} % added by IH
 }
 $endif$
 $if(lot)$
@@ -363,13 +259,10 @@ $endif$
 $if(lof)$
 \listoffigures
 $endif$
-
 $body$
 
-
-
 $if(natbib)$
-$if(biblio-files)$
+$if(bibliography)$
 $if(biblio-title)$
 $if(book-class)$
 \renewcommand\bibname{$biblio-title$}
@@ -377,8 +270,7 @@ $else$
 \renewcommand\refname{$biblio-title$}
 $endif$
 $endif$
-\bibliography{$biblio-files$}
-\bibliographystyle{plainnat}
+\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
 
 $endif$
 $endif$
@@ -390,5 +282,4 @@ $for(include-after)$
 $include-after$
 
 $endfor$
-
 \end{document}

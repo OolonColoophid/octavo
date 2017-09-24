@@ -1,0 +1,19 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdftex 2017.9.22)  22 SEP 2017 14:54
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**octavoTuftePdf.tex
+(./octavoTuftePdf.tex
+./octavoTuftePdf.tex:5: Undefined control sequence.
+l.5 \documentclass
+                  [$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$e...
+
+? 
+./octavoTuftePdf.tex:5: Emergency stop.
+l.5 \documentclass
+                  [$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$e...
+End of file on the terminal!
+
+./octavoTuftePdf.tex:5:  ==> Fatal error occurred, no output PDF file produced!
+
