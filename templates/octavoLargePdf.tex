@@ -56,10 +56,16 @@ $if(euro)$
 $endif$
 
 % Make the font a large sans serif
-\setmainfont[Scale=1.5]{Verdana}
+\setmainfont[Scale=1.2]{Verdana}
 % Increase the line spread accordingly
 \linespread{1.5}
-
+% Increase the size of equations
+\DeclareMathSizes{10}{18}{12}{8}   % For size 10 text
+\DeclareMathSizes{11}{19}{13}{9}   % For size 11 text
+\DeclareMathSizes{12}{20}{14}{10}  % For size 12 text
+\DeclareMathSizes{13}{21}{15}{11}  % For size 12 text
+\DeclareMathSizes{14}{22}{16}{12}  % For size 12 text
+\DeclareMathSizes{15}{23}{17}{13}  % For size 12 text
 $if(dyslexicfont)$
     \setmainfont{$dyslexicfont$}
 $endif$
