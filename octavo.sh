@@ -1674,7 +1674,8 @@ function moveFilesFromStagingToDeployDir {
 
 	if [[ "$DUMMY_RUN" != true ]]; then
 
-		cp -R "$localStagingDir/" "$deployto/" && rm -r "$localStagingDir"
+		cp -R "$localStagingDir/" "$deployto/" 
+		rm -r "$localStagingDir"
 
 	fi
 
