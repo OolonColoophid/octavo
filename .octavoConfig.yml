@@ -10,8 +10,8 @@ deploymentText:
 includedir:       "$octavoPath/includes"                                  # Location of text files to be inserted dynamically
 deployconfig:     "$octavoPath/deployConfig"                              # Location of deployment methods (e.g. Pandoc, Say)
 remoteserver:     "cccupsychology.com"                                    # Remote server (have this in your .netrc file)
-ftpuser:          "cccupsyc"
-macosintegration: true
+ftpuser:          "cccupsyc"                                              # FTP username
+macosintegration: true                                                    # If true, append MD5 hash to Finder comment
 
 # Edward Tufte style, solarised document
 

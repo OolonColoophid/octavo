@@ -1473,7 +1473,10 @@ function yamlAddCustomYaml () {
 
 				# shellcheck disable=SC2154
 				if [[ "${mdfivehashset}" == "true" ]]; then
-					filenameSourceFile+="_$mdFiveHashOutput"
+
+					if [[ "${macosintegration}" == "false" ]]; then
+						filenameSourceFile+="_$mdFiveHashOutput"
+					fi
 				fi
 
 				name="$(echo "$number" | templateNumToTemplate)"
