@@ -7,9 +7,11 @@ deploymentText:
 # Document settings (these can be overriden in the Yaml of the Markdown file itself)
 # (Note: Some variables must be set in the Yaml itself
 # in order to be available to Pandoc and filters)
-includedir:    "$octavoPath/includes"                                  # Location of text files to be inserted dynamically
-deployconfig:  "$octavoPath/deployConfig"                              # Location of deployment methods (e.g. Pandoc, Say)
-remoteserver:  "cccupsychology.com"                                    # Remote server (have this in your .netrc file)
+includedir:       "$octavoPath/includes"                                  # Location of text files to be inserted dynamically
+deployconfig:     "$octavoPath/deployConfig"                              # Location of deployment methods (e.g. Pandoc, Say)
+remoteserver:     "cccupsychology.com"                                    # Remote server (have this in your .netrc file)
+ftpuser:          "cccupsyc"
+macosintegration: true
 
 # Edward Tufte style, solarised document
 
@@ -181,8 +183,4 @@ template8: "octavoSpokenMacOs" # This is not a filename, but a special class han
 #       - "--voice='Alex'"
 #       - "--quality=127"
 #       - "--file-format='mp4f'"
-#
-#
-#
-#
 

@@ -141,6 +141,10 @@ Happy to look at any contributions, particularly for Latex templates.
 
 ## History
 
+### Version 1.1
+
+Uses SFTP instead of FTP, so public key encryption now required.
+
 ### Version 1.0
 
 Refactored.

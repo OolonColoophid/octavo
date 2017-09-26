@@ -361,6 +361,31 @@ __b3bp_err_report() {
 #emergency "A \"panic\" condition usually affecting multiple apps/servers/sites. At this level it would usually notify all tech staff on call."
 
 
+finderComment () {
+
+	# This is a macOS-only function to write Finder comments
+
+	if [[ $1 = *[!\ ]* ]]; then
+		osascript - "$@" << EOF
+		on run argv
+		set text item delimiters of AppleScript to " "
+		set theComment to (items 2 through end of argv) as string
+		set theFile to (POSIX path of (POSIX file (item 1 of argv) as alias)
+		tell application "Finder"
+		set comment of theFile to theComment
+	end tell
+	return
+end run
+EOF
+		else
+			echo "USAGE: findercomment file comment [words can continue]"
+			echo "Sets the Finder comment for a file."
+			echo "Example: findercomment stevejobs.jpg this one will be worth money some day"
+		fi
+	}
+
+
+
 function checkSet () {
 
 	# This function inspects certain default variables (set in yaml by the user)
@@ -711,7 +736,11 @@ function yamlAddCustomYaml () {
 
 			# shellcheck disable=SC2154
 			if [[ "${mdfivehashset}" == "true" ]]; then
-				filenameSourceFile+="_$mdFiveHashOutput"
+
+				if [[ "${macosintegration}" == "false" ]]; then
+					filenameSourceFile+="_$mdFiveHashOutput"
+				fi
+
 			fi
 
 			filenameSourceFile="$filenameSourceFile$name"
@@ -1610,7 +1639,7 @@ function yamlAddCustomYaml () {
 
 						if [[ "$DUMMY_RUN" != true ]]; then
 
-							ftp -i -v "$remoteserver" > "/dev/null" <<ENDOFCOMMANDS
+							sftp "$ftpuser@$remoteserver" > "/dev/null" <<ENDOFCOMMANDS
 
 							cd $remotedirectory
 							mput *.*
