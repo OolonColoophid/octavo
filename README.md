@@ -1,5 +1,7 @@
 # Octavo v 1.0
 
+NOTE: I'm no longer working on this, having moved to Org Mode in Emacs.
+
 Go from a single [Markdown](https://en.wikipedia.org/wiki/Markdown) source file to well-presented documents like [this](sandbox/deploy/1art_dff3df720cb5023bc29b12d1694d6b1coctavoTuftePdf.pdf). Octavo is a wrapper for the excellent [pandoc](http://pandoc.org/).
 
 If you're producing finished-product documents like PDFs or HTML from a text source such as Markdown, you'll need two things: (a) a way of crafting your Markdown files to exploit certain features like highlight boxes and including external text snippets, and (b) nice templates that take advantage of these features. Octavo supplies the (a) and (b).
